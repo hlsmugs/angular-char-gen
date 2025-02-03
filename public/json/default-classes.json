@@ -1,0 +1,80 @@
+[
+    {
+        "characterClassName": "Artificer",
+        "hitDiceSize": 8,
+        "isSpellcaster": true,
+        "spellcastingAbility": "Intelligence"
+    },
+    {
+        "characterClassName": "Barbarian",
+        "hitDiceSize": 12,
+        "isSpellcaster": false,
+        "spellcastingAbility": "None"
+    },
+    {
+        "characterClassName": "Bard",
+        "hitDiceSize": 8,
+        "isSpellcaster": true,
+        "spellcastingAbility": "Charisma"
+    },
+    {
+        "characterClassName": "Cleric",
+        "hitDiceSize": 8,
+        "isSpellcaster": true,
+        "spellcastingAbility": "Wisdom"
+    },
+    {
+        "characterClassName": "Druid",
+        "hitDiceSize": 8,
+        "isSpellcaster": true,
+        "spellcastingAbility": "Wisdom"
+    },
+    {
+        "characterClassName": "Fighter",
+        "hitDiceSize": 10,
+        "isSpellcaster": false,
+        "spellcastingAbility": "None"
+    },
+    {
+        "characterClassName": "Monk",
+        "hitDiceSize": 8,
+        "isSpellcaster": false,
+        "spellcastingAbility": "Wisdom"
+    },
+    {
+        "characterClassName": "Paladin",
+        "hitDiceSize": 10,
+        "isSpellcaster": true,
+        "spellcastingAbility": "Charisma"
+    },
+    {
+        "characterClassName": "Ranger",
+        "hitDiceSize": 10,
+        "isSpellcaster": true,
+        "spellcastingAbility": "Wisdom"
+    },
+    {
+        "characterClassName": "Rogue",
+        "hitDiceSize": 8,
+        "isSpellcaster": false,
+        "spellcastingAbility": "None"
+    },
+    {
+        "characterClassName": "Sorcerer",
+        "hitDiceSize": 6,
+        "isSpellcaster": true,
+        "spellcastingAbility": "Charisma"
+    },
+    {
+        "characterClassName": "Warlock",
+        "hitDiceSize": 8,
+        "isSpellcaster": true,
+        "spellcastingAbility": "Charisma"
+    },
+    {
+        "characterClassName": "Wizard",
+        "hitDiceSize": 6,
+        "isSpellcaster": true,
+        "spellcastingAbility": "Intelligence"
+    }
+]

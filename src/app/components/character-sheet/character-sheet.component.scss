@@ -2,7 +2,9 @@
 .character-stats {
   display: flex;
   flex-direction: row;
-  & div:not(:first-child) {
-    padding-left: 2vw;
+  div {
+    &:not(:first-child) {
+      padding-left: 2vw;
+    }
   }
 }

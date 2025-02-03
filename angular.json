@@ -39,7 +39,8 @@
             },
             "styles": [
               "src/styles.scss",
-              "node_modules/bootstrap/scss/bootstrap.scss"
+              "node_modules/bootstrap/scss/bootstrap.scss",
+              "src/styles/defaults.scss"
             ],
             "scripts": [
               "node_modules/bootstrap/dist/js/bootstrap.min.js"
@@ -111,7 +112,9 @@
               ]
             },
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "node_modules/bootstrap/scss/bootstrap.scss",
+              "src/styles/defaults.scss"
             ],
             "scripts": [
               "node_modules/bootstrap/dist/js/bootstrap.min.js"

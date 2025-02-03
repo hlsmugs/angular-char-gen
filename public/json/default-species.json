@@ -1,0 +1,35 @@
+[
+    {
+        "speciesName": "Aasimar"
+    },
+    {
+        "speciesName": "Dragonborn"
+    },
+    {
+        "speciesName": "Drow"
+    },
+    {
+        "speciesName": "Dwarf"
+    },
+    {
+        "speciesName": "Elf"
+    },
+    {
+        "speciesName": "Gnome"
+    },
+    {
+        "speciesName": "Goliath"
+    },
+    {
+        "speciesName": "Halfling"
+    },
+    {
+        "speciesName": "Human"
+    },
+    {
+        "speciesName": "Tiefling"
+    },
+    {
+        "speciesName": "Warforged"
+    }
+]

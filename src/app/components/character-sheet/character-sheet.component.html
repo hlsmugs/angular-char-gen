@@ -1,23 +1,154 @@
 <div class="character-sheet-container">
-  <div class="character-details">
-    <div>character name</div>
-    <div>class</div>
-    <div>species</div>
-    <div>background</div>
-  </div>
-  <div class="character-stats">
+  <section name="character-details" class="character-details">
+    <div class="d-flex flex-column character-name">
+      <input type="text" name="characterName" placeholder="Hero" />
+      <div class="d-flex flex-row">
+        <label for="characterName">Character Name </label>
+        <button>Randomize</button>
+      </div>
+    </div>
+    <div class="d-flex flex-column character-class">
+      <select name="characterClass" id="characterClass">
+        <option
+          value="0"
+          id="noClass"
+          name="noClass"
+          label="Select a Class"
+          selected
+          disabled
+          value
+        ></option>
+        @for (c of characterClasses; track $index;){
+        <option value="{{ $index }}">{{ c.characterClassName }}</option>
+        }
+      </select>
+      <div class="d-flex flex-row">
+        <label for="characterClass">Class</label>
+        <button>Randomize</button>
+      </div>
+    </div>
+    <div class="d-flex flex-column character-species">
+      <select name="characterSpecies" id="characterSpecies">
+        <option
+          value="0"
+          id="noSpecies"
+          name="noSpecies"
+          label="Select a Species"
+          selected
+          disabled
+          value
+        ></option>
+        @for (s of characterSpecies; track $index;){
+        <option value="{{ $index }}">{{ s.speciesName }}</option>
+        }
+      </select>
+      <div class="d-flex flex-row">
+        <label for="characterSpecies">Species</label>
+        <button>Randomize</button>
+      </div>
+    </div>
+    <div class="d-flex flex-column character-background">
+      <select name="characterBackground" id="characterBackground">
+        <option
+          value="0"
+          id="noBackground"
+          name="noBackground"
+          label="Select a Background"
+          selected
+          disabled
+          value
+        ></option>
+        @for (b of characterBackground; track $index;){
+        <option value="{{ $index }}">{{ b.backgroundName }}</option>
+        }
+      </select>
+      <div class="d-flex flex-row">
+        <label for="characterBackground">Background</label
+        ><button>Randomize</button>
+      </div>
+    </div>
+  </section>
+  <section name="character-stats" class="character-stats">
     <!--iterate through a json file for the ability score name and value-->
-    <div>Strength</div>
-    <div>Dexterity</div>
-    <div>Constitution</div>
-    <div>Intelligence</div>
-    <div>Wisdom</div>
-    <div>Charisma</div>
-  </div>
-  <div class="character-desc">
-    <div>personality traits</div>
-    <div>ideals</div>
-    <div>bonds</div>
-    <div>flaws</div>
-  </div>
+    <div class="ability-score">
+      <label for="strength">Strength</label>
+      <input type="number" name="strength" placeholder="8" min="0" max="20" />
+    </div>
+    <div class="ability-score">
+      <label for="dexterity">Dexterity</label>
+      <input type="number" name="dexterity" placeholder="8" min="0" max="20" />
+    </div>
+    <div class="ability-score">
+      <label for="constitution">Constitution</label>
+      <input
+        type="number"
+        name="constitution"
+        placeholder="8"
+        min="0"
+        max="20"
+      />
+    </div>
+    <div class="ability-score">
+      <label for="intelligence">Intelligence</label>
+      <input
+        type="number"
+        name="intelligence"
+        placeholder="8"
+        min="0"
+        max="20"
+      />
+    </div>
+    <div class="ability-score">
+      <label for="wisdom">Wisdom</label>
+      <input type="number" name="wisdom" placeholder="8" min="0" max="20" />
+    </div>
+    <div class="ability-score">
+      <label for="charisma">Charisma</label>
+      <input type="number" name="charisma" placeholder="8" min="0" max="20" />
+    </div>
+    <div class="d-flex flex-column">
+      <label for="abilityGenMethod">Generation Method:</label>
+      <select name="abilityGenMethod" id="abilityGenMethod">
+        <option>4d6 drop lowest</option>
+        <option>3d6</option>
+        <option>Array</option>
+        <option>Point Buy</option>
+      </select>
+    </div>
+  </section>
+  <section name="character-description" class="character-desc">
+    <div class="d-flex flex-column">
+      <div class="flex-row">
+        <label for="personalityTraits">Personailty Traits</label>
+        <button>Randomize</button>
+      </div>
+      <textarea name="personalityTraits" rows="3" cols="20"></textarea>
+    </div>
+    <div class="d-flex flex-column">
+      <div class="flex-row">
+        <label for="ideals">Ideals</label>
+        <button>Randomize</button>
+      </div>
+      <textarea name="ideals" rows="3" cols="20"></textarea>
+    </div>
+    <div class="d-flex flex-column">
+      <div class="flex-row">
+        <label for="bonds">Bonds</label>
+        <button>Randomize</button>
+      </div>
+      <textarea name="bonds" rows="3" cols="20"></textarea>
+    </div>
+    <div class="d-flex flex-column">
+      <div class="flex-row">
+        <label for="flaws">Flaws</label>
+        <button>Randomize</button>
+      </div>
+      <textarea name="flaws" rows="3" cols="20"></textarea>
+    </div>
+  </section>
+  <button>Randomly Generate</button>
+  <button>Export as JSON file</button>
+  <button>Export as PDF</button>
+  <button>Save</button>
+  <button>Clear</button>
 </div>
