@@ -3,6 +3,7 @@ import { HomeComponent } from './components/home/home.component';
 import { AppComponent } from './app.component';
 import { app } from '../../server';
 import { CreateACharacterComponent } from './components/create-a-character/create-a-character.component';
+import { CharacterRosterComponent } from './components/character-roster/character-roster.component';
 
 export const routes: Routes = [
   {
@@ -17,5 +18,9 @@ export const routes: Routes = [
   {
     path: 'create-a-character',
     component: CreateACharacterComponent,
+  },
+  {
+    path: 'character-roster',
+    component: CharacterRosterComponent,
   },
 ];
