@@ -1,0 +1,83 @@
+<p>dice-roller works!</p>
+<label for="numberOfDice"></label>
+<input
+  id="numberOfDice"
+  type="number"
+  (change)="setNumberOfDice($event)"
+  min="0"
+/>
+<div>
+  <input
+    id="d4"
+    type="radio"
+    name="diceSize"
+    value="4"
+    (change)="setDiceSize($event)"
+  />
+  <label for="d4">d4</label>
+  <input
+    id="d6"
+    type="radio"
+    name="diceSize"
+    value="6"
+    (change)="setDiceSize($event)"
+  />
+  <label for="d6">d6</label>
+  <input
+    id="d8"
+    type="radio"
+    name="diceSize"
+    value="8"
+    (change)="setDiceSize($event)"
+  />
+  <label for="d8">d8</label>
+  <input
+    id="d10"
+    type="radio"
+    name="diceSize"
+    value="10"
+    (change)="setDiceSize($event)"
+  />
+  <label for="d10">d10</label>
+  <input
+    id="d12"
+    type="radio"
+    name="diceSize"
+    value="12"
+    (change)="setDiceSize($event)"
+  />
+  <label for="d12">d12</label>
+  <input
+    id="d20"
+    type="radio"
+    name="diceSize"
+    value="20"
+    (change)="setDiceSize($event)"
+  />
+  <label for="d20">d20</label>
+  <input
+    id="d100"
+    type="radio"
+    name="diceSize"
+    value="100"
+    (change)="setDiceSize($event)"
+  />
+  <label for="d100">d100</label>
+</div>
+
+<button type="button" (click)="rollDice()">Roll</button>
+
+<div>
+  @for (res of rollResults; track $index){ @if(rollSum){ Roll #{{ $index + 1 }}
+  <p>Total: {{ rollSum![$index] }}</p>
+  }
+  <p>Results: {{ res }}</p>
+  }
+</div>
+
+<!--
+TODO:
+> change functionality to accept text
+> ex. 3d6 is accepted
+> ex. 4d6dl1 will work too
+-->

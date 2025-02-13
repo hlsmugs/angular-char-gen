@@ -1,12 +1,14 @@
 <div class="character-sheet-container">
-  <form [formGroup]="playerCharacterForm">
+  <form [formGroup]="playerCharacterForm$">
     <section name="character-details" class="character-details">
       <div class="d-flex flex-column character-name">
         <input
           type="text"
+          id="characterName"
           name="characterName"
           placeholder="Hero"
           formControlName="characterName"
+          #characterName
         />
         <div class="d-flex flex-row">
           <label for="characterName">Character Name </label>
@@ -28,7 +30,7 @@
             disabled
             value
           ></option>
-          @for (c of defaultClasses; track $index;){
+          @for (c of defaultClasses$; track $index;){
           <option value="{{ c.characterClassName }}">
             {{ c.characterClassName }}
           </option>
@@ -36,7 +38,7 @@
         </select>
         <div class="d-flex flex-row">
           <label for="characterClass">Class</label>
-          <button>Randomize</button>
+          <button (click)="randomizeField('class')">Randomize</button>
         </div>
       </div>
       <div class="d-flex flex-column character-species">
@@ -54,13 +56,15 @@
             disabled
             value
           ></option>
-          @for (s of defaultSpecies; track $index;){
-          <option value="{{ s.speciesName }}">{{ s.speciesName }}</option>
+          @for (s of defaultSpecies$; track $index;){
+          <option value="{{ s.speciesName }}">
+            {{ s.speciesName }}
+          </option>
           }
         </select>
         <div class="d-flex flex-row">
           <label for="characterSpecies">Species</label>
-          <button>Randomize</button>
+          <button (click)="randomizeField('species')">Randomize</button>
         </div>
       </div>
       <div class="d-flex flex-column character-background">
@@ -78,13 +82,15 @@
             disabled
             value
           ></option>
-          @for (b of defaultBackgrounds; track $index;){
-          <option value="{{ b.backgroundName }}">{{ b.backgroundName }}</option>
+          @for (b of defaultBackgrounds$; track $index;){
+          <option value="{{ b.backgroundName }}">
+            {{ b.backgroundName }}
+          </option>
           }
         </select>
         <div class="d-flex flex-row">
           <label for="characterBackground">Background</label
-          ><button>Randomize</button>
+          ><button (click)="randomizeField('background')">Randomize</button>
         </div>
       </div>
     </section>
@@ -93,90 +99,98 @@
       class="character-stats"
       formGroupName="abilityScores"
     >
-      <!--iterate through a json file for the ability score name and value-->
+      @for (a of abilityScoreLabels; track $index;){
+
       <div class="ability-score">
-        <label for="strength">Strength</label>
-        <input
-          type="number"
-          name="strength"
-          value="8"
-          min="0"
-          max="20"
-          onkeydown="return false"
-          formControlName="strengthScore"
-        />
-        <!--add buttons for increase/decrease for mobile view?-->
-        <!--add section for modifier-->
-      </div>
-      <div class="ability-score">
-        <label for="dexterity">Dexterity</label>
-        <input
-          type="number"
-          name="dexterity"
-          value="8"
+        <label for="{{ a[1] }}">{{ a[0] }}</label>
+        <!-- <input
+          type="tel"
+          id="{{ a[1] }}"
+          [value]="abilityScoreValues![$index]"
           min="3"
           max="20"
           onkeydown="return false"
-          formControlName="dexterityScore"
-        />
-      </div>
-      <div class="ability-score">
-        <label for="constitution">Constitution</label>
+        /> -->
         <input
           type="number"
-          name="constitution"
-          value="8"
-          min="3"
-          max="20"
+          [id]="a[1][$index]"
+          [formControlName]="a[1]"
+          [formTarget]="a[1]"
+          [value]="abilityScoreValuesWithBonuses![$index]"
           onkeydown="return false"
-          formControlName="constitutionScore"
         />
+        @if (abilityScoreGenMethod == 'pointBuy'){
+        <button
+          (click)="addPoints(plusOneChoice$index, plusTwoChoice$index, $index)"
+        >
+          +
+        </button>
+        <button
+          (click)="
+            subtractPoints(plusOneChoice$index, plusTwoChoice$index, $index)
+          "
+        >
+          -
+        </button>
+        }
+        <div class="radio-ability-score-bonuses">
+          <input
+            type="radio"
+            id="plusTwoChoice{{ $index }}"
+            name="plusTwoChoice"
+            value="2"
+            (change)="
+              updateAbilityScores(
+                setBonuses($event, plusOneChoice$index, $index)
+              )
+            "
+            #plusTwoChoice$index
+          />
+          <label>+2</label>
+          <input
+            type="radio"
+            id="plusOneChoice{{ $index }}"
+            name="plusOneChoice"
+            value="1"
+            (change)="
+              updateAbilityScores(
+                setBonuses($event, plusTwoChoice$index, $index)
+              )
+            "
+            #plusOneChoice$index
+          />
+          <label>+1</label>
+        </div>
       </div>
-      <div class="ability-score">
-        <label for="intelligence">Intelligence</label>
-        <input
-          type="number"
-          name="intelligence"
-          value="8"
-          min="3"
-          max="20"
-          onkeydown="return false"
-          formControlName="intelligenceScore"
-        />
-      </div>
-      <div class="ability-score">
-        <label for="wisdom">Wisdom</label>
-        <input
-          type="number"
-          name="wisdom"
-          value="8"
-          min="3"
-          max="20"
-          onkeydown="return false"
-          formControlName="wisdomScore"
-        />
-      </div>
-      <div class="ability-score">
-        <label for="charisma">Charisma</label>
-        <input
-          type="number"
-          name="charisma"
-          value="8"
-          min="3"
-          max="20"
-          onkeydown="return false"
-          formControlName="charismaScore"
-        />
-      </div>
+      }
+
       <div class="d-flex flex-column">
-        <label for="abilityGenMethod">Generation Method:</label>
-        <select name="abilityGenMethod" id="abilityGenMethod">
-          <option name="4d6dl1" id="4d6dl1">4d6 drop lowest</option>
-          <option name="3d6" id="3d6">3d6</option>
-          <option name="standardArray" id="standardArray">Array</option>
-          <option name="pointBuy" id="pointBuy">Point Buy</option>
+        <label for="abilityGenMethod">Generation Method</label>
+        <select
+          name="abilityGenMethod"
+          id="abilityGenMethod"
+          [value]="abilityScoreGenMethod"
+          (change)="setAbilityGenMethod(abiiltyScoreGenMethod.value)"
+          #abiiltyScoreGenMethod
+        >
+          <!--disabled other options until implemented-->
+          <option name="pointBuy" id="pointBuy" value="pointBuy">
+            Point Buy
+          </option>
+          <option name="standardArray" id="standardArray" value="standardArray">
+            Standard Array
+          </option>
+          <option name="4d6dl1" id="4d6dl1" value="4d6dl1" disabled>
+            4d6 drop lowest
+          </option>
+          <option name="3d6" id="3d6" value="3d6" disabled>3d6</option>
         </select>
       </div>
+      <!--point buy budget-->
+      @if (abilityScoreGenMethod == 'pointBuy'){
+      <app-point-buy [pointsRemaining]="pointsUsed"></app-point-buy>
+      } @if (abilityScoreGenMethod == 'standardArray'){
+      <button (click)="randomizeStandardArray()">Randomize Array</button> }
     </section>
     <section
       name="character-description"
@@ -190,6 +204,7 @@
         </div>
         <textarea
           name="personalityTraits"
+          id="personalityTraits"
           rows="3"
           cols="20"
           formControlName="personalityTraits"
@@ -202,6 +217,7 @@
         </div>
         <textarea
           name="ideals"
+          id="ideals"
           rows="3"
           cols="20"
           formControlName="ideals"
@@ -214,6 +230,7 @@
         </div>
         <textarea
           name="bonds"
+          id="bonds"
           rows="3"
           cols="20"
           formControlName="bonds"
@@ -226,16 +243,29 @@
         </div>
         <textarea
           name="flaws"
+          id="flaws"
           rows="3"
           cols="20"
           formControlName="flaws"
         ></textarea>
       </div>
     </section>
-    <button>Randomly Generate</button>
+    <button (click)="randomizeAll()">Randomly Generate</button>
     <button>Export as JSON file</button>
     <button>Export as PDF</button>
-    <button type="submit" (click)="saveCharacter()">Save</button>
-    <button>Clear</button>
+    @if (isNewCharacter){
+    <!--save new character-->
+    <button type="submit" (click)="createCharacter(characterName.value)">
+      Save (add new)
+    </button>
+    } @if (!isNewCharacter) {<button
+      type="submit"
+      (click)="saveEditedCharacter()"
+    >
+      Save (edit)
+    </button>
+    }
+    <!--clear all fields-->
+    <button (click)="clearFields()">Clear</button>
   </form>
 </div>

@@ -72,3 +72,39 @@ export class CharacterDescription {
     this.flaws = flaws;
   }
 }
+
+export class CharacterClassModel {
+  characterClassName: string;
+  hitDiceSize: number;
+  isSpellcaster: boolean;
+  spellcastingAbility: string;
+  // to add: saving throws, default proficiencies
+
+  constructor(
+    characterClassName: string,
+    hitDiceSize: number,
+    isSpellcaster: boolean,
+    spellcastingAbility: string
+  ) {
+    this.characterClassName = characterClassName;
+    this.hitDiceSize = hitDiceSize;
+    this.isSpellcaster = isSpellcaster;
+    this.spellcastingAbility = spellcastingAbility;
+  }
+}
+
+export class CharacterSpeciesModel {
+  speciesName: string;
+  constructor(speciesName: string) {
+    this.speciesName = speciesName;
+  }
+}
+
+export class CharacterBackgroundModel {
+  backgroundName: string;
+  backgroundDescription: string;
+  constructor(backgroundName: string, backgroundDescription: string) {
+    this.backgroundName = backgroundName;
+    this.backgroundDescription = backgroundDescription;
+  }
+}
