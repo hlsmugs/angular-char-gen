@@ -1,0 +1,19 @@
+{
+  "hosting": {
+    "public": "dist/angular-char-gen/browser",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "function": "ssr"
+      }
+    ]
+  },
+  "functions": {
+    "source": "dist/angular-char-gen/server"
+  }
+}
