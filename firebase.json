@@ -12,8 +12,5 @@
         "function": "ssr"
       }
     ]
-  },
-  "functions": {
-    "source": "dist/angular-char-gen/server"
   }
 }

@@ -352,12 +352,7 @@ export class CharacterSheetComponent {
   }
 
   createCharacter(name: string) {
-    const oldList = this.characterSheetService.get('playerCharacters');
-    if (oldList != null) {
-      this.createUniqueId();
-    } else {
-      this.playerCharacterForm$.controls['id'].setValue(0);
-    }
+    this.createUniqueId();
     //place new character at front of list
     this.playerCharacterList$.unshift(this.playerCharacterForm$.value);
     this.characterSheetService.set(
@@ -413,16 +408,14 @@ export class CharacterSheetComponent {
   }
 
   createUniqueId() {
-    if (this.playerCharacterList$) {
-      const random = Math.floor(Math.random() * (999999 - 100000)) + 100000;
-      this.playerCharacterList$.forEach((character) => {
-        if (character.id == random) {
-          this.createUniqueId();
-        } else {
-          this.playerCharacterForm$.controls['id'].setValue(random);
-        }
-      });
-    }
+    const random = Math.floor(Math.random() * (999999 - 100000)) + 100000;
+    this.playerCharacterList$.forEach((character) => {
+      if (character.id == random) {
+        this.createUniqueId();
+      } else {
+        this.playerCharacterForm$.controls['id'].setValue(random);
+      }
+    });
   }
 
   randomizeField(field: string) {
