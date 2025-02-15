@@ -62,7 +62,7 @@ export class CharacterSheetComponent {
     //default
     this.bonuses = [0, 0, 0, 0, 0, 0];
     this.abilityScoreValuesWithBonuses = this.abilityScoreValues;
-    this.abilityScoreGenMethod = 'pointBuy';
+    this.abilityScoreGenMethod = '';
     this.pointsUsed = 0;
   }
 

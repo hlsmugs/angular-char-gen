@@ -20,7 +20,12 @@
         <img alt="six sided die" src="/img/pixel-die.png" />
       </button>
     </div>
+    @if (currentCharacter$){
+    <h1 class="text-center my-3">Adventurer Update Form</h1>
+    } @else {
+
     <h1 class="text-center my-3">Adventurer Registration Form</h1>
+    }
     <!--Character Name: name, class, species, background-->
     <section
       name="character-details"
@@ -173,6 +178,18 @@
             #abiiltyScoreGenMethod
           >
             <!--disabled other options until implemented-->
+
+            <option
+              value="0"
+              id="noGenMethod"
+              name="noGetMethod"
+              label="Select a Generation Method"
+              selected
+              disabled
+              value
+            >
+              Select Gen Method
+            </option>
             <option name="pointBuy" id="pointBuy" value="pointBuy">
               Point Buy
             </option>
@@ -187,6 +204,9 @@
               4d6 drop lowest
             </option>
             <option name="3d6" id="3d6" value="3d6" disabled>3d6</option>
+            <option name="customGen" id="customGen" value="customGen">
+              Custom
+            </option>
           </select>
           <!--standard array randomizer-->
           @if (abilityScoreGenMethod == 'standardArray'){
@@ -253,7 +273,9 @@
               [formControlName]="a[1]"
               [formTarget]="a[1]"
               [value]="abilityScoreValuesWithBonuses![$index]"
-              onkeydown="return false"
+              (onkeydown)="
+                (this.abilityScoreGenMethod == 'customGen' ? true : false)
+              "
             />
             <!--increase value button-->
             @if (abilityScoreGenMethod == 'pointBuy'){

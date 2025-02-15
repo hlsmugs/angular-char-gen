@@ -112,6 +112,9 @@ img {
     width: 36px;
     caret-color: transparent;
     -webkit-text-stroke: thin #ffffff55;
+    &[type="number"] {
+      caret-color: unset;
+    }
   }
   button {
     all: unset;
@@ -248,6 +251,9 @@ img {
 
 .btn-save {
   padding-top: auto;
+}
+
+@media screen {
 }
 
 //last thing is the "Seal" to save the character
