@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import defaultClasses from '../../../../public/json/default-classes.json';
 import defaultSpecies from '../../../../public/json/default-species.json';
@@ -18,6 +19,7 @@ import { CharacterSheetService } from '../../services/character-sheet.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PointBuyComponent } from '../point-buy/point-buy.component';
 import { DiceRollerService } from '../../services/dice-roller.service';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-character-sheet',
@@ -52,7 +54,9 @@ export class CharacterSheetComponent {
     private readonly route: ActivatedRoute,
     private characterSheetService: CharacterSheetService,
     private randomService: DiceRollerService,
-    public fb: FormBuilder
+    public fb: FormBuilder,
+    public location: Location,
+    public window: Window
   ) {
     this.getCurrentCharacter();
     this.createCharacterSheet();
@@ -534,5 +538,23 @@ export class CharacterSheetComponent {
   //how to navigate after saving
   onSubmit() {
     this.router.navigate(['/character-roster']);
+  }
+
+  //export character as JSON file
+  exportToJSON() {
+    let exportData = this.playerCharacterForm$.value;
+    let fileName: string =
+      this.playerCharacterForm$.controls['characterName'].value +
+      '-character-sheet.json';
+    return saveAs(
+      new Blob([JSON.stringify(exportData, null, 2)], { type: 'JSON' }),
+      fileName
+    );
+  }
+  //export as pdf
+
+  //goes back to previous page
+  goBack() {
+    this.location.back();
   }
 }

@@ -1,0 +1,26 @@
+@font-face {
+  font-family: "Alagard";
+  src: url("/fonts/alagard.ttf") format("truetype");
+  font-weight: 100;
+  font-style: normal;
+  //created by Hewett Tsoi
+  //link https://www.dafont.com/alagard.font?l[]=10&l[]=1
+}
+
+@font-face {
+  font-family: "Pixel Cursive";
+  src: url("/fonts/pixel-cursive.ttf") format("truetype");
+  font-weight: 100;
+  font-style: normal;
+  //link https://www.dafont.com/cursive-3.font?l[]=10&l[]=1
+}
+
+/*Global font style*/
+* {
+  font-family: Alagard;
+  font-size: large;
+}
+
+strong {
+  font-weight: 600 !important;
+}

@@ -1,10 +1,253 @@
-.character-details,
-.character-stats {
-  display: flex;
-  flex-direction: row;
-  div {
-    &:not(:first-child) {
-      padding-left: 2vw;
+@import "defaults";
+
+.character-sheet-container {
+  background: url("/img/parchment-tile.jpg");
+  background-size: cover;
+  @include media-breakpoint-up(sm) {
+    background: url("/img/parchment-vertical.png") no-repeat;
+    background-size: 100% 100%;
+    max-width: 1200px;
+    max-height: 2000px;
+  }
+}
+
+.character-sheet-form {
+  padding: 5%;
+  h1 {
+    font-size: 1.75em;
+  }
+  @include media-breakpoint-up(sm) {
+    padding: 15% 12.5% 20%;
+    h1 {
+      font-size: clamp(2.125em, 5vw, 3.125em);
+    }
+  }
+  @include media-breakpoint-up(md) {
+    padding: 10% 9% 20%;
+    h1 {
+      font-size: clamp(2.125em, 5vw, 3.125em);
+    }
+  }
+  @include media-breakpoint-up(xl) {
+    padding: 10% 10% 25%;
+  }
+}
+
+input {
+  &[type="text"] {
+    padding-left: 4px;
+  }
+}
+
+input,
+select {
+  background: none;
+  border: none;
+}
+
+select option {
+  background: $parchment-color;
+}
+
+::placeholder {
+  color: #00000055;
+}
+img {
+  padding-top: 2px;
+  display: inline-block;
+  vertical-align: top;
+  width: 1.25em;
+  height: auto;
+}
+
+//randomize button
+.btn-randomize {
+  padding: 0;
+  border: none;
+  background: none;
+  img {
+    opacity: 0.5;
+    &:hover {
+      opacity: 1;
     }
   }
 }
+
+.character-details,
+.character-stats {
+  div {
+    padding-bottom: 12px;
+  }
+  label {
+    line-height: 1.25em;
+    font-size: 0.875em;
+    padding-left: 4px;
+    color: #000000aa;
+  }
+  &-input {
+    border-bottom: 2px dotted;
+    padding-bottom: 0px !important;
+  }
+}
+
+.ability-score {
+  background: wheat;
+  border: solid 4px maroon;
+  outline: outset 4px silver;
+  width: 128px;
+  height: 142px;
+  border-radius: 10px 10px 45% 45%;
+  :focus {
+    outline: none;
+  }
+  label {
+    all: unset;
+    color: black;
+    background: tan;
+    border-radius: 8px 8px 0 0;
+    -webkit-text-stroke: thin #ffffff55;
+  }
+  input {
+    font-size: 1.5em;
+    width: 36px;
+    caret-color: transparent;
+    -webkit-text-stroke: thin #ffffff55;
+  }
+  button {
+    all: unset;
+    text-align: center;
+    background: silver;
+    border: inset silver 1px;
+    border-radius: 50%;
+    outline: 2px outset silver;
+    font-size: 10px;
+    width: 20px;
+    height: 20px;
+    &:hover {
+      background: #ffffffbb;
+    }
+  }
+  @include media-breakpoint-up(xl) {
+    width: 140px;
+    height: 160px;
+    label {
+      font-size: 1.25em;
+    }
+    input {
+      font-size: 1.75em;
+      width: 64px;
+    }
+  }
+  // @include media-breakpoint-up(xl) {
+  //   width: 180px;
+  //   height: 200px;
+  //   label {
+  //     font-size: 1.5em;
+  //   }
+  //   input {
+  //     font-size: 3.75em;
+  //     padding: 0px;
+  //     line-height: normal;
+  //     width: 64px;
+  //   }
+  // }
+}
+
+.gen-methods {
+  height: 30px;
+}
+
+.radio-bonuses {
+  label {
+    all: unset;
+    font-size: 10px;
+    translate: -2px 12px;
+    -webkit-text-stroke: thin #ffffff44;
+    @include media-breakpoint-up(lg) {
+      font-size: 12px;
+      translate: 0px 20px;
+    }
+  }
+  input[type="radio"] {
+    box-sizing: border-box;
+    appearance: none;
+    width: 8px;
+    height: 8px;
+    rotate: 45deg;
+    background: white;
+    outline: 3px outset silver;
+    border: 1px ridge silver;
+    &:checked {
+      background: royalblue;
+    }
+    &[name="plusTwoChoice"] {
+      &:checked {
+        background: goldenrod;
+      }
+    }
+    &:hover {
+      outline: 3px outset white;
+    }
+    @include media-breakpoint-up(xl) {
+      width: 10px;
+      height: 10px;
+      outline-width: 4px;
+      border-width: 2px;
+    }
+  }
+}
+
+.character-description {
+  .desc-header {
+    background: maroon;
+  }
+  label {
+    color: white;
+    -webkit-text-stroke: thin #00000066;
+  }
+  textarea {
+    resize: none;
+    padding: 4px;
+    background-color: $parchment-color-lighter;
+    font-size: 0.875em;
+    border: 1px dashed black;
+    border-top: none;
+  }
+}
+
+.character-sheet-buttons {
+  button {
+    background: silver;
+    border: 2px outset black;
+    opacity: 0.8;
+    &:hover {
+      border: 2px inset black;
+      opacity: 1;
+    }
+  }
+}
+
+.save-character {
+  .signature-area {
+    height: 50px;
+    align-self: end;
+    width: 100%;
+    @include media-breakpoint-up(md) {
+      width: 50%;
+    }
+  }
+  .signature-line {
+    height: 38px;
+    border-bottom: 2px dotted black;
+    .character-signature {
+      font-size: 2em;
+      font-family: "Pixel Cursive";
+    }
+  }
+}
+
+.btn-save {
+  padding-top: auto;
+}
+
+//last thing is the "Seal" to save the character

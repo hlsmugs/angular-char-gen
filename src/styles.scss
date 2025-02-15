@@ -1,5 +1,9 @@
-/* You can add global styles to this file, and also import other style files */
+/* Importing Bootstrap SCSS file. */
 @import "defaults";
 
-/* Importing Bootstrap SCSS file. */
-@import "bootstrap/scss/bootstrap";
+body {
+  //   background: url("/img/simon-sanchez-madera-tilex1.jpg") repeat;
+  background-size: 240px 240px;
+}
+
+//Common Character Sheet elemnts

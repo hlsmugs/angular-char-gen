@@ -1,109 +1,226 @@
-<div class="character-sheet-container">
-  <form [formGroup]="playerCharacterForm$">
-    <section name="character-details" class="character-details">
-      <div class="d-flex flex-column character-name">
-        <input
-          type="text"
-          id="characterName"
-          name="characterName"
-          placeholder="Hero"
-          formControlName="characterName"
-          #characterName
-        />
-        <div class="d-flex flex-row">
-          <label for="characterName">Character Name </label>
-          <button>Randomize</button>
+<div class="character-sheet-container m-auto">
+  <form class="character-sheet-form" [formGroup]="playerCharacterForm$">
+    <div class="w-100 d-flex justify-content-between mt-0 mt-sm-3">
+      <button class="d-none d-sm-block btn align-start" (click)="goBack()">
+        &#11164; Back
+      </button>
+      <button
+        class="d-block d-sm-none btn-close align-start"
+        (click)="goBack()"
+      ></button>
+      <button
+        id="randomize-all"
+        class="btn-randomize"
+        (click)="randomizeAll()"
+        data-bs-toggle="tooltip"
+        data-bs-placement="right"
+        title="Randomize All"
+      >
+        <small class="me-1 fw-lighter text-black-50">All</small>
+        <img alt="six sided die" src="/img/pixel-die.png" />
+      </button>
+    </div>
+    <h1 class="text-center my-3">Adventurer Registration Form</h1>
+    <!--Character Name: name, class, species, background-->
+    <section
+      name="character-details"
+      class="character-details d-flex flex-column flex-lg-row justify-content-lg-between align-items-lg-end flex-wrap"
+    >
+      <div class="w-100 d-flex flex-column">
+        <div class="character-details-input d-flex justify-content-between">
+          <input
+            class="w-100"
+            type="text"
+            id="characterName"
+            name="characterName"
+            placeholder="Hero"
+            formControlName="characterName"
+            #characterName
+          />
+          <button
+            class="btn-randomize"
+            data-bs-toggle="tooltip"
+            data-bs-placement="right"
+            title="Randomize"
+          >
+            <img alt="six sided die" src="/img/pixel-die.png" />
+          </button>
         </div>
+        <label for="characterName">Name</label>
       </div>
-      <div class="d-flex flex-column character-class">
-        <select
-          name="characterClass"
-          id="characterClass"
-          formControlName="characterClass"
-        >
-          <option
-            value="0"
-            id="noClass"
-            name="noClass"
-            label="Select a Class"
-            selected
-            disabled
-            value
-          ></option>
-          @for (c of defaultClasses$; track $index;){
-          <option value="{{ c.characterClassName }}">
-            {{ c.characterClassName }}
-          </option>
-          }
-        </select>
-        <div class="d-flex flex-row">
-          <label for="characterClass">Class</label>
-          <button (click)="randomizeField('class')">Randomize</button>
+      <div class="d-flex flex-column">
+        <div class="character-details-input d-flex justify-content-between">
+          <select
+            class="w-100"
+            name="characterClass"
+            id="characterClass"
+            formControlName="characterClass"
+          >
+            <option
+              value="0"
+              id="noClass"
+              name="noClass"
+              label="Select a Class"
+              selected
+              disabled
+              value
+            ></option>
+            @for (c of defaultClasses$; track $index;){
+            <option value="{{ c.characterClassName }}">
+              {{ c.characterClassName }}
+            </option>
+            }
+          </select>
+          <button
+            class="btn-randomize"
+            (click)="randomizeField('class')"
+            data-bs-toggle="tooltip"
+            data-bs-placement="right"
+            title="Randomize"
+          >
+            <img alt="six sided die" src="/img/pixel-die.png" />
+          </button>
         </div>
+        <label for="characterClass">Class</label>
       </div>
-      <div class="d-flex flex-column character-species">
-        <select
-          name="characterSpecies"
-          id="characterSpecies"
-          formControlName="characterSpecies"
-        >
-          <option
-            value="0"
-            id="noSpecies"
-            name="noSpecies"
-            label="Select a Species"
-            selected
-            disabled
-            value
-          ></option>
-          @for (s of defaultSpecies$; track $index;){
-          <option value="{{ s.speciesName }}">
-            {{ s.speciesName }}
-          </option>
-          }
-        </select>
-        <div class="d-flex flex-row">
-          <label for="characterSpecies">Species</label>
-          <button (click)="randomizeField('species')">Randomize</button>
+      <div class="d-flex flex-column">
+        <div class="character-details-input d-flex justify-content-between">
+          <select
+            class="w-100"
+            name="characterSpecies"
+            id="characterSpecies"
+            formControlName="characterSpecies"
+          >
+            <option
+              value="0"
+              id="noSpecies"
+              name="noSpecies"
+              label="Select a Species"
+              selected
+              disabled
+              value
+            ></option>
+            @for (s of defaultSpecies$; track $index;){
+            <option value="{{ s.speciesName }}">
+              {{ s.speciesName }}
+            </option>
+            }
+          </select>
+          <button
+            class="btn-randomize"
+            (click)="randomizeField('species')"
+            data-bs-toggle="tooltip"
+            data-bs-placement="right"
+            title="Randomize"
+          >
+            <img alt="six sided die" src="/img/pixel-die.png" />
+          </button>
         </div>
+        <label for="characterSpecies">Species</label>
       </div>
-      <div class="d-flex flex-column character-background">
-        <select
-          name="characterBackground"
-          id="characterBackground"
-          formControlName="characterBackground"
-        >
-          <option
-            value="0"
-            id="noBackground"
-            name="noBackground"
-            label="Select a Background"
-            selected
-            disabled
-            value
-          ></option>
-          @for (b of defaultBackgrounds$; track $index;){
-          <option value="{{ b.backgroundName }}">
-            {{ b.backgroundName }}
-          </option>
-          }
-        </select>
-        <div class="d-flex flex-row">
-          <label for="characterBackground">Background</label
-          ><button (click)="randomizeField('background')">Randomize</button>
+      <div class="d-flex flex-column">
+        <div class="character-details-input d-flex justify-content-between">
+          <select
+            class="w-100"
+            name="characterBackground"
+            id="characterBackground"
+            formControlName="characterBackground"
+          >
+            <option
+              value="0"
+              id="noBackground"
+              name="noBackground"
+              label="Select a Background"
+              selected
+              disabled
+              value
+            ></option>
+            @for (b of defaultBackgrounds$; track $index;){
+            <option value="{{ b.backgroundName }}">
+              {{ b.backgroundName }}
+            </option>
+            }
+          </select>
+          <button
+            class="btn-randomize"
+            (click)="randomizeField('background')"
+            data-bs-toggle="tooltip"
+            data-bs-placement="right"
+            title="Randomize"
+          >
+            <img alt="six sided die" src="/img/pixel-die.png" />
+          </button>
         </div>
+        <label for="characterBackground">Background</label>
       </div>
     </section>
+    <!--Character Ability Scores-->
     <section
       name="character-stats"
       class="character-stats"
       formGroupName="abilityScores"
     >
-      @for (a of abilityScoreLabels; track $index;){
+      <!--dropdown of gen methods-->
+      <div class="d-flex flex-column">
+        <div
+          class="d-flex justify-content-start pb-1 gen-methods align-items-center"
+        >
+          <select
+            name="abilityGenMethod"
+            id="abilityGenMethod"
+            [value]="abilityScoreGenMethod"
+            (change)="setAbilityGenMethod(abiiltyScoreGenMethod.value)"
+            #abiiltyScoreGenMethod
+          >
+            <!--disabled other options until implemented-->
+            <option name="pointBuy" id="pointBuy" value="pointBuy">
+              Point Buy
+            </option>
+            <option
+              name="standardArray"
+              id="standardArray"
+              value="standardArray"
+            >
+              Standard Array
+            </option>
+            <option name="4d6dl1" id="4d6dl1" value="4d6dl1" disabled>
+              4d6 drop lowest
+            </option>
+            <option name="3d6" id="3d6" value="3d6" disabled>3d6</option>
+          </select>
+          <!--standard array randomizer-->
+          @if (abilityScoreGenMethod == 'standardArray'){
+          <button
+            class="btn-randomize position-relative ps-1"
+            (click)="randomizeStandardArray()"
+            data-bs-toggle="tooltip"
+            data-bs-placement="right"
+            title="Randomize Ability Scores"
+          >
+            <img alt="six sided die" src="/img/pixel-die.png" />
+          </button>
+          }
+        </div>
+        <!--gen method label, some nested components-->
+        <div class="d-flex justify-content-between">
+          <label class="ps-1" for="abilityGenMethod">Generation Method</label>
+          <!--point buy budget-->
+          @if (abilityScoreGenMethod == 'pointBuy'){
+          <app-point-buy [pointsRemaining]="pointsUsed"></app-point-buy>
+          }
 
-      <div class="ability-score">
-        <label for="{{ a[1] }}">{{ a[0] }}</label>
-        <!-- <input
+          <!--todo: 3d6 randomizer, 4d6dl1 randomizer-->
+        </div>
+      </div>
+      <!--ability scores-->
+      <div
+        class="d-flex flex-row flex-wrap justify-content-evenly justify-content-md-between justify-content-lg-evenly justify-content-xl-between px-md-4 px-lg-0 px-xl-2"
+      >
+        @for (a of abilityScoreLabels; track $index;){
+        <div
+          class="ability-score d-flex flex-column mx-1 mx-sm-2 mx-lg-1 mx-xl-1 mb-3 mb-md-4 mb-lg-5"
+        >
+          <!-- <input
           type="tel"
           id="{{ a[1] }}"
           [value]="abilityScoreValues![$index]"
@@ -111,161 +228,255 @@
           max="20"
           onkeydown="return false"
         /> -->
-        <input
-          type="number"
-          [id]="a[1][$index]"
-          [formControlName]="a[1]"
-          [formTarget]="a[1]"
-          [value]="abilityScoreValuesWithBonuses![$index]"
-          onkeydown="return false"
-        />
-        @if (abilityScoreGenMethod == 'pointBuy'){
-        <button
-          (click)="addPoints(plusOneChoice$index, plusTwoChoice$index, $index)"
-        >
-          +
-        </button>
-        <button
-          (click)="
-            subtractPoints(plusOneChoice$index, plusTwoChoice$index, $index)
-          "
-        >
-          -
-        </button>
-        }
-        <div class="radio-ability-score-bonuses">
-          <input
-            type="radio"
-            id="plusTwoChoice{{ $index }}"
-            name="plusTwoChoice"
-            value="2"
-            (change)="
-              updateAbilityScores(
-                setBonuses($event, plusOneChoice$index, $index)
-              )
-            "
-            #plusTwoChoice$index
-          />
-          <label>+2</label>
-          <input
-            type="radio"
-            id="plusOneChoice{{ $index }}"
-            name="plusOneChoice"
-            value="1"
-            (change)="
-              updateAbilityScores(
-                setBonuses($event, plusTwoChoice$index, $index)
-              )
-            "
-            #plusOneChoice$index
-          />
-          <label>+1</label>
+          <!--ability score label-->
+          <label class="w-100 text-center py-1 mb-2" for="{{ a[1] }}">{{
+            a[0]
+          }}</label>
+          <!--ability score value-->
+          <div
+            class="w-100 d-flex flex-row justify-content-evenly align-items-center px-2 pb-0"
+          >
+            <!--decrease value button-->
+            @if (abilityScoreGenMethod == 'pointBuy'){
+            <button
+              (click)="
+                subtractPoints(plusOneChoice$index, plusTwoChoice$index, $index)
+              "
+            >
+              -
+            </button>
+            }
+            <input
+              class="text-center"
+              type="tel"
+              [id]="a[1]"
+              [formControlName]="a[1]"
+              [formTarget]="a[1]"
+              [value]="abilityScoreValuesWithBonuses![$index]"
+              onkeydown="return false"
+            />
+            <!--increase value button-->
+            @if (abilityScoreGenMethod == 'pointBuy'){
+            <button
+              (click)="
+                addPoints(plusOneChoice$index, plusTwoChoice$index, $index)
+              "
+            >
+              +
+            </button>
+            }
+          </div>
+          <!--+2 +1 radio buttons-->
+          <div
+            class="radio-bonuses d-flex justify-content-center mt-2 mt-lg-1 mt-xl-2"
+          >
+            <!--plus 1-->
+            <div class="d-flex flex-column mx-2 mx-lg-3">
+              <input
+                type="radio"
+                id="plusOneChoice{{ $index }}"
+                name="plusOneChoice"
+                value="1"
+                (change)="
+                  updateAbilityScores(
+                    setBonuses($event, plusTwoChoice$index, $index)
+                  )
+                "
+                #plusOneChoice$index
+              />
+              <label class="position-absolute" for="plusOneChoice{{ $index }}"
+                >+1</label
+              >
+            </div>
+            <!--plus 2-->
+            <div class="d-flex flex-column mx-2 mx-lg-3">
+              <input
+                type="radio"
+                id="plusTwoChoice{{ $index }}"
+                name="plusTwoChoice"
+                value="2"
+                (change)="
+                  updateAbilityScores(
+                    setBonuses($event, plusOneChoice$index, $index)
+                  )
+                "
+                #plusTwoChoice$index
+              />
+              <label class="position-absolute" for="plusTwoChoice{{ $index }}"
+                >+2</label
+              >
+            </div>
+          </div>
         </div>
+        }
       </div>
-      }
-
-      <div class="d-flex flex-column">
-        <label for="abilityGenMethod">Generation Method</label>
-        <select
-          name="abilityGenMethod"
-          id="abilityGenMethod"
-          [value]="abilityScoreGenMethod"
-          (change)="setAbilityGenMethod(abiiltyScoreGenMethod.value)"
-          #abiiltyScoreGenMethod
-        >
-          <!--disabled other options until implemented-->
-          <option name="pointBuy" id="pointBuy" value="pointBuy">
-            Point Buy
-          </option>
-          <option name="standardArray" id="standardArray" value="standardArray">
-            Standard Array
-          </option>
-          <option name="4d6dl1" id="4d6dl1" value="4d6dl1" disabled>
-            4d6 drop lowest
-          </option>
-          <option name="3d6" id="3d6" value="3d6" disabled>3d6</option>
-        </select>
-      </div>
-      <!--point buy budget-->
-      @if (abilityScoreGenMethod == 'pointBuy'){
-      <app-point-buy [pointsRemaining]="pointsUsed"></app-point-buy>
-      } @if (abilityScoreGenMethod == 'standardArray'){
-      <button (click)="randomizeStandardArray()">Randomize Array</button> }
     </section>
+    <!--Character Description: traits, ideals, bonds, flaws-->
     <section
       name="character-description"
-      class="character-desc"
+      class="character-description"
       formGroupName="characterDescription"
     >
-      <div class="d-flex flex-column">
-        <div class="flex-row">
-          <label for="personalityTraits">Personailty Traits</label>
-          <button>Randomize</button>
+      <div class="w-100 d-flex flex-column flex-lg-row flex-lg-wrap">
+        <!--personality traits-->
+        <div class="d-flex flex-column mb-3 flex-lg-fill me-lg-2">
+          <div
+            class="w-100 d-flex flex-row justify-content-between p-1 desc-header"
+          >
+            <label for="personalityTraits">Personailty Traits</label>
+            <button
+              class="btn-randomize"
+              data-bs-toggle="tooltip"
+              data-bs-placement="right"
+              title="Randomize"
+            >
+              <img alt="six sided die" src="/img/pixel-die.png" />
+            </button>
+          </div>
+          <textarea
+            name="personalityTraits"
+            id="personalityTraits"
+            rows="3"
+            cols="20"
+            maxlength="120"
+            formControlName="personalityTraits"
+          ></textarea>
         </div>
-        <textarea
-          name="personalityTraits"
-          id="personalityTraits"
-          rows="3"
-          cols="20"
-          formControlName="personalityTraits"
-        ></textarea>
+        <!--ideals-->
+        <div class="d-flex flex-column mb-3 flex-lg-fill ms-lg-2">
+          <div
+            class="w-100 d-flex flex-row justify-content-between p-1 desc-header"
+          >
+            <label for="ideals">Ideals</label>
+            <button
+              class="btn-randomize"
+              data-bs-toggle="tooltip"
+              data-bs-placement="right"
+              title="Randomize"
+            >
+              <img alt="six sided die" src="/img/pixel-die.png" />
+            </button>
+          </div>
+          <textarea
+            name="ideals"
+            id="ideals"
+            rows="3"
+            cols="20"
+            maxlength="120"
+            formControlName="ideals"
+          ></textarea>
+        </div>
       </div>
-      <div class="d-flex flex-column">
-        <div class="flex-row">
-          <label for="ideals">Ideals</label>
-          <button>Randomize</button>
+      <div class="w-100 d-flex flex-column flex-lg-row flex-lg-wrap">
+        <!--bonds-->
+        <div class="d-flex flex-column mb-3 flex-lg-fill me-lg-2">
+          <div
+            class="w-100 d-flex flex-row justify-content-between p-1 desc-header"
+          >
+            <label for="bonds">Bonds</label>
+            <button
+              class="btn-randomize"
+              data-bs-toggle="tooltip"
+              data-bs-placement="right"
+              title="Randomize"
+            >
+              <img alt="six sided die" src="/img/pixel-die.png" />
+            </button>
+          </div>
+          <textarea
+            name="bonds"
+            id="bonds"
+            rows="3"
+            cols="20"
+            maxlength="120"
+            formControlName="bonds"
+          ></textarea>
         </div>
-        <textarea
-          name="ideals"
-          id="ideals"
-          rows="3"
-          cols="20"
-          formControlName="ideals"
-        ></textarea>
-      </div>
-      <div class="d-flex flex-column">
-        <div class="flex-row">
-          <label for="bonds">Bonds</label>
-          <button>Randomize</button>
+        <!--flaws-->
+        <div class="d-flex flex-column mb-3 flex-lg-fill ms-lg-2">
+          <div
+            class="w-100 d-flex flex-row justify-content-between p-1 desc-header"
+          >
+            <label for="flaws">Flaws</label>
+            <button
+              class="btn-randomize"
+              data-bs-toggle="tooltip"
+              data-bs-placement="right"
+              title="Randomize"
+            >
+              <img alt="six sided die" src="/img/pixel-die.png" />
+            </button>
+          </div>
+          <textarea
+            name="flaws"
+            id="flaws"
+            rows="3"
+            cols="20"
+            maxlength="120"
+            formControlName="flaws"
+          ></textarea>
         </div>
-        <textarea
-          name="bonds"
-          id="bonds"
-          rows="3"
-          cols="20"
-          formControlName="bonds"
-        ></textarea>
-      </div>
-      <div class="d-flex flex-column">
-        <div class="flex-row">
-          <label for="flaws">Flaws</label>
-          <button>Randomize</button>
-        </div>
-        <textarea
-          name="flaws"
-          id="flaws"
-          rows="3"
-          cols="20"
-          formControlName="flaws"
-        ></textarea>
       </div>
     </section>
-    <button (click)="randomizeAll()">Randomly Generate</button>
-    <button>Export as JSON file</button>
-    <button>Export as PDF</button>
-    @if (isNewCharacter){
-    <!--save new character-->
-    <button type="submit" (click)="createCharacter(characterName.value)">
-      Save (add new)
-    </button>
-    } @if (!isNewCharacter) {<button
-      type="submit"
-      (click)="saveEditedCharacter()"
+    <!--Buttons for character sheet-->
+    <section
+      name="character-sheet-buttons"
+      class="character-sheet-buttons d-flex flex-column"
     >
-      Save (edit)
-    </button>
-    }
-    <!--clear all fields-->
-    <button (click)="clearFields()">Clear</button>
+      <div class="d-flex justify-content-end">
+        <button class="me-2" (click)="exportToJSON()">Export as JSON</button>
+        <!-- <button>Export as PDF</button> -->
+        <!--clear all fields-->
+        <button (click)="clearFields()">
+          Clear<img class="ms-1" src="/img/erase.png" />
+        </button>
+      </div>
+      <div class="save-character d-flex flex-column justify-content-end mt-5">
+        <!--Character Signature Line-->
+        <div class="signature-area mb-5">
+          <div class="signature-line d-flex">
+            <span class="postition-relative bottom-0 me-1"> X</span>
+            <div class="position-relative bottom-0 w-100 overflow-hidden h-100">
+              <span
+                class="character-signature align-bottom lh-1 w-100 overflow-hidden"
+              >
+                @if (playerCharacterForm$){
+                {{ playerCharacterForm$.controls["characterName"].value }}}
+              </span>
+            </div>
+          </div>
+          <div class="mt-2 d-flex justify-content-between">
+            <sub>Your Signature</sub>
+            <div class="btn-save align-self-end">
+              <!--Save new character-->
+              @if (isNewCharacter){
+              <button
+                id="create-new-character"
+                class="btn-save-new"
+                type="submit"
+                (click)="createCharacter(characterName.value)"
+              >
+                Save<img class="ms-1" src="/img/save.png" />
+              </button>
+              }
+              <!--Edit Character-->
+              @if (!isNewCharacter) {
+              <button
+                id="edit-character"
+                class="btn-save-edit"
+                type="submit"
+                (click)="saveEditedCharacter()"
+              >
+                Save Changes<img class="ms-1" src="/img/save.png" />
+              </button>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="d-flex flex-column d-sm-none text-center">
+      <span class="lh-1">&#11205;</span><span class="lh-1">Back to top</span>
+    </div>
   </form>
 </div>

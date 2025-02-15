@@ -1,1 +1,10 @@
-<div>{{ pointsRemaining }} / {{ pointBudget }}</div>
+<div
+  class="w-100 text-end"
+  [class.points-remaining]="pointsRemaining < 27"
+  [class.points-full]="pointsRemaining >= 27"
+>
+  <span [class.points-negative]="pointsRemaining < 0">
+    {{ pointsRemaining }}</span
+  >
+  <span>/ {{ pointBudget }} </span>
+</div>
