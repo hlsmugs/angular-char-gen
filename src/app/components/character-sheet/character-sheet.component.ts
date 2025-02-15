@@ -20,6 +20,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PointBuyComponent } from '../point-buy/point-buy.component';
 import { DiceRollerService } from '../../services/dice-roller.service';
 import { saveAs } from 'file-saver';
+import { first } from 'rxjs';
 
 @Component({
   selector: 'app-character-sheet',
@@ -31,12 +32,15 @@ import { saveAs } from 'file-saver';
 export class CharacterSheetComponent {
   @Input() isNewCharacter?: boolean;
 
-  pointsUsed: number;
   abilityScoreGenMethod?: string;
+  pointsUsed: number;
   atMax?: boolean;
   atMin?: boolean;
   currentCharacter$?: PlayerCharacterModel;
   bonuses: number[] = [];
+  signature?: string;
+
+  //ability scores
   abilityScoreValues?: number[] = [];
   abilityScoreValuesWithBonuses?: number[] = [];
   public playerCharacterForm$!: FormGroup;
@@ -67,7 +71,7 @@ export class CharacterSheetComponent {
   }
 
   // point buy
-  addPoints(evt: any, evt2: any, index: number): void {
+  addPoints(index: number): void {
     let currentVal = this.abilityScoreValues![index];
     //soft limit for points
     let points = this.pointsUsed;
@@ -120,7 +124,7 @@ export class CharacterSheetComponent {
     );
   }
 
-  subtractPoints(evt: any, evt2: any, index: number): void {
+  subtractPoints(index: number): void {
     let currentVal = this.abilityScoreValues![index];
     //formula for how much each increase costs
     switch (true) {
@@ -407,6 +411,22 @@ export class CharacterSheetComponent {
     this.createCharacterSheet();
   }
 
+  //fix this idk
+  getCharacterSignature(): string {
+    let initials!: string;
+    let fullName: string =
+      this.playerCharacterForm$.controls['characterName'].value;
+    let firstInitial = fullName.charAt(0);
+    let nameArray = fullName.split(' ');
+    if (nameArray.length > 1) {
+      let lastInital = nameArray[nameArray.length - 1].charAt(0);
+      initials = firstInitial + lastInital;
+    } else {
+      initials = firstInitial;
+    }
+    return initials;
+  }
+
   createUniqueId() {
     const random = Math.floor(Math.random() * (999999 - 100000)) + 100000;
     this.playerCharacterList$.forEach((character) => {
@@ -548,5 +568,11 @@ export class CharacterSheetComponent {
   //goes back to previous page
   goBack() {
     this.location.back();
+  }
+
+  scrollToTop() {
+    // const el = document.querySelector('#top');
+    // el?.scrollIntoView();
+    window.scroll({ top: 0, left: 0, behavior: 'smooth' });
   }
 }
