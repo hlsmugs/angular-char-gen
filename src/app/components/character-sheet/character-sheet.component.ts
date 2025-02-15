@@ -55,8 +55,7 @@ export class CharacterSheetComponent {
     private characterSheetService: CharacterSheetService,
     private randomService: DiceRollerService,
     public fb: FormBuilder,
-    public location: Location,
-    public window: Window
+    public location: Location
   ) {
     this.getCurrentCharacter();
     this.createCharacterSheet();
