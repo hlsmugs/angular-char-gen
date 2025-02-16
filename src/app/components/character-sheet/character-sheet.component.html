@@ -1,15 +1,25 @@
 <div class="character-sheet-bg py-lg-5">
   <div class="character-sheet-form-container mx-auto">
-    <form class="character-sheet-form" [formGroup]="playerCharacterForm$">
+    <form
+      class="character-sheet-form"
+      [formGroup]="playerCharacterForm$"
+      (submit)="onSubmit()"
+    >
       <div class="w-100 d-flex justify-content-between mt-0 mt-sm-3">
-        <button class="d-none d-sm-block btn align-start" (click)="goBack()">
+        <button
+          type="button"
+          class="d-none d-sm-block btn align-start"
+          (click)="goBack()"
+        >
           <span class="no-font">&#11164;</span> Back
         </button>
         <button
+          type="button"
           class="d-block d-sm-none btn-close align-start"
           (click)="goBack()"
         ></button>
         <button
+          type="button"
           id="randomize-all"
           class="btn-randomize"
           (click)="randomizeAll()"
@@ -44,6 +54,7 @@
               #characterName
             />
             <button
+              type="button"
               class="btn-randomize ps-1"
               data-bs-toggle="tooltip"
               data-bs-placement="right"
@@ -78,6 +89,7 @@
               }
             </select>
             <button
+              type="button"
               class="btn-randomize ps-1"
               (click)="randomizeField('class')"
               data-bs-toggle="tooltip"
@@ -113,6 +125,7 @@
               }
             </select>
             <button
+              type="button"
               class="btn-randomize ps-1"
               (click)="randomizeField('species')"
               data-bs-toggle="tooltip"
@@ -148,6 +161,7 @@
               }
             </select>
             <button
+              type="button"
               class="btn-randomize ps-1"
               (click)="randomizeField('background')"
               data-bs-toggle="tooltip"
@@ -210,6 +224,7 @@
           <!--standard array randomizer-->
           @if (abilityScoreGenMethod == 'standardArray'){
           <button
+            type="button"
             class="btn-randomize position-relative w-100 text-end"
             (click)="randomizeStandardArray()"
             data-bs-toggle="tooltip"
@@ -250,7 +265,7 @@
             >
               <!--decrease value button-->
               @if (abilityScoreGenMethod == 'pointBuy'){
-              <button (click)="subtractPoints($index)">-</button>
+              <button type="button" (click)="subtractPoints($index)">-</button>
               }
               <input
                 class="text-center w-50"
@@ -265,7 +280,7 @@
               />
               <!--increase value button-->
               @if (abilityScoreGenMethod == 'pointBuy'){
-              <button (click)="addPoints($index)">+</button>
+              <button type="button" (click)="addPoints($index)">+</button>
               }
             </div>
             <!--+2 +1 radio buttons-->
@@ -327,6 +342,7 @@
             >
               <label for="personalityTraits">Personailty Traits</label>
               <button
+                type="button"
                 class="btn-randomize"
                 data-bs-toggle="tooltip"
                 data-bs-placement="right"
@@ -351,6 +367,7 @@
             >
               <label for="ideals">Ideals</label>
               <button
+                type="button"
                 class="btn-randomize"
                 data-bs-toggle="tooltip"
                 data-bs-placement="right"
@@ -377,6 +394,7 @@
             >
               <label for="bonds">Bonds</label>
               <button
+                type="button"
                 class="btn-randomize"
                 data-bs-toggle="tooltip"
                 data-bs-placement="right"
@@ -401,6 +419,7 @@
             >
               <label for="flaws">Flaws</label>
               <button
+                type="button"
                 class="btn-randomize"
                 data-bs-toggle="tooltip"
                 data-bs-placement="right"
@@ -426,10 +445,12 @@
         class="character-sheet-buttons d-flex flex-column"
       >
         <div class="d-flex justify-content-end">
-          <button class="me-2" (click)="exportToJSON()">Export as JSON</button>
+          <button type="button" class="me-2" (click)="exportToJSON()">
+            Export as JSON
+          </button>
           <!-- <button>Export as PDF</button> -->
           <!--clear all fields-->
-          <button (click)="clearFields()">
+          <button type="button" (click)="clearFields()">
             Clear<img class="ms-1" src="/img/erase.png" />
           </button>
         </div>
@@ -480,6 +501,7 @@
       <!--Scroll to top for mobile/tablet-->
       <div class="w-100 d-flex d-lg-none justify-content-center mt-5">
         <button
+          type="button"
           class="d-flex flex-column text-center border-0 bg-transparent"
           (click)="scrollToTop()"
         >

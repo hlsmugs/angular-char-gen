@@ -3,14 +3,13 @@ import { BrowserStorageService } from './browser-storage.service';
 import { PlayerCharacterModel } from '../models/player-character.model';
 import { AbilityScores } from '../models/_enums/ability-scores';
 import { LOCAL_STORAGE } from '../tokens/storageToken';
+import { ActivatedRoute } from '@angular/router';
+import { FormGroup } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CharacterSheetService extends BrowserStorageService {
-  protected characterList$: PlayerCharacterModel[] = [];
-  protected currentCharacter$?: PlayerCharacterModel;
-
   constructor(@Inject(LOCAL_STORAGE) public override storage: Storage) {
     super(storage);
   }
@@ -26,25 +25,50 @@ export class CharacterSheetService extends BrowserStorageService {
         characterList.push(character);
       }
     }
-    this.characterList$ = characterList;
-    return this.characterList$;
+    return characterList;
   }
 
-  getCharacterById(id: number): PlayerCharacterModel | undefined {
-    const character = this.characterList$.filter(
-      (character) => character?.id == id
-    );
+  getCharacterById(id: number): PlayerCharacterModel {
+    let characterArray = this.getAllCharacters();
+    const character = characterArray.filter((character) => character?.id == id);
     return character[0];
   }
 
+  getCurrentCharacter(route: ActivatedRoute): PlayerCharacterModel {
+    let currentCharacter!: PlayerCharacterModel;
+    route.params.subscribe((params) => {
+      let selectedId = params['id'];
+      currentCharacter = this.getCharacterById(selectedId);
+    });
+    return currentCharacter;
+  }
+
+  saveCharacters(characterArray: PlayerCharacterModel[]): void {
+    this.set('playerCharacters', JSON.stringify(characterArray));
+  }
+
   deleteCharacterById(id: number): void {
+    let characterArray = this.getAllCharacters();
     let newCharacterList: PlayerCharacterModel[] = [];
-    newCharacterList = this.characterList$.filter(
+    newCharacterList = characterArray.filter(
       (character) => character?.id != id
     );
-    this.characterList$ = newCharacterList;
-    const newJSON = JSON.stringify(this.characterList$);
-    this.set('playerCharacters', newJSON);
+    characterArray = newCharacterList;
+    this.saveCharacters(characterArray);
+  }
+
+  editCharacter(
+    character: PlayerCharacterModel,
+    characterArray: PlayerCharacterModel[],
+    formGroup: FormGroup
+  ) {
+    const selectedId = character.id;
+    formGroup.controls['id'].setValue(selectedId);
+    const editedCharacter = formGroup.value;
+    this.deleteCharacterById(selectedId);
+    characterArray = this.getAllCharacters();
+    characterArray.unshift(editedCharacter);
+    this.saveCharacters(characterArray);
   }
 
   /**
@@ -52,7 +76,7 @@ export class CharacterSheetService extends BrowserStorageService {
    * @param character is current character
    * @returns array [ability score name, ability score value]
    */
-  getAbilityScores(character: PlayerCharacterModel) {
+  getAbilityScores(character: PlayerCharacterModel): string[][] {
     let c = character.abilityScores;
     let abilityScores: string[][] = [];
     let abilityScoreValues: number[] = [

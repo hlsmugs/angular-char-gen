@@ -1,10 +1,15 @@
 import { Injectable } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RandomizerService {
   constructor() {}
+
+  getUniqueId(): number {
+    return Math.floor(Math.random() * (999999 - 100000)) + 100000;
+  }
 
   //inclusive
   getRandomNumber(min: number, max: number): number {

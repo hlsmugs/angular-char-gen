@@ -20,7 +20,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PointBuyComponent } from '../point-buy/point-buy.component';
 import { DiceRollerService } from '../../services/dice-roller.service';
 import { saveAs } from 'file-saver';
-import { first } from 'rxjs';
+import { ExporterService } from '../../services/exporter.service';
 
 @Component({
   selector: 'app-character-sheet',
@@ -58,10 +58,10 @@ export class CharacterSheetComponent {
     private readonly route: ActivatedRoute,
     private characterSheetService: CharacterSheetService,
     private randomService: DiceRollerService,
+    private exportService: ExporterService,
     public fb: FormBuilder,
     public location: Location
   ) {
-    this.getCurrentCharacter();
     this.createCharacterSheet();
     //default
     this.bonuses = [0, 0, 0, 0, 0, 0];
@@ -223,7 +223,6 @@ export class CharacterSheetComponent {
   }
 
   /**TODO:
-   * random number gen for indexes to select random drop down option
    * 4d6 drop lowest roll method
    * 3d6 roll method
    * standard array
@@ -235,14 +234,17 @@ export class CharacterSheetComponent {
    *
    * random generation entire character method
    * - should be biased where highest stats go depending on class
-   *
-   * save as JSON / PDF
    */
 
   createCharacterSheet() {
     this.createForm();
     this.abilityScoreValues = [8, 8, 8, 8, 8, 8];
     this.playerCharacterList$ = this.characterSheetService.getAllCharacters();
+    //set current character
+    this.currentCharacter$ = this.characterSheetService.getCurrentCharacter(
+      this.route
+    );
+    //set current character vals
     let c = this.currentCharacter$;
     if (c) {
       this.populateCharacterSheet(c);
@@ -345,26 +347,11 @@ export class CharacterSheetComponent {
     });
   }
 
-  getCurrentCharacter(): void {
-    this.route.params.subscribe((params) => {
-      let selectedId = params['id'];
-      if (selectedId != null) {
-        this.currentCharacter$ =
-          this.characterSheetService.getCharacterById(selectedId);
-      }
-    });
-  }
-
   createCharacter(name: string) {
     this.createUniqueId();
-    //place new character at front of list
     this.playerCharacterList$.unshift(this.playerCharacterForm$.value);
-    this.characterSheetService.set(
-      'playerCharacters',
-      JSON.stringify(this.playerCharacterList$)
-    );
+    this.characterSheetService.saveCharacters(this.playerCharacterList$);
     alert(name + ' has been added to your roster');
-    console.log(this.playerCharacterForm$.value);
     this.clearFields();
   }
 
@@ -372,19 +359,10 @@ export class CharacterSheetComponent {
     if (this.playerCharacterList$ != null && this.currentCharacter$) {
       this.setAbiltyScoreFormValues();
       if (confirm('Are you sure you want to overwrite this character?')) {
-        const editedCharacterId = this.currentCharacter$.id;
-        //retain same id
-        this.playerCharacterForm$.controls['id'].setValue(editedCharacterId);
-        const editedCharacter = this.playerCharacterForm$.value;
-        //deletes old entry by id
-        this.characterSheetService.deleteCharacterById(editedCharacterId);
-        this.playerCharacterList$ =
-          this.characterSheetService.getAllCharacters();
-        //put new edited char at front of list
-        this.playerCharacterList$.unshift(editedCharacter);
-        this.characterSheetService.set(
-          'playerCharacters',
-          JSON.stringify(this.playerCharacterList$)
+        this.characterSheetService.editCharacter(
+          this.currentCharacter$,
+          this.playerCharacterList$,
+          this.playerCharacterForm$
         );
         alert('Saved changes');
       }
@@ -411,7 +389,7 @@ export class CharacterSheetComponent {
     this.createCharacterSheet();
   }
 
-  //fix this idk
+  //fix this id
   getCharacterSignature(): string {
     let initials!: string;
     let fullName: string =
@@ -428,7 +406,7 @@ export class CharacterSheetComponent {
   }
 
   createUniqueId() {
-    const random = Math.floor(Math.random() * (999999 - 100000)) + 100000;
+    const random = this.randomService.getUniqueId();
     this.playerCharacterList$.forEach((character) => {
       if (character.id == random) {
         this.createUniqueId();
@@ -492,6 +470,7 @@ export class CharacterSheetComponent {
       }
     }
   }
+
   randomizeAll() {
     const array = [
       'name',
@@ -517,12 +496,22 @@ export class CharacterSheetComponent {
 
   setAbilityGenMethod(genMethod: string) {
     this.abilityScoreGenMethod = genMethod;
+    //reset to defaults depending
+
     this.resetAbilityScoreDefaults();
-    //if standard array
-    //todo: turn field into drop down where u can pick a value from the standard array (including a blank one); choosing a value that is already chosen should make the other dropdown with that value blank instead
-    if (genMethod == 'standardArray') {
-      this.randomizeStandardArray();
-      console.log('Standard Array chosen');
+    switch (genMethod) {
+      case 'pointBuy':
+        break;
+      case 'standardArray':
+        //todo: turn field into drop down where u can pick a value from the standard array (including a blank one); choosing a value that is already chosen should make the other dropdown with that value blank instead
+        this.randomizeStandardArray();
+        break;
+      case '4d6dl':
+        break;
+      case '3d6':
+        break;
+      case 'customGen':
+        break;
     }
   }
 
@@ -558,10 +547,7 @@ export class CharacterSheetComponent {
     let fileName: string =
       this.playerCharacterForm$.controls['characterName'].value +
       '-character-sheet.json';
-    return saveAs(
-      new Blob([JSON.stringify(exportData, null, 2)], { type: 'JSON' }),
-      fileName
-    );
+    this.exportService.exportForm(exportData, fileName, 'JSON');
   }
   //export as pdf
 
