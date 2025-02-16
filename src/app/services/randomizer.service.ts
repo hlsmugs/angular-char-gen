@@ -27,4 +27,6 @@ export class RandomizerService {
     }
     return array;
   }
+
+  //weighted random array / biased towards a class' "optimal" array
 }

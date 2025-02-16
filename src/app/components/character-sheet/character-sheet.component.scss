@@ -38,18 +38,21 @@ input {
 }
 
 input,
-select {
+select,
+button {
   background: none;
   border: none;
+  color: $tavern-black;
 }
 
 select option {
-  background: $parchment-color;
+  background: $tavern-parchment;
 }
 
 ::placeholder {
-  color: #00000055;
+  color: rgba(var($tavern-black), 0.7);
 }
+
 img {
   padding-top: 2px;
   display: inline-block;
@@ -80,7 +83,7 @@ img {
     line-height: 1.25em;
     font-size: 0.875em;
     padding-left: 4px;
-    color: #000000aa;
+    color: rgba(var($tavern-black), 0.7);
   }
   &-input {
     border-bottom: 2px dotted;
@@ -89,7 +92,7 @@ img {
 }
 
 .ability-score {
-  background: wheat;
+  background: $tavern-white;
   border: solid 4px maroon;
   outline: outset 4px silver;
   width: 128px;
@@ -100,23 +103,21 @@ img {
   }
   label {
     all: unset;
-    color: black;
-    background: tan;
-    border-radius: 8px 8px 0 0;
-    -webkit-text-stroke: thin #ffffff55;
+    color: whitesmoke;
+    background: $tavern-red;
+    border-radius: 5px 5px 0 0;
   }
   input {
     font-size: 1.5em;
     width: 36px;
     caret-color: transparent;
-    -webkit-text-stroke: thin #ffffff55;
     &[type="number"] {
       caret-color: unset;
     }
   }
   button {
-    all: unset;
     text-align: center;
+    color: $tavern-black;
     background: silver;
     border: inset silver 1px;
     border-radius: 50%;
@@ -156,6 +157,9 @@ img {
 
 .gen-methods {
   height: 30px;
+  select {
+    border: 1px dashed black;
+  }
 }
 
 .radio-bonuses {
@@ -169,7 +173,7 @@ img {
       translate: 0px 20px;
     }
   }
-  input[type="radio"] {
+  input {
     box-sizing: border-box;
     appearance: none;
     width: 8px;
@@ -204,12 +208,11 @@ img {
   }
   label {
     color: white;
-    -webkit-text-stroke: thin #00000066;
   }
   textarea {
     resize: none;
     padding: 4px;
-    background-color: $parchment-color-lighter;
+    background-color: $tavern-parchment-lighter;
     font-size: 0.875em;
     border: 1px dashed black;
     border-top: none;
@@ -218,6 +221,7 @@ img {
 
 .character-sheet-buttons {
   button {
+    color: $tavern-black;
     background: silver;
     border: 2px outset black;
     opacity: 0.8;
@@ -242,9 +246,9 @@ img {
     border-bottom: 2px dotted black;
     .character-signature {
       font-size: 150px;
-      font-family: "Pixel Cursive";
+      font-family: "Venice Classic";
       position: absolute;
-      translate: 0px 40px;
+      translate: 0px 30px;
     }
   }
 }

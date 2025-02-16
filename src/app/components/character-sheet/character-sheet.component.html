@@ -167,71 +167,62 @@
         formGroupName="abilityScores"
       >
         <!--dropdown of gen methods-->
-        <div class="d-flex flex-column">
-          <div
-            class="d-flex justify-content-start pb-1 gen-methods align-items-center"
+        <div
+          class="d-flex justify-content-start pb-1 gen-methods align-items-center mb-2"
+        >
+          <select
+            class="me-2 my-auto"
+            name="abilityGenMethod"
+            id="abilityGenMethod"
+            [value]="abilityScoreGenMethod"
+            (change)="setAbilityGenMethod(abiiltyScoreGenMethod.value)"
+            #abiiltyScoreGenMethod
           >
-            <select
-              name="abilityGenMethod"
-              id="abilityGenMethod"
-              [value]="abilityScoreGenMethod"
-              (change)="setAbilityGenMethod(abiiltyScoreGenMethod.value)"
-              #abiiltyScoreGenMethod
-            >
-              <!--disabled other options until implemented-->
+            <!--disabled other options until implemented-->
 
-              <option
-                value="0"
-                id="noGenMethod"
-                name="noGetMethod"
-                label="Select a Generation Method"
-                selected
-                disabled
-                value
-              >
-                Select Gen Method
-              </option>
-              <option name="pointBuy" id="pointBuy" value="pointBuy">
-                Point Buy
-              </option>
-              <option
-                name="standardArray"
-                id="standardArray"
-                value="standardArray"
-              >
-                Standard Array
-              </option>
-              <option name="4d6dl1" id="4d6dl1" value="4d6dl1" disabled>
-                4d6 drop lowest
-              </option>
-              <option name="3d6" id="3d6" value="3d6" disabled>3d6</option>
-              <option name="customGen" id="customGen" value="customGen">
-                Custom
-              </option>
-            </select>
-            <!--standard array randomizer-->
-            @if (abilityScoreGenMethod == 'standardArray'){
-            <button
-              class="btn-randomize position-relative ps-1"
-              (click)="randomizeStandardArray()"
-              data-bs-toggle="tooltip"
-              data-bs-placement="right"
-              title="Randomize Ability Scores"
+            <option
+              value="0"
+              id="noGenMethod"
+              name="noGetMethod"
+              label="Select Generation Method"
+              selected
+              disabled
+              value
+            ></option>
+            <option name="pointBuy" id="pointBuy" value="pointBuy">
+              Point Buy
+            </option>
+            <option
+              name="standardArray"
+              id="standardArray"
+              value="standardArray"
             >
-              <img alt="six sided die" src="/img/pixel-die.png" />
-            </button>
-            }
-          </div>
-          <!--gen method label, some nested components-->
-          <div class="d-flex justify-content-between">
-            <label class="ps-1" for="abilityGenMethod">Generation Method</label>
-            <!--point buy budget-->
-            @if (abilityScoreGenMethod == 'pointBuy'){
+              Standard Array
+            </option>
+            <option name="4d6dl1" id="4d6dl1" value="4d6dl1" disabled>
+              4d6 drop lowest
+            </option>
+            <option name="3d6" id="3d6" value="3d6" disabled>3d6</option>
+            <option name="customGen" id="customGen" value="customGen">
+              Custom
+            </option>
+          </select>
+          <!--standard array randomizer-->
+          @if (abilityScoreGenMethod == 'standardArray'){
+          <button
+            class="btn-randomize position-relative w-100 text-end"
+            (click)="randomizeStandardArray()"
+            data-bs-toggle="tooltip"
+            data-bs-placement="right"
+            title="Randomize Ability Scores"
+          >
+            <img alt="six sided die" src="/img/pixel-die.png" />
+          </button>
+          } @if (abilityScoreGenMethod == 'pointBuy'){
+          <div class="w-100 p-0 text-end">
             <app-point-buy [pointsRemaining]="pointsUsed"></app-point-buy>
-            }
-
-            <!--todo: 3d6 randomizer, 4d6dl1 randomizer-->
           </div>
+          }
         </div>
         <!--ability scores-->
         <div
@@ -262,7 +253,7 @@
               <button (click)="subtractPoints($index)">-</button>
               }
               <input
-                class="text-center"
+                class="text-center w-50"
                 type="tel"
                 [id]="a[1]"
                 [formControlName]="a[1]"
