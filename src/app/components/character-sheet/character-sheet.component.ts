@@ -68,94 +68,103 @@ export class CharacterSheetComponent {
     this.abilityScoreValuesWithBonuses = this.abilityScoreValues;
     this.abilityScoreGenMethod = '';
     this.pointsUsed = 0;
+    console.log(
+      this.characterSheetService.getAbilityScoreValues(this.currentCharacter$!)
+    );
   }
 
   // point buy
   addPoints(index: number): void {
     let currentVal = this.abilityScoreValues![index];
     //soft limit for points
-    let points = this.pointsUsed;
-    switch (points <= 27) {
-      // //18 max
-      // case currentVal == 18:
-      //   console.log('Cannot go past maximum');
-      //   break;
-      // //17
-      // case currentVal == 17:
-      //   if (points + 4 > 27) {
-      //     break;
-      //   }
-      //   this.abilityScoreValues![index] += 1;
-      //   this.pointsUsed += 4;
-      //   break;
-      // case currentVal == 16:
-      // case currentVal == 15:
-      //   if (points + 3 > 27) {
-      //     break;
-      //   }
-      //   this.abilityScoreValues![index] += 1;
-      //   this.pointsUsed += 3;
-      //   break;
-      //15 max before bonuses
-      case currentVal == 15:
-        console.log('Cannot go past maximum');
-        break;
+    if (this.abilityScoreGenMethod == 'pointBuy') {
+      let points = this.pointsUsed;
+      switch (points <= 27) {
+        // //18 max
+        // case currentVal == 18:
+        //   console.log('Cannot go past maximum');
+        //   break;
+        // //17
+        // case currentVal == 17:
+        //   if (points + 4 > 27) {
+        //     break;
+        //   }
+        //   this.abilityScoreValues![index] += 1;
+        //   this.pointsUsed += 4;
+        //   break;
+        // case currentVal == 16:
+        // case currentVal == 15:
+        //   if (points + 3 > 27) {
+        //     break;
+        //   }
+        //   this.abilityScoreValues![index] += 1;
+        //   this.pointsUsed += 3;
+        //   break;
+        //15 max before bonuses
+        case currentVal == 15:
+          console.log('Maximum Reached');
+          break;
 
-      //13, 14
-      case currentVal == 13 || currentVal == 14:
-        if (points + 2 > 27) {
+        //13, 14
+        case currentVal == 13 || currentVal == 14:
+          if (points + 2 > 27) {
+            break;
+          }
+          this.abilityScoreValues![index] += 1;
+          this.pointsUsed += 2;
           break;
-        }
-        this.abilityScoreValues![index] += 1;
-        this.pointsUsed += 2;
-        break;
-      //6-12
-      case currentVal <= 12 && currentVal > 5:
-        if (points + 1 > 27) {
+        //6-12
+        case currentVal <= 12 && currentVal > 5:
+          if (points + 1 > 27) {
+            break;
+          }
+          this.abilityScoreValues![index] += 1;
+          this.pointsUsed += 1;
           break;
-        }
-        this.abilityScoreValues![index] += 1;
-        this.pointsUsed += 1;
-        break;
+      }
+    } else {
+      if (currentVal < 30) {
+        this.abilityScoreValues![index]++;
+      }
     }
-    this.abilityScoreValuesWithBonuses = this.getAbilityScoreValuesWithBonuses(
-      this.abilityScoreValues!,
-      this.bonuses
-    );
+    this.updateAbilityScoreValuesWithBonuses();
   }
 
   subtractPoints(index: number): void {
     let currentVal = this.abilityScoreValues![index];
     //formula for how much each increase costs
-    switch (true) {
-      case currentVal == 18:
-        this.abilityScoreValues![index] -= 1;
-        this.pointsUsed -= 4;
-        break;
-      //range 17 to 16
-      case currentVal >= 16:
-        this.abilityScoreValues![index] -= 1;
-        this.pointsUsed -= 3;
-        break;
-      //range 15 to 14
-      case currentVal >= 14:
-        this.abilityScoreValues![index] -= 1;
-        this.pointsUsed -= 2;
-        break;
-      //range 13-6
-      case currentVal > 6:
-        this.abilityScoreValues![index] -= 1;
-        this.pointsUsed -= 1;
-        break;
-      //range 6 and below
-      case currentVal == 6:
-        console.log('Cannot go past minimum');
-        break;
+    if (this.abilityScoreGenMethod == 'pointBuy') {
+      switch (true) {
+        case currentVal == 18:
+          this.abilityScoreValues![index] -= 1;
+          this.pointsUsed -= 4;
+          break;
+        //range 17 to 16
+        case currentVal >= 16:
+          this.abilityScoreValues![index] -= 1;
+          this.pointsUsed -= 3;
+          break;
+        //range 15 to 14
+        case currentVal >= 14:
+          this.abilityScoreValues![index] -= 1;
+          this.pointsUsed -= 2;
+          break;
+        //range 13-6
+        case currentVal > 6:
+          this.abilityScoreValues![index] -= 1;
+          this.pointsUsed -= 1;
+          break;
+        //range 6 and below
+        case currentVal == 6:
+          console.log('Cannot go past minimum');
+          break;
+      }
+    } else {
+      if (currentVal > 4) {
+        this.abilityScoreValues![index]--;
+      }
     }
-    this.abilityScoreValuesWithBonuses = this.getAbilityScoreValuesWithBonuses(
-      this.abilityScoreValues!,
-      this.bonuses
-    );
+    this.updateAbilityScoreValuesWithBonuses();
   }
 
   /**
@@ -164,7 +173,7 @@ export class CharacterSheetComponent {
    * @param val event of other radio button
    * @param index of the radio button
    */
-  setBonuses(evt: any, val: any, index: number) {
+  setBonuses(evt: any, val: any, index: number): void {
     //do if other radio button is unchecked
     if (val.checked) {
       evt.target.checked = false;
@@ -198,12 +207,12 @@ export class CharacterSheetComponent {
     });
 
     this.abilityScoreValuesWithBonuses = this.abilityScoreValues;
+    this.updateAbilityScores();
   }
 
-  getAbilityScoreValuesWithBonuses(
-    currentVals: number[],
-    bonuses: number[]
-  ): number[] | undefined {
+  updateAbilityScoreValuesWithBonuses(): void {
+    const currentVals: number[] = this.abilityScoreValues!;
+    const bonuses: number[] = this.bonuses;
     let res: number[] = [];
     this.abilityScoreValuesWithBonuses?.forEach((val, index) => {
       {
@@ -211,15 +220,12 @@ export class CharacterSheetComponent {
         res.push(val);
       }
     });
-    return res;
+    this.abilityScoreValuesWithBonuses = res;
   }
 
-  updateAbilityScores(evt: any) {
+  updateAbilityScores() {
     this.abilityScoreValuesWithBonuses = this.abilityScoreValues;
-    this.abilityScoreValuesWithBonuses = this.getAbilityScoreValuesWithBonuses(
-      this.abilityScoreValues!,
-      this.bonuses
-    );
+    this.updateAbilityScoreValuesWithBonuses();
   }
 
   /**TODO:
@@ -561,4 +567,7 @@ export class CharacterSheetComponent {
     // el?.scrollIntoView();
     window.scroll({ top: 0, left: 0, behavior: 'smooth' });
   }
+
+  //disable non-letters
+  validate(evt: any) {}
 }

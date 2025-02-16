@@ -264,7 +264,8 @@
               class="w-100 d-flex flex-row justify-content-evenly align-items-center px-2 pb-0"
             >
               <!--decrease value button-->
-              @if (abilityScoreGenMethod == 'pointBuy'){
+              @if (abilityScoreGenMethod == 'pointBuy' || abilityScoreGenMethod
+              == 'customGen'){
               <button type="button" (click)="subtractPoints($index)">-</button>
               }
               <input
@@ -274,12 +275,11 @@
                 [formControlName]="a[1]"
                 [formTarget]="a[1]"
                 [value]="abilityScoreValuesWithBonuses![$index]"
-                (onkeydown)="
-                  (this.abilityScoreGenMethod == 'customGen' ? true : false)
-                "
+                onkeydown="return false"
               />
               <!--increase value button-->
-              @if (abilityScoreGenMethod == 'pointBuy'){
+              @if (abilityScoreGenMethod == 'pointBuy' || abilityScoreGenMethod
+              == 'customGen'){
               <button type="button" (click)="addPoints($index)">+</button>
               }
             </div>
@@ -294,11 +294,7 @@
                   id="plusOneChoice{{ $index }}"
                   name="plusOneChoice"
                   value="1"
-                  (change)="
-                    updateAbilityScores(
-                      setBonuses($event, plusTwoChoice$index, $index)
-                    )
-                  "
+                  (change)="setBonuses($event, plusTwoChoice$index, $index)"
                   #plusOneChoice$index
                 />
                 <label class="position-absolute" for="plusOneChoice{{ $index }}"
@@ -312,11 +308,7 @@
                   id="plusTwoChoice{{ $index }}"
                   name="plusTwoChoice"
                   value="2"
-                  (change)="
-                    updateAbilityScores(
-                      setBonuses($event, plusOneChoice$index, $index)
-                    )
-                  "
+                  (change)="setBonuses($event, plusOneChoice$index, $index)"
                   #plusTwoChoice$index
                 />
                 <label class="position-absolute" for="plusTwoChoice{{ $index }}"

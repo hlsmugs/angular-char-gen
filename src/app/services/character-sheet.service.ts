@@ -1,6 +1,9 @@
 import { Inject, Injectable } from '@angular/core';
 import { BrowserStorageService } from './browser-storage.service';
-import { PlayerCharacterModel } from '../models/player-character.model';
+import {
+  CharacterAbilityScores,
+  PlayerCharacterModel,
+} from '../models/player-character.model';
 import { AbilityScores } from '../models/_enums/ability-scores';
 import { LOCAL_STORAGE } from '../tokens/storageToken';
 import { ActivatedRoute } from '@angular/router';
@@ -100,6 +103,21 @@ export class CharacterSheetService extends BrowserStorageService {
     });
     return abilityScores;
   }
+
+  getAbilityScoreValues(character: PlayerCharacterModel): number[] {
+    //ability scores
+    let a = character.abilityScores;
+    let abilityScoreValues: number[] = [
+      a.strengthScore,
+      a.dexterityScore,
+      a.constitutionScore,
+      a.intelligenceScore,
+      a.wisdomScore,
+      a.charismaScore,
+    ];
+    return abilityScoreValues;
+  }
+
   /**
    *
    * @returns labels for ability scores from AbilityScores enum

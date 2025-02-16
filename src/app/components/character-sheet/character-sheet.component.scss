@@ -158,7 +158,8 @@ img {
 .gen-methods {
   height: 30px;
   select {
-    border: 1px dashed black;
+    border: none;
+    border-bottom: 2px dotted black;
   }
 }
 
