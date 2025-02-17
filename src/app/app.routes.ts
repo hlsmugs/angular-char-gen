@@ -3,7 +3,6 @@ import { HomeComponent } from './components/home/home.component';
 import { CharacterRosterComponent } from './components/character-roster/character-roster.component';
 import { CreateACharacterComponent } from './components/create-a-character/create-a-character.component';
 import { EditCharacterComponent } from './components/edit-character/edit-character.component';
-import { ErrorHandler, inject } from '@angular/core';
 import { NotFoundComponent } from './error/not-found/not-found.component';
 import { DiceRollerComponent } from './components/dice-roller/dice-roller.component';
 
@@ -48,5 +47,10 @@ export const routes: Routes = [
   {
     path: 'dice-roller',
     component: DiceRollerComponent,
+  },
+  {
+    //MUST BE LAST
+    path: '**',
+    redirectTo: 'not-found',
   },
 ];

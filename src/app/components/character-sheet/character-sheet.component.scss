@@ -198,7 +198,7 @@ img {
     &:hover {
       outline: 3px outset white;
     }
-    @include media-breakpoint-up(xl) {
+    @include media-breakpoint-up(lg) {
       width: 10px;
       height: 10px;
       outline-width: 4px;
