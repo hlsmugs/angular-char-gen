@@ -3,8 +3,12 @@ import { Component, Input } from '@angular/core';
 import defaultClasses from '../../../../public/json/default-classes.json';
 import defaultSpecies from '../../../../public/json/default-species.json';
 import defaultBackgrounds from '../../../../public/json/default-backgrounds.json';
+//list of names from
+//https://www.reddit.com/r/DnDBehindTheScreen/comments/50pcg1/a_post_about_names_names_for_speakers_of_the/
 import firstNames from '../../../../public/json/first-names.json';
 import lastNames from '../../../../public/json/last-names.json';
+//list of traits, ideals, bonds, flaws from:
+//https://www.enworld.org/threads/list-of-all-personality-traits-ideals-bonds-flaws.469002/
 import personalityTraits from '../../../../public/json/personality-traits.json';
 import ideals from '../../../../public/json/ideals.json';
 import bonds from '../../../../public/json/bonds.json';
@@ -26,7 +30,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PointBuyComponent } from '../point-buy/point-buy.component';
 import { DiceRollerService } from '../../services/dice-roller.service';
 import { ExporterService } from '../../services/exporter.service';
-import { json } from 'stream/consumers';
 
 @Component({
   selector: 'app-character-sheet',
