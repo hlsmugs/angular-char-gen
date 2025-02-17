@@ -55,6 +55,7 @@
             />
             <button
               type="button"
+              (click)="randomizeField('characterName')"
               class="btn-randomize ps-1"
               data-bs-toggle="tooltip"
               data-bs-placement="right"
@@ -91,7 +92,7 @@
             <button
               type="button"
               class="btn-randomize ps-1"
-              (click)="randomizeField('class')"
+              (click)="randomizeField('characterClass')"
               data-bs-toggle="tooltip"
               data-bs-placement="right"
               title="Randomize"
@@ -127,7 +128,7 @@
             <button
               type="button"
               class="btn-randomize ps-1"
-              (click)="randomizeField('species')"
+              (click)="randomizeField('characterSpecies')"
               data-bs-toggle="tooltip"
               data-bs-placement="right"
               title="Randomize"
@@ -163,7 +164,7 @@
             <button
               type="button"
               class="btn-randomize ps-1"
-              (click)="randomizeField('background')"
+              (click)="randomizeField('characterBackground')"
               data-bs-toggle="tooltip"
               data-bs-placement="right"
               title="Randomize"
@@ -335,6 +336,9 @@
               <label for="personalityTraits">Personailty Traits</label>
               <button
                 type="button"
+                (click)="
+                  randomizeField('characterDescription.personalityTraits')
+                "
                 class="btn-randomize"
                 data-bs-toggle="tooltip"
                 data-bs-placement="right"
@@ -360,6 +364,7 @@
               <label for="ideals">Ideals</label>
               <button
                 type="button"
+                (click)="randomizeField('characterDescription.ideals')"
                 class="btn-randomize"
                 data-bs-toggle="tooltip"
                 data-bs-placement="right"
@@ -387,6 +392,7 @@
               <label for="bonds">Bonds</label>
               <button
                 type="button"
+                (click)="randomizeField('characterDescription.bonds')"
                 class="btn-randomize"
                 data-bs-toggle="tooltip"
                 data-bs-placement="right"
@@ -412,6 +418,7 @@
               <label for="flaws">Flaws</label>
               <button
                 type="button"
+                (click)="randomizeField('characterDescription.flaws')"
                 class="btn-randomize"
                 data-bs-toggle="tooltip"
                 data-bs-placement="right"

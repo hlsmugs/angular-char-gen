@@ -184,11 +184,15 @@ img {
     outline: 3px outset silver;
     border: 1px ridge silver;
     &:checked {
-      background: royalblue;
+      background-image: radial-gradient(skyblue, royalblue);
+      outline: 3px outset silver;
+      border: 1px ridge silver;
     }
     &[name="plusTwoChoice"] {
       &:checked {
-        background: goldenrod;
+        background-image: radial-gradient(yellow, goldenrod);
+        outline: 3px outset silver;
+        border: 1px ridge silver;
       }
     }
     &:hover {

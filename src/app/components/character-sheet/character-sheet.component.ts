@@ -3,6 +3,12 @@ import { Component, Input } from '@angular/core';
 import defaultClasses from '../../../../public/json/default-classes.json';
 import defaultSpecies from '../../../../public/json/default-species.json';
 import defaultBackgrounds from '../../../../public/json/default-backgrounds.json';
+import firstNames from '../../../../public/json/first-names.json';
+import lastNames from '../../../../public/json/last-names.json';
+import personalityTraits from '../../../../public/json/personality-traits.json';
+import ideals from '../../../../public/json/ideals.json';
+import bonds from '../../../../public/json/bonds.json';
+import flaws from '../../../../public/json/flaws.json';
 import {
   FormGroup,
   Validators,
@@ -19,8 +25,8 @@ import { CharacterSheetService } from '../../services/character-sheet.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PointBuyComponent } from '../point-buy/point-buy.component';
 import { DiceRollerService } from '../../services/dice-roller.service';
-import { saveAs } from 'file-saver';
 import { ExporterService } from '../../services/exporter.service';
+import { json } from 'stream/consumers';
 
 @Component({
   selector: 'app-character-sheet',
@@ -38,13 +44,14 @@ export class CharacterSheetComponent {
   atMin?: boolean;
   currentCharacter$?: PlayerCharacterModel;
   bonuses: number[] = [];
+  isPlusOneChecked?: boolean;
+  isPlusTwoChecked?: boolean;
   signature?: string;
 
   //ability scores
   abilityScoreValues?: number[] = [];
   abilityScoreValuesWithBonuses?: number[] = [];
   public playerCharacterForm$!: FormGroup;
-  // public playerCharacterModel!: PlayerCharacterModel;
   public playerCharacterList$: PlayerCharacterModel[] = [];
 
   //default dropdown lists
@@ -68,9 +75,6 @@ export class CharacterSheetComponent {
     this.abilityScoreValuesWithBonuses = this.abilityScoreValues;
     this.abilityScoreGenMethod = '';
     this.pointsUsed = 0;
-    console.log(
-      this.characterSheetService.getAbilityScoreValues(this.currentCharacter$!)
-    );
   }
 
   // point buy
@@ -205,9 +209,13 @@ export class CharacterSheetComponent {
         }
       }
     });
-
     this.abilityScoreValuesWithBonuses = this.abilityScoreValues;
     this.updateAbilityScores();
+  }
+
+  //checks a random box
+  clearChecked() {
+    //clear by Name
   }
 
   updateAbilityScoreValuesWithBonuses(): void {
@@ -231,15 +239,10 @@ export class CharacterSheetComponent {
   /**TODO:
    * 4d6 drop lowest roll method
    * 3d6 roll method
-   * standard array
-   * ^ above methods put the numbers in a pool that can be dragged and dropped into the section
+   * number pool that can be dragged and dropped into the section
    * ^ also can drag and drop numbers to swap values
    *
-   * pool of names or some API to pull from
-   * pool of character description stuff
-   *
-   * random generation entire character method
-   * - should be biased where highest stats go depending on class
+   * biased stat randomizer based on class
    */
 
   createCharacterSheet() {
@@ -391,10 +394,32 @@ export class CharacterSheetComponent {
       this.playerCharacterForm$.controls['abilityScores'].value;
   }
 
-  clearFields() {
-    this.createCharacterSheet();
+  resetAbilityScoreDefaults() {
+    this.pointsUsed = 0;
+    this.abilityScoreValues = [8, 8, 8, 8, 8, 8];
+    this.abilityScoreValuesWithBonuses = this.abilityScoreValues;
   }
 
+  setAbilityGenMethod(genMethod: string) {
+    this.abilityScoreGenMethod = genMethod;
+    //reset to defaults depending
+
+    this.resetAbilityScoreDefaults();
+    switch (genMethod) {
+      case 'pointBuy':
+        break;
+      case 'standardArray':
+        //todo: turn field into drop down where u can pick a value from the standard array (including a blank one); choosing a value that is already chosen should make the other dropdown with that value blank instead
+        this.randomizeStandardArray();
+        break;
+      case '4d6dl':
+        break;
+      case '3d6':
+        break;
+      case 'customGen':
+        break;
+    }
+  }
   //fix this id
   getCharacterSignature(): string {
     let initials!: string;
@@ -422,102 +447,84 @@ export class CharacterSheetComponent {
     });
   }
 
-  randomizeField(field: string) {
+  //generate random character stuff
+  getRandomString(field: string): string {
+    let jsonArray: any[] = [];
+    const rdmGen = (arr: any[]) => {
+      return this.randomService.getRandomNumber(0, arr.length);
+    };
     switch (field) {
-      case 'name': {
-        //create default random names
-        break;
-      }
-      case 'class': {
-        const randomNumber = this.randomService.getRandomNumber(
-          0,
-          this.defaultClasses$.length
-        );
-        this.playerCharacterForm$.controls['characterClass'].setValue(
-          this.defaultClasses$[randomNumber].characterClassName
-        );
-        break;
-      }
-      case 'species': {
-        const randomNumber = this.randomService.getRandomNumber(
-          0,
-          this.defaultSpecies$.length
-        );
-        this.playerCharacterForm$.controls['characterSpecies'].setValue(
-          this.defaultSpecies$[randomNumber].speciesName
-        );
-        break;
-      }
-      case 'background': {
-        const randomNumber = this.randomService.getRandomNumber(
-          0,
-          this.defaultBackgrounds$.length
-        );
-        this.playerCharacterForm$.controls['characterBackground'].setValue(
-          this.defaultBackgrounds$[randomNumber].backgroundName
-        );
-        break;
-      }
-      case 'personalityTraits': {
-        //create default random traits
-        break;
-      }
-      case 'ideals': {
-        //create default random ideals
-        break;
-      }
-      case 'bonds': {
-        //create default random bonds
-        break;
-      }
-      case 'flaws': {
-        //create default random flaws
-        break;
-      }
+      case 'characterName':
+        return this.getRandomName();
+      case 'firstName':
+        jsonArray = firstNames;
+        return jsonArray[rdmGen(jsonArray)].firstName;
+      case 'lastName':
+        jsonArray = lastNames;
+        return jsonArray[rdmGen(jsonArray)].lastName;
+      case 'characterClass':
+        jsonArray = defaultClasses;
+        return jsonArray[rdmGen(jsonArray)].characterClassName;
+      case 'characterSpecies':
+        jsonArray = defaultSpecies;
+        return jsonArray[rdmGen(jsonArray)].speciesName;
+      case 'characterBackground':
+        jsonArray = defaultBackgrounds;
+        return jsonArray[rdmGen(jsonArray)].backgroundName;
+      case 'characterDescription.personalityTraits':
+        jsonArray = personalityTraits;
+        return jsonArray[rdmGen(jsonArray)].personalityTraitsText;
+      case 'characterDescription.ideals':
+        jsonArray = ideals;
+        return jsonArray[rdmGen(jsonArray)].idealsText;
+      case 'characterDescription.bonds':
+        jsonArray = bonds;
+        return jsonArray[rdmGen(jsonArray)].bondText;
+      case 'characterDescription.flaws':
+        jsonArray = flaws;
+        return jsonArray[rdmGen(jsonArray)].flawsText;
+      default:
+        console.error('invalid field');
+        return '';
     }
   }
+
+  //generate random name combining random first and last name
+  getRandomName(): string {
+    const fName = this.getRandomString('firstName');
+    const lName = this.getRandomString('lastName');
+    return fName + ' ' + lName;
+  }
+
+  randomizeField(field: string) {
+    const newVal = this.getRandomString(field);
+    this.playerCharacterForm$.get(field)?.setValue(newVal);
+  }
+
+  //randomize radio selection
 
   randomizeAll() {
     const array = [
-      'name',
-      'class',
-      'species',
-      'background',
-      'personalityTraits',
-      'ideals',
-      'bonds',
-      'flaws',
+      'characterName',
+      'characterClass',
+      'characterSpecies',
+      'characterBackground',
+      'characterDescription.personalityTraits',
+      'characterDescription.ideals',
+      'characterDescription.bonds',
+      'characterDescription.flaws',
     ];
+    //make a way to 'lock' a field from being randomized
+
+    //randomize fields
     array.forEach((field) => this.randomizeField(field));
-    if (this.abilityScoreGenMethod == 'standardArray') {
+
+    //randomize stats
+    if (
+      !this.abilityScoreGenMethod ||
+      this.abilityScoreGenMethod == 'standardArray'
+    ) {
       this.randomizeStandardArray();
-    }
-  }
-
-  resetAbilityScoreDefaults() {
-    this.pointsUsed = 0;
-    this.abilityScoreValues = [8, 8, 8, 8, 8, 8];
-    this.abilityScoreValuesWithBonuses = this.abilityScoreValues;
-  }
-
-  setAbilityGenMethod(genMethod: string) {
-    this.abilityScoreGenMethod = genMethod;
-    //reset to defaults depending
-
-    this.resetAbilityScoreDefaults();
-    switch (genMethod) {
-      case 'pointBuy':
-        break;
-      case 'standardArray':
-        //todo: turn field into drop down where u can pick a value from the standard array (including a blank one); choosing a value that is already chosen should make the other dropdown with that value blank instead
-        this.randomizeStandardArray();
-        break;
-      case '4d6dl':
-        break;
-      case '3d6':
-        break;
-      case 'customGen':
-        break;
     }
   }
 
@@ -542,11 +549,6 @@ export class CharacterSheetComponent {
     }
   }
 
-  //how to navigate after saving
-  onSubmit() {
-    this.router.navigate(['/character-roster']);
-  }
-
   //export character as JSON file
   exportToJSON() {
     let exportData = this.playerCharacterForm$.value;
@@ -557,9 +559,19 @@ export class CharacterSheetComponent {
   }
   //export as pdf
 
+  clearFields() {
+    this.createCharacterSheet();
+    this.clearChecked();
+  }
+
   //goes back to previous page
   goBack() {
     this.location.back();
+  }
+
+  //how to navigate after saving
+  onSubmit() {
+    this.router.navigate(['/character-roster']);
   }
 
   scrollToTop() {

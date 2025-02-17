@@ -133,5 +133,8 @@ export class CharacterSheetService extends BrowserStorageService {
     return abilityScoreLabels;
   }
 
-  //editById
+  getDescriptionDropdrown(txtFile: any): any[] {
+    let descriptionDropDown: any[] = [];
+    return descriptionDropDown;
+  }
 }
