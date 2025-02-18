@@ -1,7 +1,2 @@
 @import "defaults";
 
-main {
-  @include media-breakpoint-up(xl) {
-    padding: 100px;
-  }
-}

@@ -1,8 +1,13 @@
 /* Importing Bootstrap SCSS file. */
+@import 'bootstrap/scss/bootstrap';
+
 @import "defaults";
 
 body {
-  // background: url("/img/simon-sanchez-madera-tilex1.jpg") repeat;
+  background: url("/img/simon-sanchez-madera-tilex1.jpg") repeat;
 }
 
-//Common Character Sheet elemnts
+//Common Character Sheet elements
+.app-container {
+  padding: 36px;
+}
