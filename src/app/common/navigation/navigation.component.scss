@@ -1,5 +1,53 @@
 @import "defaults";
 .navigation-container {
-  padding: 2vh 2vw;
   background-color: $tavern-red;
 }
+
+// .nav-bar {
+//   background-color: $default-header-bg;
+//   height: 60px;
+//   fa-icon {
+//     color: $default-navbar-text;
+//   }
+//   img {
+//     width: 72px;
+//   }
+// }
+
+// .search-bar {
+//   background-color: $color-surface-a20 !important;
+//   color: $default-white !important;
+//   font-size: 1rem;
+//   border-radius: 12px;
+//   padding: 8px 12px;
+//   input {
+//     background: $color-surface-a20;
+//     border: none;
+//     &:focus {
+//       outline: none;
+//     }
+//     &:-webkit-autofill,
+//     &:-webkit-autofill:hover,
+//     &:-webkit-autofill:focus,
+//     &:-webkit-autofill:active {
+//       -webkit-text-fill-color: #ecf9f3 !important;
+//       -webkit-box-shadow: 0 0 0 50px background-color inset;
+//       -webkit-background-clip: text !important;
+//       transition: background-color 5000s ease-in-out 0s;
+//       background-clip: text;
+//       color: #ecf9f3;
+//       caret-color: #ecf9f3;
+//     }
+//   }
+//   button {
+//     background: none;
+//     border: none;
+//   }
+// }
+
+// [type="search"]::-webkit-search-cancel-button {
+//   height: 14px;
+//   width: 10px;
+//   -webkit-filter: contrast(0);
+//   cursor: pointer;
+// }
