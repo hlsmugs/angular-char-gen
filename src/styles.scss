@@ -1,6 +1,5 @@
 /* Importing Bootstrap SCSS file. */
 @import "bootstrap/scss/bootstrap";
-
 @import "defaults";
 
 body {
@@ -9,5 +8,38 @@ body {
 
 //Common Character Sheet elements
 .app-container {
-  padding: 36px;
+  @include media-breakpoint-up(sm) {
+    padding: 36px;
+  }
+}
+
+.banner {
+  //hanging banner thingy
+  background: url("/img/parchment-tile.jpg");
+  background-size: cover;
+}
+
+.parchment {
+  &-vertical,
+  &-horizontal {
+    background: url("/img/parchment-tile.jpg");
+    background-size: cover;
+  }
+  @include media-breakpoint-up(sm) {
+    &-vertical {
+      background: url("/img/parchment-vertical.png") no-repeat;
+      background-size: 100% 100%;
+      max-width: 1200px;
+      max-height: 2000px;
+    }
+    &-horizontal {
+      background: url("/img/parchment-horizontal.png") no-repeat;
+      background-size: 100% 100%;
+      max-width: 2000px;
+      max-height: 1200px;
+    }
+  }
+  &-content {
+    padding: min(10vh, 10%) 8vw;
+  }
 }
