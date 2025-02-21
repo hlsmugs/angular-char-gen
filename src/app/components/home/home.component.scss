@@ -1,1 +1,14 @@
 @import "defaults";
+
+.link-boxes > a {
+    background: $tavern-grey;
+    border: 4px silver inset;
+    outline: 4px silver outset;
+    margin: 12px;    
+    width: 140px;
+    height: 140px;
+    @include media-breakpoint-up(sm){
+        width: 200px;
+        height: 200px;
+    }
+}
