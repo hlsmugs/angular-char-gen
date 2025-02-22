@@ -4,11 +4,21 @@
       <h1 class="my-4">The Tavern</h1>
     </div>
   </div>
-  <div class="d-flex flex-row flex-wrap justify-content-start justify-content-sm-evenly align-items-center link-boxes my-3 my-sm-5 mx-4
-  ">
-    <a routerLink="/create-a-character" class="link-box">Create a Character; image is signing parchment</a>
-    <a routerLink="/character-roster" class="link-box">Character Roster; image is wanted poster type thing</a>
-    <a class="link-box">Coming Soon; image is under construction</a>
+  <div
+    class="d-flex flex-row flex-wrap justify-content-start justify-content-sm-evenly align-items-center my-3 my-sm-5 mx-4"
+  >
+    <div class="link-box d-flex flex-column">
+      <span class="text-center p-2">Create a Character</span>
+      <a routerLink="/create-a-character">Image: signing parchment</a>
+    </div>
+    <div class="link-box d-flex flex-column">
+      <span class="text-center p-2">Character Roster</span>
+      <a routerLink="/character-roster">Image: wanted poster type thing</a>
+    </div>
+    <div class="link-box d-flex flex-column">
+      <span class="text-center p-2">Coming Soon</span>
+      <a>Image: under construction</a>
+    </div>
   </div>
   <div class="parchment-horizontal my-sm-3">
     <div class="parchment-content">
