@@ -1,0 +1,20 @@
+[
+    {
+        "title": "Create a Character",
+        "link": "/create-a-character",
+        "src": "img/document-sealed.png",
+        "alt": "document with a red seal"
+    },
+    {
+        "title": "Character Roster",
+        "link": "/character-roster",
+        "src": "img/character-silhouette.png",
+        "alt": "silhouette of a person with a glowing outline"
+    },
+    {
+        "title": "Coming Soon",
+        "link": "",
+        "src": "img/construction-sign.png",
+        "alt": "yellow construction sign of a hammer and wrench crossed"
+    }
+]

@@ -5,61 +5,66 @@
     </div>
   </div>
   <div
-    class="d-flex flex-row flex-wrap justify-content-start justify-content-sm-evenly align-items-center my-3 my-sm-5 mx-4"
+    class="d-flex flex-row flex-wrap justify-content-evenly justify-content-sm-center align-items-center my-3 mx-1 mx-sm-2"
   >
-    <div class="link-box d-flex flex-column">
-      <span class="text-center p-2">Create a Character</span>
-      <a routerLink="/create-a-character">Image: signing parchment</a>
+    @for (b of linkboxes; track $index){
+    <div
+      class="link-box d-flex flex-column justify-content-between mx-2 my-3 mx-sm-4"
+    >
+      <a
+        class="flex-fill text-center align-content-center"
+        routerLink="{{ b.link }}"
+      >
+        <img class="w-50" src="{{ b.src }}" alt="{{ b.alt }}"
+      /></a>
+      <div class="link-box-label d-flex flex-column justify-content-center">
+        <p class="m-0 text-center">{{ b.title }}</p>
+      </div>
     </div>
-    <div class="link-box d-flex flex-column">
-      <span class="text-center p-2">Character Roster</span>
-      <a routerLink="/character-roster">Image: wanted poster type thing</a>
-    </div>
-    <div class="link-box d-flex flex-column">
-      <span class="text-center p-2">Coming Soon</span>
-      <a>Image: under construction</a>
-    </div>
+    }
   </div>
-  <div class="parchment-horizontal my-sm-3">
-    <div class="parchment-content">
-      <h3>Completed Features</h3>
-      <ul class="m-0 ps-3">
-        <li>Create a character</li>
-        <li>Randomly generate character class, species, background</li>
-        <li>
-          Ability score generation methods: point buy and standard array; (Note:
-          standard array partially implemented, can only randomly assign the
-          values)
-        </li>
-        <li>View character roster</li>
-        <li>Edit/Delete character from roster</li>
-      </ul>
+  <div class="mx-auto">
+    <div class="parchment-horizontal my-sm-3">
+      <div class="parchment-content">
+        <h3>Completed Features</h3>
+        <ul class="m-0 ps-3">
+          <li>Create a character</li>
+          <li>Randomly generate character class, species, background</li>
+          <li>
+            Ability score generation methods: point buy and standard array;
+            (Note: standard array partially implemented, can only randomly
+            assign the values)
+          </li>
+          <li>View character roster</li>
+          <li>Edit/Delete character from roster</li>
+        </ul>
+      </div>
     </div>
-  </div>
 
-  <div class="parchment-horizontal my-sm-3">
-    <div class="parchment-content">
-      <h3>Known Bugs</h3>
-      <ul class="m-0 ps-3">
-        <li>
-          When editing a character, the point buy generation method does not
-          retain the amount of points used
-        </li>
-        <li>
-          bonus radio buttons
-          <ul>
-            <li>
-              stat bonus application and check status not retained when editing
-              a character
-            </li>
-            <li>
-              stat bonus application not retained and checked status does not
-              get cleared for the following scenarios: randomizing stats,
-              changing generation method, clearing all fields
-            </li>
-          </ul>
-        </li>
-      </ul>
+    <div class="parchment-horizontal my-sm-3">
+      <div class="parchment-content">
+        <h3>Known Bugs</h3>
+        <ul class="m-0 ps-3">
+          <li>
+            When editing a character, the point buy generation method does not
+            retain the amount of points used
+          </li>
+          <li>
+            bonus radio buttons
+            <ul>
+              <li>
+                stat bonus application and check status not retained when
+                editing a character
+              </li>
+              <li>
+                stat bonus application not retained and checked status does not
+                get cleared for the following scenarios: randomizing stats,
+                changing generation method, clearing all fields
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </div>
