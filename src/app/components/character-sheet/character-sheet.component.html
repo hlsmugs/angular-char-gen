@@ -435,7 +435,7 @@
     <!--Buttons for character sheet-->
     <section
       name="character-sheet-buttons"
-      class="character-sheet-buttons d-flex flex-column pb-5"
+      class="character-sheet-buttons d-flex flex-column"
     >
       <div class="d-flex justify-content-end">
         <button type="button" class="me-2" (click)="exportToJSON()">
@@ -447,7 +447,15 @@
           Clear<img class="ms-1" src="/img/erase.png" />
         </button>
       </div>
-      <div class="save-character d-flex flex-column justify-content-end mt-1">
+    </section>
+    <!--Signature Area-->
+    <section
+      name="character-signature-area"
+      class="d-flex flex-column flex-sm-row-reverse mb-5"
+    >
+      <div
+        class="save-character w-100 d-flex flex-column justify-content-end mt-1"
+      >
         <!--Character Signature Line-->
         <div class="signature-area mb-5">
           <div class="signature-line d-flex">
@@ -490,9 +498,13 @@
           </div>
         </div>
       </div>
+      <!--Seal-->
+      <div class="mt-3 w-100 text-end text-sm-start position-relative">
+        <img class="red-seal pt-4" src="img/red-seal.png" />
+      </div>
     </section>
     <!--Scroll to top for mobile/tablet-->
-    <div class="w-100 d-flex d-lg-none justify-content-center mt-5">
+    <div class="w-100 d-flex d-sm-none justify-content-center mt-5">
       <button
         type="button"
         class="d-flex flex-column text-center border-0 bg-transparent"

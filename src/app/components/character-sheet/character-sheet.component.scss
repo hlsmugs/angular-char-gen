@@ -232,9 +232,6 @@ img {
     height: 100px;
     align-self: end;
     width: 100%;
-    @include media-breakpoint-up(md) {
-      width: 50%;
-    }
   }
   .signature-line {
     height: 150px;
@@ -253,6 +250,14 @@ img {
 }
 
 @media screen {
+}
+
+.red-seal {
+  width: 50%;
+  @include media-breakpoint-up(sm) {
+    position: absolute;
+    translate: 25% 10%;
+  }
 }
 
 //last thing is the "Seal" to save the character
