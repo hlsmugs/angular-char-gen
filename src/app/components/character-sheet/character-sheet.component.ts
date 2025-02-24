@@ -80,6 +80,155 @@ export class CharacterSheetComponent {
     this.pointsUsed = 0;
   }
 
+  createCharacterSheet() {
+    this.createForm();
+    this.abilityScoreValues = [8, 8, 8, 8, 8, 8];
+    this.playerCharacterList$ = this.characterSheetService.getAllCharacters();
+    //set current character
+    this.currentCharacter$ = this.characterSheetService.getCurrentCharacter(
+      this.route
+    );
+    //set current character vals
+    let c = this.currentCharacter$;
+    if (c) {
+      this.populateCharacterSheet(c);
+      this.abilityScoreValues = [
+        c.abilityScores.strengthScore,
+        c.abilityScores.dexterityScore,
+        c.abilityScores.constitutionScore,
+        c.abilityScores.intelligenceScore,
+        c.abilityScores.wisdomScore,
+        c.abilityScores.charismaScore,
+      ];
+    }
+    //create abiilty scores
+    this.abilityScoreLabels =
+      this.characterSheetService.getAbilityScoreLabels();
+  }
+
+  createForm() {
+    this.playerCharacterForm$ = this.fb.group({
+      id: [0, [Validators.required]],
+      characterName: ['', [Validators.required]],
+      characterClass: ['', [Validators.required]],
+      characterSpecies: ['', [Validators.required]],
+      characterBackground: ['', [Validators.required]],
+      abilityScores: this.fb.group({
+        strengthScore: [8, [Validators.required]],
+        dexterityScore: [8, [Validators.required]],
+        constitutionScore: [8, [Validators.required]],
+        intelligenceScore: [8, [Validators.required]],
+        wisdomScore: [8, [Validators.required]],
+        charismaScore: [8, [Validators.required]],
+      }),
+      characterDescription: this.fb.group({
+        personalityTraits: ['', [Validators.required]],
+        ideals: ['', [Validators.required]],
+        bonds: ['', [Validators.required]],
+        flaws: ['', [Validators.required]],
+      }),
+    });
+  }
+
+  //for editing characters
+  populateCharacterSheet(currentCharacter$: PlayerCharacterModel) {
+    this.playerCharacterForm$ = this.fb.group({
+      id: [currentCharacter$.id, [Validators.required]],
+      characterName: [currentCharacter$.characterName, [Validators.required]],
+      characterClass: [currentCharacter$.characterClass, [Validators.required]],
+      characterSpecies: [
+        currentCharacter$.characterSpecies,
+        [Validators.required],
+      ],
+      characterBackground: [
+        currentCharacter$.characterBackground,
+        [Validators.required],
+      ],
+      abilityScores: this.fb.group({
+        strengthScore: [
+          currentCharacter$.abilityScores.strengthScore,
+          [Validators.required],
+        ],
+        dexterityScore: [
+          currentCharacter$.abilityScores.dexterityScore,
+          [Validators.required],
+        ],
+        constitutionScore: [
+          currentCharacter$.abilityScores.constitutionScore,
+          [Validators.required],
+        ],
+        intelligenceScore: [
+          currentCharacter$.abilityScores.intelligenceScore,
+          [Validators.required],
+        ],
+        wisdomScore: [
+          currentCharacter$.abilityScores.wisdomScore,
+          [Validators.required],
+        ],
+        charismaScore: [
+          currentCharacter$.abilityScores.charismaScore,
+          [Validators.required],
+        ],
+      }),
+      characterDescription: this.fb.group({
+        personalityTraits: [
+          currentCharacter$.characterDescription.personalityTraits,
+          [Validators.required],
+        ],
+        ideals: [
+          currentCharacter$.characterDescription.ideals,
+          [Validators.required],
+        ],
+        bonds: [
+          currentCharacter$.characterDescription.bonds,
+          [Validators.required],
+        ],
+        flaws: [
+          currentCharacter$.characterDescription.flaws,
+          [Validators.required],
+        ],
+      }),
+    });
+  }
+
+  createCharacter(name: string) {
+    this.createUniqueId();
+    this.playerCharacterList$.unshift(this.playerCharacterForm$.value);
+    this.characterSheetService.saveCharacters(this.playerCharacterList$);
+    alert(name + ' has been added to your roster');
+    this.clearFields();
+  }
+
+  saveEditedCharacter() {
+    if (this.playerCharacterList$ != null && this.currentCharacter$) {
+      this.setAbiltyScoreFormValues();
+      if (confirm('Are you sure you want to overwrite this character?')) {
+        this.characterSheetService.editCharacter(
+          this.currentCharacter$,
+          this.playerCharacterList$,
+          this.playerCharacterForm$
+        );
+        alert('Saved changes');
+      }
+    }
+  }
+
+  //set abilityScore values for form
+  setAbiltyScoreFormValues() {
+    let newScores = this.abilityScoreValuesWithBonuses;
+    let form = this.fb.group({
+      strengthScore: [newScores![0], [Validators.required]],
+      dexterityScore: [newScores![1], [Validators.required]],
+      constitutionScore: [newScores![2], [Validators.required]],
+      intelligenceScore: [newScores![3], [Validators.required]],
+      wisdomScore: [newScores![4], [Validators.required]],
+      charismaScore: [newScores![5], [Validators.required]],
+    });
+    this.playerCharacterForm$.controls['abilityScores'] = form;
+    let abilityScores =
+      this.playerCharacterForm$.controls['abilityScores'].value;
+  }
+
   // point buy
   addPoints(index: number): void {
     let currentVal = this.abilityScoreValues![index];
@@ -247,155 +396,6 @@ export class CharacterSheetComponent {
    *
    * biased stat randomizer based on class
    */
-
-  createCharacterSheet() {
-    this.createForm();
-    this.abilityScoreValues = [8, 8, 8, 8, 8, 8];
-    this.playerCharacterList$ = this.characterSheetService.getAllCharacters();
-    //set current character
-    this.currentCharacter$ = this.characterSheetService.getCurrentCharacter(
-      this.route
-    );
-    //set current character vals
-    let c = this.currentCharacter$;
-    if (c) {
-      this.populateCharacterSheet(c);
-      this.abilityScoreValues = [
-        c.abilityScores.strengthScore,
-        c.abilityScores.dexterityScore,
-        c.abilityScores.constitutionScore,
-        c.abilityScores.intelligenceScore,
-        c.abilityScores.wisdomScore,
-        c.abilityScores.charismaScore,
-      ];
-    }
-    //create abiilty scores
-    this.abilityScoreLabels =
-      this.characterSheetService.getAbilityScoreLabels();
-  }
-
-  createForm() {
-    this.playerCharacterForm$ = this.fb.group({
-      id: [0, [Validators.required]],
-      characterName: ['', [Validators.required]],
-      characterClass: ['', [Validators.required]],
-      characterSpecies: ['', [Validators.required]],
-      characterBackground: ['', [Validators.required]],
-      abilityScores: this.fb.group({
-        strengthScore: [8, [Validators.required]],
-        dexterityScore: [8, [Validators.required]],
-        constitutionScore: [8, [Validators.required]],
-        intelligenceScore: [8, [Validators.required]],
-        wisdomScore: [8, [Validators.required]],
-        charismaScore: [8, [Validators.required]],
-      }),
-      characterDescription: this.fb.group({
-        personalityTraits: ['', [Validators.required]],
-        ideals: ['', [Validators.required]],
-        bonds: ['', [Validators.required]],
-        flaws: ['', [Validators.required]],
-      }),
-    });
-  }
-
-  //for editing characters
-  populateCharacterSheet(currentCharacter$: PlayerCharacterModel) {
-    this.playerCharacterForm$ = this.fb.group({
-      id: [currentCharacter$.id, [Validators.required]],
-      characterName: [currentCharacter$.characterName, [Validators.required]],
-      characterClass: [currentCharacter$.characterClass, [Validators.required]],
-      characterSpecies: [
-        currentCharacter$.characterSpecies,
-        [Validators.required],
-      ],
-      characterBackground: [
-        currentCharacter$.characterBackground,
-        [Validators.required],
-      ],
-      abilityScores: this.fb.group({
-        strengthScore: [
-          currentCharacter$.abilityScores.strengthScore,
-          [Validators.required],
-        ],
-        dexterityScore: [
-          currentCharacter$.abilityScores.dexterityScore,
-          [Validators.required],
-        ],
-        constitutionScore: [
-          currentCharacter$.abilityScores.constitutionScore,
-          [Validators.required],
-        ],
-        intelligenceScore: [
-          currentCharacter$.abilityScores.intelligenceScore,
-          [Validators.required],
-        ],
-        wisdomScore: [
-          currentCharacter$.abilityScores.wisdomScore,
-          [Validators.required],
-        ],
-        charismaScore: [
-          currentCharacter$.abilityScores.charismaScore,
-          [Validators.required],
-        ],
-      }),
-      characterDescription: this.fb.group({
-        personalityTraits: [
-          currentCharacter$.characterDescription.personalityTraits,
-          [Validators.required],
-        ],
-        ideals: [
-          currentCharacter$.characterDescription.ideals,
-          [Validators.required],
-        ],
-        bonds: [
-          currentCharacter$.characterDescription.bonds,
-          [Validators.required],
-        ],
-        flaws: [
-          currentCharacter$.characterDescription.flaws,
-          [Validators.required],
-        ],
-      }),
-    });
-  }
-
-  createCharacter(name: string) {
-    this.createUniqueId();
-    this.playerCharacterList$.unshift(this.playerCharacterForm$.value);
-    this.characterSheetService.saveCharacters(this.playerCharacterList$);
-    alert(name + ' has been added to your roster');
-    this.clearFields();
-  }
-
-  saveEditedCharacter() {
-    if (this.playerCharacterList$ != null && this.currentCharacter$) {
-      this.setAbiltyScoreFormValues();
-      if (confirm('Are you sure you want to overwrite this character?')) {
-        this.characterSheetService.editCharacter(
-          this.currentCharacter$,
-          this.playerCharacterList$,
-          this.playerCharacterForm$
-        );
-        alert('Saved changes');
-      }
-    }
-  }
-
-  //set abilityScore values for form
-  setAbiltyScoreFormValues() {
-    let newScores = this.abilityScoreValuesWithBonuses;
-    let form = this.fb.group({
-      strengthScore: [newScores![0], [Validators.required]],
-      dexterityScore: [newScores![1], [Validators.required]],
-      constitutionScore: [newScores![2], [Validators.required]],
-      intelligenceScore: [newScores![3], [Validators.required]],
-      wisdomScore: [newScores![4], [Validators.required]],
-      charismaScore: [newScores![5], [Validators.required]],
-    });
-    this.playerCharacterForm$.controls['abilityScores'] = form;
-    let abilityScores =
-      this.playerCharacterForm$.controls['abilityScores'].value;
-  }
 
   resetAbilityScoreDefaults() {
     this.pointsUsed = 0;

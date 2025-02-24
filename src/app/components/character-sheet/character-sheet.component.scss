@@ -96,6 +96,7 @@ img {
     color: whitesmoke;
     background: $tavern-red;
     border-radius: 5px 5px 0 0;
+    text-shadow: $text-shadow-dark-outline;
   }
   input {
     font-size: 1.5em;
@@ -175,13 +176,13 @@ img {
     border: 1px ridge silver;
     &:checked {
       background-image: radial-gradient(skyblue, royalblue);
-      outline: 3px outset silver;
+      outline: 4px outset silver;
       border: 1px ridge silver;
     }
     &[name="plusTwoChoice"] {
       &:checked {
         background-image: radial-gradient(yellow, goldenrod);
-        outline: 3px outset silver;
+        outline: 4px outset silver;
         border: 1px ridge silver;
       }
     }
@@ -203,6 +204,7 @@ img {
   }
   label {
     color: white;
+    text-shadow: $text-shadow-dark-outline;
   }
   textarea {
     resize: none;
@@ -247,9 +249,11 @@ img {
 
 .btn-save {
   padding-top: auto;
-}
-
-@media screen {
+  button {
+    &:disabled {
+      opacity: 0.2;
+    }
+  }
 }
 
 .red-seal {
@@ -259,5 +263,3 @@ img {
     translate: 25% 10%;
   }
 }
-
-//last thing is the "Seal" to save the character

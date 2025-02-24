@@ -20,3 +20,7 @@ $faded-orange: rgb(214, 158, 73);
 $faded-grey: rgb(131, 132, 105);
 $faded-slate: rgb(101, 114, 104);
 $faded-blue: rgb(71, 96, 102);
+
+//outlines
+$text-shadow-dark-outline: 1px 1px 1px $tavern-black, -1px 1px 1px $tavern-black,
+  -1px -1px 1px $tavern-black, 1px -1px 1px $tavern-black;

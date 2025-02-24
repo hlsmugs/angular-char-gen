@@ -4,6 +4,8 @@
     [formGroup]="playerCharacterForm$"
     (submit)="onSubmit()"
   >
+    <!--form top buttons-->
+    @let form = playerCharacterForm$;
     <div class="w-100 d-flex justify-content-between mt-0 mt-sm-3">
       <button
         type="button"
@@ -31,17 +33,19 @@
         <span>All <img alt="six sided die" src="/img/pixel-die.png" /></span>
       </button>
     </div>
+    <!--Form Header-->
     @if (currentCharacter$){
     <h1 class="text-center my-3">Adventurer Update Form</h1>
     } @else {
 
     <h1 class="text-center my-3">Adventurer Registration Form</h1>
     }
-    <!--Character Name: name, class, species, background-->
+    <!--Character Details: name, class, species, background-->
     <section
       name="character-details"
       class="character-details d-flex flex-column flex-lg-row justify-content-lg-between align-items-lg-end flex-wrap"
     >
+      <!--Character Name-->
       <div class="w-100 d-flex flex-column">
         <div class="character-details-input d-flex justify-content-between">
           <input
@@ -64,8 +68,14 @@
             <img alt="six sided die" src="/img/pixel-die.png" />
           </button>
         </div>
+        @let cName = form.controls['characterName']; @if (cName.invalid &&
+        (cName.dirty || cName.touched)){
+        <label class="text-danger" for="characterName">Name *required</label>
+        } @else {
         <label for="characterName">Name</label>
+        }
       </div>
+      <!--Character Class-->
       <div class="d-flex flex-column">
         <div class="character-details-input d-flex justify-content-between">
           <select
@@ -73,6 +83,7 @@
             name="characterClass"
             id="characterClass"
             formControlName="characterClass"
+            #characterClass
           >
             <option
               value="0"
@@ -100,8 +111,14 @@
             <img alt="six sided die" src="/img/pixel-die.png" />
           </button>
         </div>
+        @let cClass = form.controls['characterClass']; @if (cClass.invalid &&
+        cClass.touched){
+        <label class="text-danger" for="characterClass">Class *required</label>
+        } @else {
         <label for="characterClass">Class</label>
+        }
       </div>
+      <!--Character Species-->
       <div class="d-flex flex-column">
         <div class="character-details-input d-flex justify-content-between">
           <select
@@ -136,8 +153,16 @@
             <img alt="six sided die" src="/img/pixel-die.png" />
           </button>
         </div>
+        @let cSpecies = form.controls['characterSpecies']; @if (cSpecies.invalid
+        && cSpecies.touched){
+        <label class="text-danger" for="characterSpecies"
+          >Species *required</label
+        >
+        } @else {
         <label for="characterSpecies">Species</label>
+        }
       </div>
+      <!--Character Background-->
       <div class="d-flex flex-column">
         <div class="character-details-input d-flex justify-content-between">
           <select
@@ -172,7 +197,14 @@
             <img alt="six sided die" src="/img/pixel-die.png" />
           </button>
         </div>
+        @let cBackground = form.controls['characterBackground']; @if
+        (cBackground.invalid && cBackground.touched){
+        <label class="text-danger" for="characterBackground"
+          >Background *required</label
+        >
+        } @else {
         <label for="characterBackground">Background</label>
+        }
       </div>
     </section>
     <!--Character Ability Scores-->
@@ -325,11 +357,20 @@
     >
       <div class="w-100 d-flex flex-column flex-lg-row flex-lg-wrap">
         <!--personality traits-->
+        @let pTraits = form.get('characterDescription.personalityTraits');
         <div class="d-flex flex-column mb-3 flex-lg-fill me-lg-2">
+          @let pTraitsHasErr = (pTraits?.invalid && (pTraits?.dirty ||
+          pTraits?.touched));
           <div
             class="w-100 d-flex flex-row justify-content-between p-1 desc-header"
           >
+            @if (pTraitsHasErr){
+            <label class="text-danger" for="personalityTraits"
+              >Personality Traits *</label
+            >
+            } @else {
             <label for="personalityTraits">Personailty Traits</label>
+            }
             <button
               type="button"
               (click)="randomizeField('characterDescription.personalityTraits')"
@@ -344,18 +385,26 @@
           <textarea
             name="personalityTraits"
             id="personalityTraits"
-            rows="3"
+            rows="5"
             cols="20"
-            maxlength="120"
+            maxlength="140"
             formControlName="personalityTraits"
+            [class.border-danger]="pTraitsHasErr"
           ></textarea>
         </div>
         <!--ideals-->
+        @let ideals = form.get('characterDescription.ideals');
         <div class="d-flex flex-column mb-3 flex-lg-fill ms-lg-2">
+          @let idealsHasErr = (ideals?.invalid && (ideals?.dirty ||
+          ideals?.touched));
           <div
             class="w-100 d-flex flex-row justify-content-between p-1 desc-header"
           >
+            @if (idealsHasErr){
+            <label class="text-danger" for="ideals">Ideals *</label>
+            } @else {
             <label for="ideals">Ideals</label>
+            }
             <button
               type="button"
               (click)="randomizeField('characterDescription.ideals')"
@@ -370,20 +419,27 @@
           <textarea
             name="ideals"
             id="ideals"
-            rows="3"
+            rows="5"
             cols="20"
-            maxlength="120"
+            maxlength="140"
             formControlName="ideals"
           ></textarea>
         </div>
       </div>
       <div class="w-100 d-flex flex-column flex-lg-row flex-lg-wrap">
         <!--bonds-->
+        @let bonds = form.get('characterDescription.bonds');
         <div class="d-flex flex-column mb-3 flex-lg-fill me-lg-2">
+          @let bondsHasErr = (bonds?.invalid && (bonds?.dirty ||
+          bonds?.touched));
           <div
             class="w-100 d-flex flex-row justify-content-between p-1 desc-header"
           >
+            @if (bondsHasErr){
+            <label class="text-danger" for="bonds">Bonds *</label>
+            } @else {
             <label for="bonds">Bonds</label>
+            }
             <button
               type="button"
               (click)="randomizeField('characterDescription.bonds')"
@@ -398,18 +454,25 @@
           <textarea
             name="bonds"
             id="bonds"
-            rows="3"
+            rows="5"
             cols="20"
-            maxlength="120"
+            maxlength="140"
             formControlName="bonds"
           ></textarea>
         </div>
         <!--flaws-->
+        @let flaws = form.get('characterDescription.flaws');
         <div class="d-flex flex-column mb-3 flex-lg-fill ms-lg-2">
+          @let flawsHasErr = (flaws?.invalid && (flaws?.dirty ||
+          flaws?.touched));
           <div
             class="w-100 d-flex flex-row justify-content-between p-1 desc-header"
           >
+            @if (flawsHasErr){
+            <label class="text-danger" for="flaws">Flaws *</label>
+            } @else {
             <label for="flaws">Flaws</label>
+            }
             <button
               type="button"
               (click)="randomizeField('characterDescription.flaws')"
@@ -424,9 +487,9 @@
           <textarea
             name="flaws"
             id="flaws"
-            rows="3"
+            rows="5"
             cols="20"
-            maxlength="120"
+            maxlength="140"
             formControlName="flaws"
           ></textarea>
         </div>
@@ -478,6 +541,7 @@
                 id="create-new-character"
                 class="btn-save-new"
                 type="submit"
+                [disabled]="!form.valid"
                 (click)="createCharacter(characterName.value)"
               >
                 Save<img class="ms-1" src="/img/save.png" />
@@ -489,6 +553,7 @@
                 id="edit-character"
                 class="btn-save-edit"
                 type="submit"
+                [disabled]="!form.valid"
                 (click)="saveEditedCharacter()"
               >
                 Save Changes<img class="ms-1" src="/img/save.png" />
@@ -500,7 +565,11 @@
       </div>
       <!--Seal-->
       <div class="mt-3 w-100 text-end text-sm-start position-relative">
-        <img class="red-seal pt-4" src="img/red-seal.png" />
+        <img
+          class="red-seal pt-4"
+          src="img/red-seal.png"
+          [hidden]="!playerCharacterForm$.valid"
+        />
       </div>
     </section>
     <!--Scroll to top for mobile/tablet-->
