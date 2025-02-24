@@ -7,10 +7,15 @@ button {
   border: none;
   color: $tavern-black;
 }
-button > span {
-  opacity: 0.5;
-  &:hover {
-    opacity: 1;
+button {
+  &:disabled {
+    opacity: 0.2;
+  }
+  span {
+    opacity: 0.5;
+    &:hover {
+      opacity: 1;
+    }
   }
 }
 
@@ -219,12 +224,16 @@ img {
 .character-sheet-buttons {
   button {
     color: $tavern-black;
-    background: silver;
+    background: $tavern-white;
     border: 2px outset black;
     opacity: 0.8;
     &:hover {
       border: 2px inset black;
       opacity: 1;
+    }
+    &:disabled {
+      background: none;
+      border: 2px dotted black;
     }
   }
 }
@@ -243,15 +252,6 @@ img {
       font-family: "Venice Classic";
       position: absolute;
       translate: 0px 30px;
-    }
-  }
-}
-
-.btn-save {
-  padding-top: auto;
-  button {
-    &:disabled {
-      opacity: 0.2;
     }
   }
 }

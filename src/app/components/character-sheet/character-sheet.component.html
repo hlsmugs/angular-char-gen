@@ -501,7 +501,13 @@
       class="character-sheet-buttons d-flex flex-column"
     >
       <div class="d-flex justify-content-end">
-        <button type="button" class="me-2" (click)="exportToJSON()">
+        <button
+          type="button"
+          class="me-2"
+          [disabled]="!form.valid"
+          [class.opacity-25]="!form.valid"
+          (click)="exportToJSON()"
+        >
           Export as JSON
         </button>
         <!-- <button>Export as PDF</button> -->
@@ -534,12 +540,11 @@
           </div>
           <div class="mt-2 d-flex justify-content-between">
             <sub>Your Signature</sub>
-            <div class="btn-save align-self-end">
+            <div class="pt-auto align-self-end">
               <!--Save new character-->
               @if (isNewCharacter){
               <button
                 id="create-new-character"
-                class="btn-save-new"
                 type="submit"
                 [disabled]="!form.valid"
                 (click)="createCharacter(characterName.value)"
@@ -551,7 +556,6 @@
               @if (!isNewCharacter) {
               <button
                 id="edit-character"
-                class="btn-save-edit"
                 type="submit"
                 [disabled]="!form.valid"
                 (click)="saveEditedCharacter()"
@@ -568,7 +572,7 @@
         <img
           class="red-seal pt-4"
           src="img/red-seal.png"
-          [hidden]="!playerCharacterForm$.valid"
+          [class.opacity-0]="!playerCharacterForm$.valid"
         />
       </div>
     </section>
