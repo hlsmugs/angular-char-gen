@@ -7,11 +7,6 @@ body {
 }
 
 //Common Character Sheet elements
-.app-container {
-  @include media-breakpoint-up(sm) {
-    padding: 36px;
-  }
-}
 
 .banner {
   //hanging banner thingy

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { NavigationEnd, Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-navigation',
@@ -8,4 +8,15 @@ import { RouterModule } from '@angular/router';
   templateUrl: './navigation.component.html',
   styleUrl: './navigation.component.scss',
 })
-export class NavigationComponent {}
+export class NavigationComponent {
+  isHome?: boolean;
+  constructor(private router: Router){
+    router.events.subscribe((evt) => {
+      if(evt instanceof NavigationEnd && this.router.url == '/'){
+        this.isHome = true;
+      } else {
+        this.isHome = false;
+      }
+    });
+  }
+}
