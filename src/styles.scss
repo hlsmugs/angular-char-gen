@@ -4,6 +4,16 @@
 
 body {
   background: url("/img/wood-tile-vertical.jpg") repeat;
+
+  // background: url("/img/stucco-tile2.jpg") repeat;
+}
+
+//min height should be 100vh - nav height
+main {
+  min-height: 100vh;
+}
+
+footer {
 }
 
 //Common Character Sheet elements

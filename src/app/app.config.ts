@@ -10,12 +10,14 @@ import { provideClientHydration } from '@angular/platform-browser';
 import { BrowserStorageService } from './services/browser-storage.service';
 import { LOCAL_STORAGE } from './tokens/storageToken';
 import { isPlatformServer } from '@angular/common';
+import { provideHttpClient } from '@angular/common/http';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideClientHydration(),
+    provideHttpClient(),
     BrowserStorageService,
     {
       provide: LOCAL_STORAGE,

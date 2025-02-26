@@ -4,7 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "getDate": "node build/buildTime.js > public/json/buildTime.json",
+    "build": "npm run getDate && ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:angular-char-gen": "node dist/angular-char-gen/server/server.mjs",

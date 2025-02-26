@@ -18,7 +18,6 @@
   </div>
 </div>
 
-<hr />
 <!--no characters-->
 @if (filteredCharacterList$.length == 0){
 <section name="no-characters">
@@ -37,7 +36,6 @@
     <a routerLink="/create-a-character">Add another character</a>
   </div>
   @for(c of filteredCharacterList$; track c;){
-  <hr />
   <div class="parchment-horizontal">
     <div class="parchment-content">
       <div class="d-flex flex-row">
