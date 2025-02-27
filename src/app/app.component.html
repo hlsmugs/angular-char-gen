@@ -4,13 +4,22 @@ TODO:
 - nav bar
 - footer
 -->
-<nav>
+<nav class="sticky-top">
   <app-navigation></app-navigation>
 </nav>
-
-<main class="p-0 p-sm-4 p-lg-5">
-  <router-outlet />
-</main>
+<div class="d-flex flex-row w-100">
+  <div class="drawer-wrapper z-1">
+    <app-drawer></app-drawer>
+  </div>
+  <div class="w-100">
+    <div class="position-relative w-100 d-flex flex-row justify-content-center">
+      <img class="tavern-sign" src="img/tavern-sign-hanging.png" />
+    </div>
+    <main class="p-0 p-sm-4 p-lg-5">
+      <router-outlet />
+    </main>
+  </div>
+</div>
 
 <footer>
   <app-footer></app-footer>

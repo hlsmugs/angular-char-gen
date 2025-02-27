@@ -1,2 +1,13 @@
 @import "defaults";
 
+.drawer-wrapper {
+  position: sticky;
+  height: 100%;
+  margin-top: -60px;
+  top: 0;
+}
+
+.tavern-sign {
+  width: max(25vh, 80vw);
+  max-width: 400px;
+}

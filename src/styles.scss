@@ -1,4 +1,5 @@
 /* Importing Bootstrap SCSS file. */
+@import "bootstrap";
 @import "bootstrap/scss/bootstrap";
 @import "defaults";
 
@@ -11,9 +12,6 @@ body {
 //min height should be 100vh - nav height
 main {
   min-height: 100vh;
-}
-
-footer {
 }
 
 //Common Character Sheet elements
@@ -47,4 +45,8 @@ footer {
   &-content {
     padding: min(10vh, 10%) 8vw;
   }
+}
+
+.custom-icon {
+  width: 24px;
 }

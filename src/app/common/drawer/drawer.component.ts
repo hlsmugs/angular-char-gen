@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 @Component({
-  selector: 'app-navigation',
+  selector: 'app-drawer',
   standalone: true,
   imports: [RouterModule],
-  templateUrl: './navigation.component.html',
-  styleUrl: './navigation.component.scss',
+  templateUrl: './drawer.component.html',
+  styleUrl: './drawer.component.scss',
 })
-export class NavigationComponent {}
+export class DrawerComponent {}

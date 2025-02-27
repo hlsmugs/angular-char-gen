@@ -1,0 +1,69 @@
+<div id="drawer-collapse" class="collapse collapse-horizontal drawer">
+  <div class="drawer-contents d-flex flex-row bg-black">
+    <div class="d-flex flex-column justify-content-between flex-fill z-1">
+      <ul class="d-flex flex-column align-items-start ps-3 m-0">
+        <li>
+          <a
+            routerLink="/home"
+            routerLinkActive="active"
+            data-bs-toggle="collapse"
+            data-bs-target="#drawer-collapse"
+            >Home</a
+          >
+        </li>
+        <li>
+          <a
+            routerLink="/character-roster"
+            data-bs-toggle="collapse"
+            data-bs-target="#drawer-collapse"
+            >Character Roster</a
+          >
+        </li>
+        <li>
+          <a
+            routerLink="/create-a-character"
+            data-bs-toggle="collapse"
+            data-bs-target="#drawer-collapse"
+            >Create a Character</a
+          >
+        </li>
+        <li>
+          <a
+            routerLink="/dice-roller"
+            data-bs-toggle="collapse"
+            data-bs-target="#drawer-collapse"
+            >Dice Roller</a
+          >
+        </li>
+      </ul>
+      <div class="d-flex flex-column mb-4">
+        <div
+          class="position-relative h-auto m-auto d-flex flex-column align-items-center mb-1"
+        >
+          <img class="my-2 jmd-logo" src="img/jmd-logo.png" alt="jmd logo" />
+          <small class="mb-1 text-light">Created by JMD</small>
+        </div>
+        <a
+          class="text-center"
+          href="https://github.com/hlsmugs/angular-char-gen"
+          data-bs-toggle="tooltip"
+          data-bs-placement="right"
+          title="Check it out on GitHub"
+        >
+          <img
+            class="logo"
+            id="github"
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Github_logo_svg.svg/640px-Github_logo_svg.svg.png"
+            alt="Github icon"
+          />
+        </a>
+      </div>
+    </div>
+    <!--dark screen-->
+    <div
+      class="darken z-0"
+      data-bs-toggle="collapse"
+      data-bs-target="#drawer-collapse"
+    ></div>
+  </div>
+</div>

@@ -1,19 +1,10 @@
-<div class="navigation-container w-100 p-3 ps-sm-4">
-  <ul class="m-0 ps-2 list-unstyled">
-    <li>
-      <a routerLink="/home">Home</a>
-    </li>
-    <li>
-      <a routerLink="/character-roster">Character Roster</a>
-    </li>
-    <li>
-      <a routerLink="/create-a-character">Create a Character</a>
-    </li>
-    <li>
-      <a routerLink="/dice-roller">Dice Roller</a>
-    </li>
-  </ul>
-</div>
-<div class="text-center" [hidden]="isHome">
-  <img class="tavern-sign" src="img/tavern-sign.png" />
+<div class="navigation-container w-100 p-1">
+  <button
+    type="button"
+    class="btn-nav-collapse bg-transparent border-0 ps-1 ps-sm-2 h-100"
+    data-bs-toggle="collapse"
+    data-bs-target="#drawer-collapse"
+  >
+    <img class="custom-icon" src="img/hamburger-icon.png" />
+  </button>
 </div>

@@ -30,6 +30,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PointBuyComponent } from '../point-buy/point-buy.component';
 import { DiceRollerService } from '../../services/dice-roller.service';
 import { ExporterService } from '../../services/exporter.service';
+import { ScrollerService } from '../../services/scroller.service';
 
 @Component({
   selector: 'app-character-sheet',
@@ -69,6 +70,7 @@ export class CharacterSheetComponent {
     private characterSheetService: CharacterSheetService,
     private randomService: DiceRollerService,
     private exportService: ExporterService,
+    private scrollerService: ScrollerService,
     public fb: FormBuilder,
     public location: Location
   ) {
@@ -578,9 +580,7 @@ export class CharacterSheetComponent {
   }
 
   scrollToTop() {
-    // const el = document.querySelector('#top');
-    // el?.scrollIntoView();
-    window.scroll({ top: 0, left: 0, behavior: 'smooth' });
+    this.scrollerService.scrollToTop();
   }
 
   //disable non-letters
