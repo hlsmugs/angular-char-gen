@@ -45,7 +45,8 @@
           <span> {{ c.characterSpecies }}</span>
           <span> {{ c.characterBackground }} </span>
         </div>
-        <div class="ability-scores d-flex flex-row">
+        <!--ability scores-->
+        <div class="ability-scores d-flex flex-row flex-wrap">
           @if (c.abilityScores){ @let abilityScoresList =
           this.characterSheetService.getAbilityScores(c); @for (a of
           abilityScoresList; track $index){

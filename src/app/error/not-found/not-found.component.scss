@@ -1,0 +1,12 @@
+@import "defaults";
+a {
+  border: 2px outset silver;
+  background: $tavern-parchment-lighter;
+  padding: 12px;
+  text-decoration: none;
+  color: $tavern-white;
+  text-shadow: $text-shadow-dark-outline;
+  &:hover {
+    border: 2px inset silver;
+  }
+}

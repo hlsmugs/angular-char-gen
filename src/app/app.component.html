@@ -1,10 +1,4 @@
-<!--
-TODO:
-- header
-- nav bar
-- footer
--->
-<nav class="sticky-top z-3">
+<nav class="position-sticky top-0 z-3">
   <app-navigation></app-navigation>
 </nav>
 <div class="d-flex flex-row w-100">
@@ -12,7 +6,9 @@ TODO:
     <app-drawer></app-drawer>
   </div>
   <div class="w-100">
-    <div class="position-relative w-100 d-flex flex-row justify-content-center">
+    <div
+      class="position-relative w-100 d-flex flex-row justify-content-center mb-3 mb-sm-0"
+    >
       <a routerLink="/">
         <img class="tavern-sign" src="img/tavern-sign-hanging.png" />
       </a>

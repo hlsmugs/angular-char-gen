@@ -4,12 +4,17 @@
 @import "defaults";
 
 body {
+  min-height: 100vh;
   background: url("/img/wood-tile-vertical.jpg");
 }
 
 //min height should be 100vh - nav height
 main {
   min-height: 100vh;
+}
+
+nav {
+  overscroll-behavior: contain;
 }
 
 //Common Character Sheet elements
