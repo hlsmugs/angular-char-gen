@@ -4,9 +4,7 @@
 @import "defaults";
 
 body {
-  background: url("/img/wood-tile-vertical.jpg") repeat;
-
-  // background: url("/img/stucco-tile2.jpg") repeat;
+  background: url("/img/wood-tile-vertical.jpg");
 }
 
 //min height should be 100vh - nav height
@@ -20,6 +18,7 @@ main {
   //hanging banner thingy
   background: url("/img/parchment-tile.jpg");
   background-size: cover;
+  max-width: 75vw;
 }
 
 .parchment {
@@ -38,8 +37,8 @@ main {
     &-horizontal {
       background: url("/img/parchment-horizontal.png") no-repeat;
       background-size: 100% 100%;
-      max-width: 2000px;
-      max-height: 1200px;
+      max-width: 75vw;
+      max-height: 45vw;
     }
   }
   &-content {

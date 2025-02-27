@@ -1,5 +1,9 @@
 @import "defaults";
 .navigation-container {
-  background-color: $tavern-red;
+  background-color: maroon;
   height: 50px;
+}
+
+img {
+  filter: invert(100);
 }

@@ -1,4 +1,4 @@
-import { Component, ElementRef } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { NavigationComponent } from './common/navigation/navigation.component';
 import { FooterComponent } from './common/footer/footer.component';
@@ -18,15 +18,19 @@ import { DrawerComponent } from './common/drawer/drawer.component';
 })
 export class AppComponent {
   title = 'angular-char-gen';
-  //   constructor(private router: Router, private el: ElementRef) {
-  //     this.onPageChange();
-  //   }
+  // isHome?: boolean;
+  // constructor(private router: Router) {
+  //   this.onPageChange();
+  // }
 
-  //   onPageChange() {
-  //     this.router.events.subscribe((evt) => {
-  //       if (evt instanceof NavigationEnd) {
-  //         console.log('page changed' + this.el.nativeElement);
-  //       }
-  //     });
-  //   }
+  // onPageChange() {
+  //   this.router.events.subscribe((evt) => {
+  //     if (evt instanceof NavigationEnd && this.router.url == '/') {
+  //       this.isHome = true;
+  //     } else {
+  //       this.isHome = false;
+  //     }
+  //   });
+  //   console.log(this.isHome);
+  // }
 }

@@ -10,7 +10,6 @@ import { provideClientHydration } from '@angular/platform-browser';
 import { BrowserStorageService } from './services/browser-storage.service';
 import { LOCAL_STORAGE } from './tokens/storageToken';
 import { isPlatformServer } from '@angular/common';
-import { provideHttpClient } from '@angular/common/http';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -20,7 +19,6 @@ export const appConfig: ApplicationConfig = {
       withInMemoryScrolling({ scrollPositionRestoration: 'top' })
     ),
     provideClientHydration(),
-    provideHttpClient(),
     BrowserStorageService,
     {
       provide: LOCAL_STORAGE,

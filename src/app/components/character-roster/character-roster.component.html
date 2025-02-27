@@ -1,99 +1,103 @@
-<div class="d-flex flex-row banner">
-  <!-- <div class="pe-2">
-    <button>Filter</button>
-  </div> -->
-  <div>
-    <div class="searchBar">
-      <input
-        name="characterSearchBar"
-        id="characterSearchBar"
-        type="search"
-        placeholder="Find a hero..."
-        (keyup)="searchCharacterRoster(filter.value)"
-        #filter
-      />
+<div
+  class="character-roster-container d-flex flex-column justify-content-center"
+>
+  <div class="d-flex flex-column banner w-100 align-self-center">
+    <!--search, sort, filters-->
+    <div class="">
+      <div class="searchBar">
+        <input
+          name="characterSearchBar"
+          id="characterSearchBar"
+          type="search"
+          placeholder="Find a hero..."
+          (keyup)="searchCharacterRoster(filter.value)"
+          #filter
+        />
+      </div>
+      <!--sort by button-->
+      <!--filter by button that opens modal-->
     </div>
-    <!--sort by button-->
-    <!--filter by button that opens modal-->
-  </div>
-</div>
+    <!--add characters-->
 
-<!--no characters-->
-@if (filteredCharacterList$.length == 0){
-<section name="no-characters">
-  <div>
-    <a routerLink="/create-a-character"
-      >You have no heroes... click here to create a character</a
-    >
-  </div>
-</section>
-}
-
-<!--list of characters-->
-@if (filteredCharacterList$ && filteredCharacterList$.length > 0){
-<section name="character-list" class="character-list">
-  <div class="banner">
-    <a routerLink="/create-a-character">Add another character</a>
-  </div>
-  @for(c of filteredCharacterList$; track c;){
-  <div class="parchment-horizontal">
-    <div class="parchment-content">
-      <div class="d-flex flex-row">
-        <h2>{{ c.characterName }}</h2>
-        <span> {{ c.characterClass }}</span>
-        <span> {{ c.characterSpecies }}</span>
-        <span> {{ c.characterBackground }} </span>
-      </div>
-      <div class="ability-scores d-flex flex-row">
-        @if (c.abilityScores){ @let abilityScoresList =
-        this.characterSheetService.getAbilityScores(c); @for (a of
-        abilityScoresList; track $index){
-        <div class="ability-score-box d-flex flex-column">
-          <strong class="ability-score-name">{{
-            abilityScoresList[$index][0]
-          }}</strong>
-          <p class="ability-score-value">
-            {{ abilityScoresList[$index][1] }}
-          </p>
-        </div>
-        }}
-      </div>
-      <div class="character-description">
-        @if (c.characterDescription){
-        <div class="character-description-box">
-          <strong class="character-description-header"
-            >Personality Traits</strong
-          >
-          <p class="character-description-text">
-            {{ c.characterDescription.personalityTraits }}
-          </p>
-        </div>
-        <div class="character-description-box">
-          <strong class="character-description-header">Ideals</strong>
-          <p class="character-description-text">
-            {{ c.characterDescription.ideals }}
-          </p>
-        </div>
-        <div class="character-description-box">
-          <strong class="character-description-header">Bonds</strong>
-          <p class="character-description-text">
-            {{ c.characterDescription.bonds }}
-          </p>
-        </div>
-        <div class="character-description-box">
-          <strong class="character-description-header">Flaws</strong>
-          <p class="character-description-text">
-            {{ c.characterDescription.flaws }}
-          </p>
-        </div>
-        }
-      </div>
-      <div>
-        <button [routerLink]="['/edit-character', c.id]">Edit</button>
-        <button (click)="deleteCharacter(c.id, c.characterName)">Delete</button>
-      </div>
+    <div class="text-center">
+      <a routerLink="/create-a-character">
+        <!--no characters-->
+        @if (filteredCharacterList$.length == 0){ Your roster is empty... click
+        here to create a character}
+        <!--characters >= 1-->
+        @else {Add another character}
+      </a>
     </div>
   </div>
+
+  <!--list of characters-->
+  @if (filteredCharacterList$ && filteredCharacterList$.length > 0){
+  <section
+    name="character-list"
+    class="character-list d-flex flex-column align-items-center"
+  >
+    @for(c of filteredCharacterList$; track c;){
+    <div class="parchment-horizontal w-100">
+      <div class="parchment-content">
+        <div class="d-flex flex-row">
+          <h2>{{ c.characterName }}</h2>
+          <span> {{ c.characterClass }}</span>
+          <span> {{ c.characterSpecies }}</span>
+          <span> {{ c.characterBackground }} </span>
+        </div>
+        <div class="ability-scores d-flex flex-row">
+          @if (c.abilityScores){ @let abilityScoresList =
+          this.characterSheetService.getAbilityScores(c); @for (a of
+          abilityScoresList; track $index){
+          <div class="ability-score-box d-flex flex-column">
+            <strong class="ability-score-name">{{
+              abilityScoresList[$index][0]
+            }}</strong>
+            <p class="ability-score-value">
+              {{ abilityScoresList[$index][1] }}
+            </p>
+          </div>
+          }}
+        </div>
+        <div class="character-description">
+          @if (c.characterDescription){
+          <div class="character-description-box">
+            <strong class="character-description-header"
+              >Personality Traits</strong
+            >
+            <p class="character-description-text">
+              {{ c.characterDescription.personalityTraits }}
+            </p>
+          </div>
+          <div class="character-description-box">
+            <strong class="character-description-header">Ideals</strong>
+            <p class="character-description-text">
+              {{ c.characterDescription.ideals }}
+            </p>
+          </div>
+          <div class="character-description-box">
+            <strong class="character-description-header">Bonds</strong>
+            <p class="character-description-text">
+              {{ c.characterDescription.bonds }}
+            </p>
+          </div>
+          <div class="character-description-box">
+            <strong class="character-description-header">Flaws</strong>
+            <p class="character-description-text">
+              {{ c.characterDescription.flaws }}
+            </p>
+          </div>
+          }
+        </div>
+        <div>
+          <button [routerLink]="['/edit-character', c.id]">Edit</button>
+          <button (click)="deleteCharacter(c.id, c.characterName)">
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
+    }
+  </section>
   }
-</section>
-}
+</div>
