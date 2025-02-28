@@ -1,17 +1,32 @@
 @import "defaults";
 .drawer {
   position: fixed;
+  display: flex;
   margin-top: 50px;
   top: 0;
   bottom: 0;
   left: 0;
+  z-index: 0;
+  &.show .darken {
+    @include media-breakpoint-down(xl) {
+      overscroll-behavior: none;
+      position: sticky;
+      width: 100vw;
+      height: 120vh;
+      z-index: -1;
+      right: 0;
+      top: 0;
+      background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+    }
+  }
 }
 
 .drawer-contents {
   min-width: 160px;
   max-width: fit-content;
-  height: calc(100vh - 50px); // display minus navigation height
+  height: 120vh;
   background-color: $tavern-black;
+  overflow-y: visible;
   ul {
     max-width: 30vw;
   }
@@ -28,16 +43,8 @@
   }
 }
 
-.darken {
-  @include media-breakpoint-down(xl) {
-    position: fixed;
-    width: 100%;
-    z-index: -1;
-    height: 100vh;
-    right: 0;
-    top: 0;
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
-  }
+.logo-section {
+  margin-bottom: calc(20vh + 72px);
 }
 
 .logo {

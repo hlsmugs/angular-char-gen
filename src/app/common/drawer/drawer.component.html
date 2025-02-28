@@ -1,6 +1,8 @@
-<!--dark screen-->
-<div id="drawer-collapse" class="collapse collapse-horizontal drawer">
-  <div class="drawer-contents d-flex">
+<div
+  id="drawer-collapse"
+  class="collapse multi-collapse collapse-horizontal drawer"
+>
+  <div class="drawer-contents d-flex position-sticky top-0 bottom-0">
     <div class="d-flex flex-column justify-content-between flex-fill">
       <!--nav items-->
       <ul class="d-flex flex-column flex-fill align-items-start px-3 m-0">
@@ -39,7 +41,7 @@
         </li>
       </ul>
       <!--logos and stuff-->
-      <div class="d-flex flex-column mb-4">
+      <div class="d-flex flex-column logo-section">
         <div
           class="position-relative h-auto m-auto d-flex flex-column align-items-center mb-1"
         >
@@ -63,9 +65,10 @@
       </div>
     </div>
   </div>
+  <!--dark screen-->
   <div
-    class="darken"
+    class="darken collapse collapse-horizontal multi-collapse"
     data-bs-toggle="collapse"
-    data-bs-target="#drawer-collapse"
+    data-bs-target=".multi-collapse"
   ></div>
 </div>
