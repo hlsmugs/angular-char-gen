@@ -1,23 +1,10 @@
 @import "defaults";
 .drawer {
-  position: absolute;
-  top: 50px;
+  position: fixed;
+  margin-top: 50px;
+  top: 0;
+  bottom: 0;
   left: 0;
-  //   max-width: 228px;
-  //   @include media-breakpoint-down(sm) {
-  //     display: none;
-  //   }
-  &.show > .darken {
-    @include media-breakpoint-down(xl) {
-      position: fixed;
-      width: 100%;
-      z-index: -1;
-      height: 100vh;
-      right: 0;
-      top: 0;
-      background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
-    }
-  }
 }
 
 .drawer-contents {
@@ -38,6 +25,18 @@
         color: $tavern-white;
       }
     }
+  }
+}
+
+.darken {
+  @include media-breakpoint-down(xl) {
+    position: fixed;
+    width: 100%;
+    z-index: -1;
+    height: 100vh;
+    right: 0;
+    top: 0;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
   }
 }
 

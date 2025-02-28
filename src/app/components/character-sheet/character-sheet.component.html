@@ -7,19 +7,8 @@
     <!--form top buttons-->
     @let form = playerCharacterForm$;
     <div class="w-100 d-flex justify-content-between mt-0 mt-sm-3">
-      <button
-        type="button"
-        class="d-none d-sm-block btn align-start"
-        (click)="goBack()"
-      >
-        <span>&#8592; Back</span>
-      </button>
-      <button
-        type="button"
-        class="d-block d-sm-none align-start"
-        (click)="goBack()"
-      >
-        <span>&#8592;</span>
+      <button type="button" class="align-start" (click)="goBack()">
+        <span><img class="w-auto py-1" src="/img/left-arrow.png" /> Back</span>
       </button>
       <button
         type="button"

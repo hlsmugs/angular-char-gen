@@ -1,1 +1,45 @@
 @import "defaults";
+
+.chain {
+  height: 8vh;
+}
+
+.roster-header {
+  background: $faded-brown;
+  h1 {
+    color: white;
+    text-shadow: $text-shadow-dark-outline;
+  }
+  a {
+    color: white;
+  }
+  @include media-breakpoint-up(sm) {
+    background: url("/img/stucco-tile-dark.png");
+    max-width: max(50vw, 500px);
+    border: 12px ridge $faded-brown;
+  }
+}
+
+.add-character {
+  position: absolute;
+  background: silver;
+  font-size: 14px;
+  height: 20px;
+  width: 20px;
+  border-radius: 50px 50px 50px 50px;
+  translate: -100% -25%;
+}
+
+.search-bar {
+  background: $tavern-white;
+  border-radius: 10px;
+  padding: 4px 8px;
+  input {
+    background: none;
+    border: none;
+    padding: 0px 8px;
+    &:focus {
+      outline: none;
+    }
+  }
+}

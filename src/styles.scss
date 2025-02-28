@@ -3,32 +3,41 @@
 @import "bootstrap/scss/bootstrap";
 @import "defaults";
 
+html,
 body {
+  overscroll-behavior: none;
+}
+
+body,
+.app-container {
   min-height: 100vh;
   background: url("/img/wood-tile-vertical.jpg");
 }
 
-//min height should be 100vh - nav height
-main {
-  min-height: 100vh;
+nav {
+  height: 50px;
 }
 
-nav {
-  overscroll-behavior: contain;
+//min height should be 100vh - nav height
+main {
+  min-height: calc(100vh - 50px - 30px);
+}
+
+footer {
+  height: 30px;
+  background: $tavern-black;
+  sub {
+    color: $tavern-white;
+    opacity: 0.5;
+  }
 }
 
 //Common Character Sheet elements
 
-.banner {
-  //hanging banner thingy
-  background: url("/img/parchment-tile.jpg");
-  background-size: cover;
-  max-width: 75vw;
-}
-
 .parchment {
   &-vertical,
-  &-horizontal {
+  &-horizontal,
+  &-bg {
     background: url("/img/parchment-tile.jpg");
     background-size: cover;
   }
@@ -53,4 +62,13 @@ nav {
 
 .custom-icon {
   width: 24px;
+}
+
+.invert-color {
+  filter: invert(100);
+}
+
+.tavern-sign {
+  width: max(25vh, 80vw);
+  max-width: 400px;
 }

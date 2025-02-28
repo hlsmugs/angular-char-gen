@@ -1,24 +1,20 @@
-<nav class="position-sticky top-0 z-3">
-  <app-navigation></app-navigation>
-</nav>
-<div class="d-flex flex-row w-100">
-  <div class="drawer-wrapper z-1">
-    <app-drawer></app-drawer>
-  </div>
-  <div class="w-100">
-    <div
-      class="position-relative w-100 d-flex flex-row justify-content-center mb-3 mb-sm-0"
-    >
-      <a routerLink="/">
-        <img class="tavern-sign" src="img/tavern-sign-hanging.png" />
-      </a>
-    </div>
-    <main class="p-0 p-sm-4 p-lg-5">
-      <router-outlet />
-    </main>
-  </div>
-</div>
+<div class="app-container position-">
+  <nav class="position-sticky top-0 z-3">
+    <app-navigation></app-navigation>
+  </nav>
 
-<footer>
-  <app-footer></app-footer>
-</footer>
+  <main class="position-relative">
+    <div class="d-flex flex-row w-100">
+      <div class="drawer-wrapper z-1">
+        <app-drawer></app-drawer>
+      </div>
+      <div class="w-100 px-0 px-sm-4 px-lg-5">
+        <router-outlet />
+      </div>
+    </div>
+  </main>
+
+  <footer class="position-relative bottom-0 text-end pe-2">
+    <app-footer></app-footer>
+  </footer>
+</div>

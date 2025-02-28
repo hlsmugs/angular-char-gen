@@ -1,37 +1,59 @@
 <div
   class="character-roster-container d-flex flex-column justify-content-center"
 >
-  <div class="d-flex flex-column banner w-100 align-self-center">
-    <!--search, sort, filters-->
-    <div class="">
-      <div class="searchBar">
-        <input
-          name="characterSearchBar"
-          id="characterSearchBar"
-          type="search"
-          placeholder="Find a hero..."
-          (keyup)="searchCharacterRoster(filter.value)"
-          #filter
-        />
+  <div class="d-none d-sm-flex flex-row justify-content-between w-50 m-auto">
+    <img class="chain" src="/img/chain.png" />
+    <img class="chain" src="/img/chain.png" />
+  </div>
+  <div
+    class="d-flex flex-column align-items-center roster-header w-100 align-self-center py-3 py-sm-2"
+  >
+    <h1 class="text-center p-2">Character Roster</h1>
+    <div class="d-flex flex-column flex-sm-row justify-content-between w-100">
+      <!--search, sort, filters-->
+      <div
+        class="d-flex flex-row justify-content-center justify-content-sm-start my-3 mx-0 mx-sm-3"
+      >
+        <!--filter by button that opens modal-->
+        <div class="mt-auto search-bar">
+          <input
+            type="search"
+            name="characterSearchBar"
+            id="characterSearchBar"
+            type="search"
+            placeholder="Find a hero..."
+            (keyup)="searchCharacterRoster(filter.value)"
+            #filter
+            data-bs-toggle="tooltip"
+            data-bs-placement="bottom"
+            title="Search by name, class, species, or background"
+          />
+        </div>
+        <!--sort by button-->
       </div>
-      <!--sort by button-->
-      <!--filter by button that opens modal-->
-    </div>
-    <!--add characters-->
-
-    <div class="text-center">
-      <a routerLink="/create-a-character">
-        <!--no characters-->
-        @if (filteredCharacterList$.length == 0){ Your roster is empty... click
-        here to create a character}
-        <!--characters >= 1-->
-        @else {Add another character}
-      </a>
+      <!--add characters-->
+      <div class="d-flex flex-row align-self-end text-center my-3 my-sm-0 me-4">
+        @if (filteredCharacterList$.length > 0){ }
+        <a
+          class="text-decoration-none"
+          routerLink="/create-a-character"
+          data-bs-toggle="tooltip"
+          data-bs-placement="top"
+          title="Add Character"
+        >
+          <img src="/img/document-sealed.png" />
+          <span class="add-character">+</span>
+          <span class="d-none d-sm-block">Add</span>
+        </a>
+      </div>
     </div>
   </div>
 
   <!--list of characters-->
   @if (filteredCharacterList$ && filteredCharacterList$.length > 0){
+  <!--no characters-->
+  @if (filteredCharacterList$.length == 0){ Your roster is empty... click here
+  to create a character}
   <section
     name="character-list"
     class="character-list d-flex flex-column align-items-center"
@@ -101,4 +123,5 @@
     }
   </section>
   }
+  <!--infinite scroll, only load 5 at a time-->
 </div>
