@@ -1,12 +1,15 @@
 # AngularCharGen
+
 > You all start in a tavern...
 
 ## Description
+
 This web app is a fun personal project I initially built to be able to randomly generate characters for TTRPGs (Table Top Roleplaying Games).
 Users can create characters which are saved in local storage - no database/server required! On the Character Roster page they can be viewed, edited, and deleted.
 Anyone can run it locally to use this app's features.
 
 ## Running the Project Locally / Installation
+
 After cloning the project, you will require the following:
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.12.
@@ -29,9 +32,14 @@ Install File Saver
 
 `npm install file-saver --save`
 
+Install ngx-infinite-scroll v18
+`npm i ngx-infinite-scroll@18.0.0`
+
 ## Author
+
 **JMD**
 GitHub: [hlsmugs](https://github.com/hlsmugs)
 
 ## License
+
 This project is [MIT](https://github.com/hlsmugs/angular-char-gen/blob/master/LICENSE) licensed.

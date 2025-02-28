@@ -83,6 +83,17 @@ img {
   &-input {
     border-bottom: 2px dotted;
     padding-bottom: 0px !important;
+    width: 100%;
+    @include media-breakpoint-up(xl) {
+      max-width: 300px;
+    }
+  }
+}
+
+.character-name {
+  width: 100%;
+  @include media-breakpoint-up(xl) {
+    max-width: 300px;
   }
 }
 
@@ -154,8 +165,12 @@ img {
 .gen-methods {
   height: 30px;
   select {
+    opacity: 0.5;
     border: none;
-    border-bottom: 2px dotted black;
+    appearance: none;
+    &:hover {
+      opacity: 1;
+    }
   }
 }
 

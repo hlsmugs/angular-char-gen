@@ -35,7 +35,7 @@
       class="character-details d-flex flex-column flex-lg-row justify-content-lg-between align-items-lg-end flex-wrap"
     >
       <!--Character Name-->
-      <div class="w-100 d-flex flex-column">
+      <div class="d-flex flex-column character-name">
         <div class="character-details-input d-flex justify-content-between">
           <input
             class="w-100"
@@ -44,6 +44,7 @@
             name="characterName"
             placeholder="Hero"
             formControlName="characterName"
+            maxlength="28"
             #characterName
           />
           <button
@@ -199,15 +200,15 @@
     <!--Character Ability Scores-->
     <section
       name="character-stats"
-      class="character-stats"
+      class="character-stats mt-0 mt-lg-3"
       formGroupName="abilityScores"
     >
       <!--dropdown of gen methods-->
       <div
-        class="d-flex justify-content-start pb-1 gen-methods align-items-center mb-4"
+        class="d-flex justify-content-between pb-1 gen-methods align-items-center mb-4"
       >
         <select
-          class="me-2 my-auto"
+          class="me-2 my-auto px-1"
           name="abilityGenMethod"
           id="abilityGenMethod"
           [value]="abilityScoreGenMethod"
@@ -243,7 +244,7 @@
         @if (abilityScoreGenMethod == 'standardArray'){
         <button
           type="button"
-          class="btn-randomize position-relative w-100 text-end"
+          class="btn-randomize position-relative text-end"
           (click)="randomizeStandardArray()"
           data-bs-toggle="tooltip"
           data-bs-placement="right"
@@ -252,7 +253,7 @@
           <img alt="six sided die" src="/img/pixel-die.png" />
         </button>
         } @if (abilityScoreGenMethod == 'pointBuy'){
-        <div class="w-100 p-0 text-end">
+        <div class="p-0 text-end">
           <app-point-buy [pointsRemaining]="pointsUsed"></app-point-buy>
         </div>
         }
