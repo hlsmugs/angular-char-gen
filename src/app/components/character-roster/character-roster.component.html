@@ -5,11 +5,14 @@
     <img class="chain" src="/img/chain.png" />
     <img class="chain" src="/img/chain.png" />
   </div>
+  <!--header-->
   <div
+    id="test"
     class="d-flex flex-column align-items-center roster-header w-100 align-self-center py-3 py-sm-2"
+    (scroll)="onScrollTop($event)"
   >
     <h1 class="text-center p-2">Character Roster</h1>
-    <div class="d-flex flex-column flex-sm-row justify-content-between w-100">
+    <div class="d-flex flex-column flex-sm-row justify-content-center w-100">
       <!--search, sort, filters-->
       <div
         class="d-flex flex-row justify-content-center justify-content-sm-start my-3 mx-0 mx-sm-3"
@@ -31,41 +34,59 @@
         </div>
         <!--sort by button-->
       </div>
-      <!--add characters-->
-      <div class="d-flex flex-row align-self-end text-center my-3 my-sm-0 me-4">
-        @if (filteredCharacterList$.length > 0){ }
-        <a
-          class="text-decoration-none"
-          routerLink="/create-a-character"
-          data-bs-toggle="tooltip"
-          data-bs-placement="top"
-          title="Add Character"
-        >
-          <img src="/img/document-sealed.png" />
-          <span class="add-character">+</span>
-          <span class="d-none d-sm-block">Add</span>
-        </a>
-      </div>
     </div>
+  </div>
+
+  <!--floating buttons-->
+  <div class="floating-button d-flex flex-column align-items-center">
+    <!--scroll to top-->
+    @if (loadLimit! > 2) {
+    <button
+      class="scroll-to-top"
+      (click)="scrollToTop()"
+      data-bs-toggle="tooltip"
+      data-bs-placement="top"
+      title="Scroll to top"
+    >
+      <img src="/img/up-arrow.png" />
+    </button>
+    }
+    <!--add characters-->
+    <a
+      class="text-decoration-none"
+      routerLink="/create-a-character"
+      data-bs-toggle="tooltip"
+      data-bs-placement="top"
+      title="Add Character"
+    >
+      <img src="/img/document-sealed.png" />
+      <span class="plus-sign">+</span>
+    </a>
   </div>
 
   <!--list of characters-->
   @if (filteredCharacterList$ && filteredCharacterList$.length > 0){
-  <!--no characters-->
-  @if (filteredCharacterList$.length == 0){ Your roster is empty... click here
-  to create a character}
   <section
     name="character-list"
     class="character-list d-flex flex-column align-items-center"
+    infiniteScroll
+    [infiniteScrollDistance]="2"
+    [infiniteScrollThrottle]="50"
+    (scrolled)="onScroll()"
   >
-    @for(c of filteredCharacterList$; track c;){
+    <!--iterate through character list-->
+    @for(c of filteredCharacterList$; track $index;){
+    <!--load limit; default = 5-->
+    @if ($index <= loadLimit! - 1){
     <div class="parchment-horizontal w-100">
       <div class="parchment-content">
-        <div class="d-flex flex-row">
+        <div class="d-flex flex-column character-details">
           <h2>{{ c.characterName }}</h2>
-          <span> {{ c.characterClass }}</span>
-          <span> {{ c.characterSpecies }}</span>
-          <span> {{ c.characterBackground }} </span>
+          <div class="d-flex flex-row flex-wrap">
+            <span> {{ c.characterClass }}</span>
+            <span> {{ c.characterSpecies }}</span>
+            <span> {{ c.characterBackground }} </span>
+          </div>
         </div>
         <!--ability scores-->
         <div class="ability-scores d-flex flex-row flex-wrap">
@@ -82,7 +103,10 @@
           </div>
           }}
         </div>
-        <div class="character-description">
+        <!--description-->
+        <div
+          class="d-flex flex-column flex-sm-row flex-wrap character-description"
+        >
           @if (c.characterDescription){
           <div class="character-description-box">
             <strong class="character-description-header"
@@ -112,6 +136,7 @@
           </div>
           }
         </div>
+        <!--buttons-->
         <div>
           <button [routerLink]="['/edit-character', c.id]">Edit</button>
           <button (click)="deleteCharacter(c.id, c.characterName)">
@@ -120,8 +145,22 @@
         </div>
       </div>
     </div>
-    }
+    } }
   </section>
   }
+  <!--no characters-->
+  @if (characterList$.length == 0) {
+  <div class="bg-black text-white">
+    Your roster is empty... click here to create a character
+  </div>
+  }
+  <!--no character found-->
+  @if (filteredCharacterList$.length == 0 && characterList$.length > 0){
+
+  <div class="bg-black text-white">
+    There are no characters that match your search
+  </div>
+  }
+
   <!--infinite scroll, only load 5 at a time-->
 </div>

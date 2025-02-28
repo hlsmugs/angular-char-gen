@@ -1,22 +1,38 @@
-import { Component, EventEmitter, inject, Output } from '@angular/core';
+import { Component, HostListener, inject } from '@angular/core';
 import { PlayerCharacterModel } from '../../models/player-character.model';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { CharacterSheetService } from '../../services/character-sheet.service';
+import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
 import { Title } from '@angular/platform-browser';
+import { ScrollerService } from '../../services/scroller.service';
 
 @Component({
   selector: 'app-character-roster',
   standalone: true,
-  imports: [RouterModule],
+  imports: [RouterModule, InfiniteScrollDirective],
   templateUrl: './character-roster.component.html',
   styleUrl: './character-roster.component.scss',
 })
 export class CharacterRosterComponent {
+  @HostListener('window:scroll', ['$event'])
+  onScrollTop(event: any) {
+    const offsetScrollHeight = document.getElementById('test')?.scrollHeight;
+    if (window.scrollY <= offsetScrollHeight!) {
+      this.loadLimit = this.loadDefault;
+    }
+  }
+
   public title: string = 'Character Roster';
   characterSheetService: CharacterSheetService = inject(CharacterSheetService);
   characterList$: PlayerCharacterModel[] = [];
   filteredCharacterList$: PlayerCharacterModel[] = [];
   selectedId?: number;
+
+  //character load limit
+  charactersLoaded?: number;
+  loadLimit?: number;
+  loadIncrement?: number;
+  loadDefault = 2;
 
   //filters
   isSearchByName?: boolean;
@@ -26,7 +42,8 @@ export class CharacterRosterComponent {
 
   constructor(
     private readonly titleService: Title,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private scrollerService: ScrollerService
   ) {
     this.titleService.setTitle(this.title);
     this.characterList$ = this.characterSheetService.getAllCharacters();
@@ -35,6 +52,9 @@ export class CharacterRosterComponent {
     this.isSearchByClass = true;
     this.isSearchBySpecies = true;
     this.isSearchByBackground = true;
+    //default val
+    this.loadLimit = this.loadDefault;
+    this.loadIncrement = this.loadDefault;
   }
 
   searchCharacterRoster(text: string) {
@@ -83,5 +103,11 @@ export class CharacterRosterComponent {
     }
   }
 
-  //ALSO: create a character service that can edit/delete or extend browserStorageService
+  onScroll() {
+    this.loadLimit! += this.loadIncrement!;
+  }
+
+  scrollToTop() {
+    this.scrollerService.scrollToTop();
+  }
 }

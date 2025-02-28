@@ -19,17 +19,6 @@
     border: 12px ridge $faded-brown;
   }
 }
-
-.add-character {
-  position: absolute;
-  background: silver;
-  font-size: 14px;
-  height: 20px;
-  width: 20px;
-  border-radius: 50px 50px 50px 50px;
-  translate: -100% -25%;
-}
-
 .search-bar {
   background: $tavern-white;
   border-radius: 10px;
@@ -41,5 +30,56 @@
     &:focus {
       outline: none;
     }
+  }
+}
+
+.floating-button {
+  position: fixed;
+  bottom: 6%;
+  right: 6%;
+  text-align: center;
+  text-decoration: none;
+  a {
+    color: white;
+  }
+  .plus-sign {
+    position: absolute;
+    background: $tavern-red;
+    color: white;
+    font-size: 14px;
+    height: 20px;
+    width: 20px;
+    border-radius: 50px 50px 50px 50px;
+    translate: -100% -25%;
+  }
+}
+
+.scroll-to-top {
+  background: silver;
+  border: none;
+  border-radius: 25px;
+  color: black;
+  font-size: 10px;
+  opacity: 0.8;
+  z-index: 5;
+  padding: 8px;
+  margin-bottom: 12px;
+  width: fit-content;
+  img {
+    width: 18px;
+  }
+  &:hover {
+    opacity: 1;
+  }
+  @include media-breakpoint-up(sm) {
+    img {
+      width: 28px;
+    }
+  }
+}
+
+.character-description-box {
+  @include media-breakpoint-up(sm) {
+    width: 50%;
   }
 }
