@@ -3,3 +3,12 @@
   background-color: $tavern-black;
   height: 50px;
 }
+
+.tavern-sign {
+  height: 38px;
+  width: fit-content;
+  a,
+  img {
+    height: 38px;
+  }
+}
