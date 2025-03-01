@@ -43,13 +43,13 @@
     color: white;
   }
   .plus-sign {
-    position: absolute;
     background: $tavern-red;
     color: white;
     font-size: 14px;
     height: 20px;
     width: 20px;
     border-radius: 50px 50px 50px 50px;
+    position: absolute;
     translate: -100% -25%;
   }
 }
@@ -63,23 +63,40 @@
   opacity: 0.8;
   z-index: 5;
   padding: 8px;
-  margin-bottom: 12px;
   width: fit-content;
   img {
     width: 18px;
+    @include media-breakpoint-up(sm) {
+      width: 28px;
+    }
   }
   &:hover {
     opacity: 1;
-  }
-  @include media-breakpoint-up(sm) {
-    img {
-      width: 28px;
-    }
   }
 }
 
 .character-description-box {
   @include media-breakpoint-up(sm) {
     width: 50%;
+  }
+}
+
+//xl only
+@include media-breakpoint-up(xl) {
+  .floating-button {
+    .plus-sign {
+      font-size: 18px;
+      height: 28px;
+      width: 28px;
+    }
+    a > img {
+      width: 100px;
+    }
+  }
+  .scroll-to-top {
+    padding: 16px 8px;
+    img {
+      width: 32px;
+    }
   }
 }

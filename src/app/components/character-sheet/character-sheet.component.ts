@@ -194,11 +194,12 @@ export class CharacterSheetComponent {
   }
 
   createCharacter(name: string) {
+    this.setAbiltyScoreFormValues();
     this.createUniqueId();
     this.playerCharacterList$.unshift(this.playerCharacterForm$.value);
     this.characterSheetService.saveCharacters(this.playerCharacterList$);
     alert(name + ' has been added to your roster');
-    this.clearFields();
+    this.onSubmit();
   }
 
   saveEditedCharacter() {
@@ -211,6 +212,7 @@ export class CharacterSheetComponent {
           this.playerCharacterForm$
         );
         alert('Saved changes');
+        this.onSubmit();
       }
     }
   }

@@ -2,7 +2,8 @@
   <form
     class="character-sheet-form"
     [formGroup]="playerCharacterForm$"
-    (submit)="onSubmit()"
+    (submit)="isNewCharacter && createCharacter(characterName.value)"
+    (submit)="!isNewCharacter && saveEditedCharacter()"
   >
     <!--form top buttons-->
     @let form = playerCharacterForm$;
@@ -537,7 +538,6 @@
                 id="create-new-character"
                 type="submit"
                 [disabled]="!form.valid"
-                (click)="createCharacter(characterName.value)"
               >
                 Save<img class="ms-1" src="/img/save.png" />
               </button>
@@ -548,7 +548,6 @@
                 id="edit-character"
                 type="submit"
                 [disabled]="!form.valid"
-                (click)="saveEditedCharacter()"
               >
                 Save Changes<img class="ms-1" src="/img/save.png" />
               </button>
@@ -559,11 +558,17 @@
       </div>
       <!--Seal-->
       <div class="mt-3 w-100 text-end text-sm-start position-relative">
-        <img
-          class="red-seal pt-4"
-          src="img/red-seal.png"
-          [class.opacity-0]="!playerCharacterForm$.valid"
-        />
+        <button
+          type="submit"
+          class="border-0 bg-transparent red-seal"
+          [disabled]="!form.valid"
+        >
+          <img
+            class="w-100 pt-4"
+            src="img/red-seal.png"
+            [class.opacity-0]="!playerCharacterForm$.valid"
+          />
+        </button>
       </div>
     </section>
     <!--Scroll to top for mobile/tablet-->

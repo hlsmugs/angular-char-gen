@@ -16,7 +16,8 @@ import { ScrollerService } from '../../services/scroller.service';
 export class CharacterRosterComponent {
   @HostListener('window:scroll', ['$event'])
   onScrollTop(event: any) {
-    const offsetScrollHeight = document.getElementById('test')?.scrollHeight;
+    const offsetScrollHeight =
+      document.getElementById('character-roster')?.scrollTop;
     if (window.scrollY <= offsetScrollHeight!) {
       this.loadLimit = this.loadDefault;
     }
@@ -32,7 +33,7 @@ export class CharacterRosterComponent {
   charactersLoaded?: number;
   loadLimit?: number;
   loadIncrement?: number;
-  loadDefault = 2;
+  loadDefault = 3;
 
   //filters
   isSearchByName?: boolean;
