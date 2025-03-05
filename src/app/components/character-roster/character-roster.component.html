@@ -80,7 +80,7 @@
     <!--variables to track index-->
     @let characterIndex = 'character-index-' + $index;
     <!--variables to for id-->
-    @let characterIndexTarget = '#' + characterIndex;
+    @let characterIndexTarget = '.' + characterIndex;
     <!--load limit; default = 5-->
     @if ($index <= loadLimit! - 1){
     <div
@@ -127,7 +127,7 @@
               <span> {{ c.characterBackground }} </span>
             </div>
           </div>
-          <div [id]="characterIndex" class="collapse">
+          <div [class]="characterIndex" class="collapse">
             <!--ability scores-->
             <div
               class="ability-scores d-flex flex-row flex-wrap justify-content-between mt-3"
@@ -178,6 +178,15 @@
               </div>
               }
             </div>
+          </div>
+          <!--ellipsis-->
+          <div
+            class="text-center collapse show"
+            [class]="characterIndex"
+            data-bs-toggle="tooltip"
+            title="Expand Content"
+          >
+            <img class="custom-icon" src="/img/ellipsis.png" />
           </div>
         </div>
       </div>

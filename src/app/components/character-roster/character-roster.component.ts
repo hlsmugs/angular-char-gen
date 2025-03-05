@@ -50,6 +50,9 @@ export class CharacterRosterComponent {
   prevScrollY?: number;
   isSTTShown?: boolean;
 
+  //collapse
+  isCollapsed?: boolean;
+
   //filters
   isSearchByName?: boolean;
   isSearchByClass?: boolean;
@@ -70,6 +73,7 @@ export class CharacterRosterComponent {
     this.isSearchByBackground = true;
     //default val
     this.prevScrollY = 0;
+    this.isCollapsed = true;
     this.loadLimit = this.loadDefault;
     this.loadIncrement = this.loadDefault;
   }
