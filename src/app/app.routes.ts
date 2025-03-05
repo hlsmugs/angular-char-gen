@@ -5,6 +5,7 @@ import { CreateACharacterComponent } from './components/create-a-character/creat
 import { EditCharacterComponent } from './components/edit-character/edit-character.component';
 import { NotFoundComponent } from './error/not-found/not-found.component';
 import { DiceRollerComponent } from './components/dice-roller/dice-roller.component';
+import { RoadmapComponent } from './components/roadmap/roadmap.component';
 
 export const routes: Routes = [
   {
@@ -43,10 +44,17 @@ export const routes: Routes = [
   //     }
   //   },
   // },
-  { path: 'edit-character/:id', component: EditCharacterComponent },
+  {
+    path: 'edit-character/:id',
+    component: EditCharacterComponent,
+  },
   {
     path: 'dice-roller',
     component: DiceRollerComponent,
+  },
+  {
+    path: 'roadmap',
+    component: RoadmapComponent,
   },
   {
     //MUST BE LAST
