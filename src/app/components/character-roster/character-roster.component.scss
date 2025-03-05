@@ -182,7 +182,6 @@ input[type="search"]::-webkit-search-cancel-button {
     text-decoration: underline;
   }
   @include media-breakpoint-up(xl) {
-    width: 50%;
     .character-description-text {
       padding-right: 24px;
     }
@@ -205,4 +204,39 @@ input[type="search"]::-webkit-search-cancel-button {
 .ellipsis {
   width: 18px;
   height: 18px;
+}
+
+//xxl
+@include media-breakpoint-up(xxl) {
+  h2 {
+    font-size: 40px;
+  }
+  h6 {
+    font-size: 24px;
+  }
+  .character-details span {
+    font-size: 24px;
+  }
+  .delete-button,
+  .edit-button {
+    width: 32px;
+    height: 32px;
+    img {
+      width: 32px;
+      height: 32px;
+    }
+  }
+  .ability-score-box {
+    width: 20%;
+    height: 90px !important;
+    max-width: 80px;
+    border-radius: 5px 5px 50px 50px;
+    p {
+      height: 100%;
+      align-content: center;
+      font-size: 24px;
+      padding-bottom: 4px;
+    }
+    // max-width: 60px;
+  }
 }
