@@ -1,8 +1,28 @@
 @import "defaults";
 
-.character-roster-bar {
-  height: $nav-height;
-  background-color: $tavern-black;
+.character-roster-messages {
+  width: 100%;
+  min-height: 120px;
+  background: $tavern-parchment;
+  border-bottom: 8px ridge $tavern-brown;
+  color: $tavern-black;
+  &-border {
+    border: 2px dashed $tavern-black;
+    border-radius: 16px;
+    margin: 18px 25%;
+  }
+  span {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+.search-messages {
+  background: url("/img/parchment-horizontal.png") no-repeat;
+  border: none;
+  background-size: 100% 100%;
+  width: 300px;
+  height: 200px;
 }
 
 .character-list {
@@ -70,46 +90,55 @@
   }
 }
 
-.floating-buttons {
+.floating-button {
   position: fixed;
-  bottom: 6%;
-  right: 6%;
   text-align: center;
-  text-decoration: none;
-  a {
-    color: white;
-    opacity: 0.6;
-    &:hover {
-      opacity: 1;
-    }
-  }
-  .plus-sign {
-    background: $tavern-red;
-    color: white;
-    font-size: 14px;
-    height: 20px;
-    width: 20px;
-    border-radius: 50px 50px 50px 50px;
-    position: absolute;
-    translate: -100% -25%;
+  border-radius: 50px;
+  a,
+  button {
+    all: unset;
+    text-align: center;
+    vertical-align: middle;
+    width: 100%;
+    height: 100%;
   }
 }
 
-.scroll-to-top {
-  background: silver;
-  border: none;
-  border-radius: 25px;
-  color: black;
-  font-size: 10px;
-  opacity: 0.6;
-  z-index: 5;
-  padding: 8px;
-  width: fit-content;
-  &:hover {
-    opacity: 1;
+.btn-add-character {
+  bottom: 6%;
+  right: 4%;
+  height: 64px;
+  width: 64px;
+  background: $tavern-red;
+  a > img {
+    width: 38px;
+    margin-left: 8px;
   }
-  img {
-    width: 28px;
+  @include media-breakpoint-up(xl) {
+    height: 100px;
+    width: 100px;
+    a > img {
+      width: 60px;
+      margin-left: 14px;
+    }
+  }
+}
+
+.btn-scroll-to-top {
+  bottom: 6%;
+  left: 4%;
+  height: 50px;
+  width: 50px;
+  background: $tavern-black;
+  button > img {
+    width: 32px;
+  }
+  @include media-breakpoint-up(xl) {
+    height: 80px;
+    width: 80px;
+    button > img {
+      width: 64px;
+    }
   }
 }
 
@@ -130,33 +159,15 @@
   // }
 }
 
-//xl only
-@include media-breakpoint-up(xl) {
-  .floating-button {
-    .plus-sign {
-      font-size: 18px;
-      height: 28px;
-      width: 28px;
-    }
-    a > img {
-      width: 100px;
-    }
-  }
-  .scroll-to-top {
-    padding: 16px 8px;
-    img {
-      width: 32px;
-    }
-  }
-}
-
 .delete-button,
 .edit-button {
   all: unset;
   width: 24px;
   height: 24px;
-  opacity: 0.5;
-  &:hover {
-    opacity: 1;
+  @include media-breakpoint-up(sm) {
+    opacity: 0.5;
+    &:hover {
+      opacity: 1;
+    }
   }
 }

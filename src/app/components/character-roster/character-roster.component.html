@@ -9,7 +9,7 @@
   <div
     id="character-roster"
     class="d-flex flex-column align-items-center roster-header w-100 align-self-center py-3 py-sm-2"
-    (scroll)="onScrollTop($event)"
+    (scroll)="onScroll($event)"
   >
     <h1 class="text-center p-2">Character Roster</h1>
     <div class="d-flex flex-column flex-sm-row justify-content-center w-100">
@@ -38,30 +38,30 @@
   </div>
 
   <!--floating buttons-->
-  <div class="floating-buttons d-none d-sm-flex flex-column align-items-center">
-    <!--scroll to top-->
-    @if (loadLimit! > loadDefault) {
-
+  <!--scroll to top-->
+  @if (isSTTShown) {
+  <div class="floating-button btn-scroll-to-top">
     <button
-      class="scroll-to-top mb-2 mb-sm-3"
       (click)="scrollToTop()"
       data-bs-toggle="tooltip"
       data-bs-placement="top"
       title="Scroll to top"
     >
-      <img src="/img/up-arrow.png" />
+      <img class="invert-color" src="/img/up-caret.png" />
     </button>
-    }
-    <!--add characters-->
+  </div>
+  }
+
+  <!--add characters-->
+  <div class="floating-button btn-add-character d-flex">
     <a
-      class="text-decoration-none"
+      class="flex-fill align-content-center"
       routerLink="/create-a-character"
       data-bs-toggle="tooltip"
       data-bs-placement="top"
       title="Add Character"
     >
-      <img src="/img/document-sealed.png" />
-      <span class="plus-sign">+</span>
+      <img class="invert-color" src="/img/new-file.png" />
     </a>
   </div>
 
@@ -74,7 +74,6 @@
     infiniteScroll
     [infiniteScrollDistance]="2"
     [infiniteScrollThrottle]="50"
-    (scrolled)="onScroll()"
   >
     <!--iterate through character list-->
     @for(c of filteredCharacterList$; track $index;){
@@ -191,26 +190,50 @@
   </section>
   }
 
+  <!--desktop; search messages-->
+  @if (filteredCharacterList$.length == 0){
   <div
-    class="d-flex d-sm-none w-100 position-static bottom-0 character-roster-bar"
+    class="d-none d-sm-flex flex-column search-messages align-self-center my-5"
   >
     <!--no characters-->
     @if (characterList$.length == 0) {
-    <div class="bg-black text-white">
-      Your roster is empty... click here to create a character
-    </div>
+    <span class="px-4 my-auto text-center"> Your roster is empty... </span>
+    }
+    <!--no character found-->
+    @if (characterList$.length > 0){
+
+    <span class="px-4 my-auto"
+      >There are no characters that match your search</span
+    >
+    }
+  </div>
+  }
+
+  <!--mobile view; search messages / add character-->
+  <div
+    class="d-flex d-sm-none flex-column flex-fill character-roster-messages position-static bottom-0 m-0"
+  >
+    <!--unsuccessful search result-->
+    <!--no characters-->
+    @if (characterList$.length == 0 && filteredCharacterList$.length == 0) {
+    <span class="px-5 mt-3"> Your roster is empty... </span>
     }
     <!--no character found-->
     @if (filteredCharacterList$.length == 0 && characterList$.length > 0){
 
-    <div class="bg-black text-white">
-      There are no characters that match your search
+    <span class="px-5 mt-3"
+      >There are no characters that match your search</span
+    >
+    }
+    <div
+      class="d-flex d-sm-none character-roster-messages-border"
+      [class.my-auto]="
+        characterList$.length > 0 && filteredCharacterList$.length > 0
+      "
+      routerLink="/create-a-character"
+    >
+      <!--add character-->
+      <span class="my-3">Add New Character</span>
     </div>
-    }
-    <!--add character-->
-    @if (characterList$.length > 0 || filteredCharacterList$.length > 0) {
-    <!--change text based on stuff-->
-    <div class="text-white">Add another character</div>
-    }
   </div>
 </div>

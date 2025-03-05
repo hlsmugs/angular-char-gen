@@ -14,11 +14,22 @@ import { ScrollerService } from '../../services/scroller.service';
   styleUrl: './character-roster.component.scss',
 })
 export class CharacterRosterComponent {
+  //for all scroll events
   @HostListener('window:scroll', ['$event'])
-  onScrollTop(event: any) {
+  onScroll(event: any) {
+    // on scroll
+    const currentScrollY = window.scrollY;
+    if (this.prevScrollY! < currentScrollY) {
+      this.isSTTShown = true;
+      this.loadLimit! += this.loadIncrement!;
+    }
+    this.prevScrollY = currentScrollY;
+
+    //if at top, hide scroll to top
     const offsetScrollHeight =
       document.getElementById('character-roster')?.scrollTop;
     if (window.scrollY <= offsetScrollHeight!) {
+      this.isSTTShown = false;
       this.loadLimit = this.loadDefault;
     }
   }
@@ -34,6 +45,10 @@ export class CharacterRosterComponent {
   loadLimit?: number;
   loadIncrement?: number;
   loadDefault = 10;
+
+  //scrolling
+  prevScrollY?: number;
+  isSTTShown?: boolean;
 
   //filters
   isSearchByName?: boolean;
@@ -54,6 +69,7 @@ export class CharacterRosterComponent {
     this.isSearchBySpecies = true;
     this.isSearchByBackground = true;
     //default val
+    this.prevScrollY = 0;
     this.loadLimit = this.loadDefault;
     this.loadIncrement = this.loadDefault;
   }
@@ -101,14 +117,15 @@ export class CharacterRosterComponent {
       this.characterSheetService.deleteCharacterById(id);
       this.filteredCharacterList$ =
         this.characterSheetService.getAllCharacters();
+      this.refresh();
     }
-  }
-
-  onScroll() {
-    this.loadLimit! += this.loadIncrement!;
   }
 
   scrollToTop() {
     this.scrollerService.scrollToTop();
+  }
+
+  refresh() {
+    window.location.reload();
   }
 }
