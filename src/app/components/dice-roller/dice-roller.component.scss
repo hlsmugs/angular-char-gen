@@ -1,0 +1,13 @@
+@import "defaults";
+
+.dice-roller-wrapper {
+  height: calc(100vh - $nav-height);
+  background: url("/img/card-table.png") repeat;
+  padding: 16px;
+}
+
+.dice-roller-header {
+  text-align: center;
+  color: white;
+  text-shadow: $text-shadow-dark-outline;
+}
