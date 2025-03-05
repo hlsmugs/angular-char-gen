@@ -33,7 +33,7 @@ export class CharacterRosterComponent {
   charactersLoaded?: number;
   loadLimit?: number;
   loadIncrement?: number;
-  loadDefault = 3;
+  loadDefault = 10;
 
   //filters
   isSearchByName?: boolean;

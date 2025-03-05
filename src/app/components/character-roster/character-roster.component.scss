@@ -1,5 +1,42 @@
 @import "defaults";
 
+.character-roster-bar {
+  height: $nav-height;
+  background-color: $tavern-black;
+}
+
+.character-list {
+  @include media-breakpoint-up(sm) {
+    padding: 0 50px;
+  }
+}
+
+.roster-scroll {
+  background: $tavern-parchment;
+  @include media-breakpoint-up(sm) {
+    background: url("/img/scroll-content.png") no-repeat;
+    background-size: cover;
+    margin-bottom: -2vh;
+  }
+  &-ends {
+    max-height: 7.5vh;
+  }
+  &-content {
+    padding: 16px 20px;
+    @include media-breakpoint-up(sm) {
+      padding: 3.5vh 20vw;
+    }
+  }
+  &-container {
+    @include media-breakpoint-down(sm) {
+      &:first-child {
+        border-top: 8px ridge $tavern-brown;
+      }
+      border-bottom: 8px ridge $tavern-brown;
+    }
+  }
+}
+
 .chain {
   height: 8vh;
 }
@@ -33,7 +70,7 @@
   }
 }
 
-.floating-button {
+.floating-buttons {
   position: fixed;
   bottom: 6%;
   right: 6%;
@@ -41,6 +78,10 @@
   text-decoration: none;
   a {
     color: white;
+    opacity: 0.6;
+    &:hover {
+      opacity: 1;
+    }
   }
   .plus-sign {
     background: $tavern-red;
@@ -60,25 +101,33 @@
   border-radius: 25px;
   color: black;
   font-size: 10px;
-  opacity: 0.8;
+  opacity: 0.6;
   z-index: 5;
   padding: 8px;
   width: fit-content;
-  img {
-    width: 18px;
-    @include media-breakpoint-up(sm) {
-      width: 28px;
-    }
-  }
   &:hover {
     opacity: 1;
   }
+  img {
+    width: 28px;
+  }
+}
+
+.character-details {
+  span {
+    padding-right: 16px;
+  }
+}
+
+.ability-score-box {
+  width: 15%;
 }
 
 .character-description-box {
-  @include media-breakpoint-up(sm) {
-    width: 50%;
-  }
+  width: 100%;
+  // @include media-breakpoint-up(xl) {
+  //   width: 50%;
+  // }
 }
 
 //xl only
@@ -98,5 +147,16 @@
     img {
       width: 32px;
     }
+  }
+}
+
+.delete-button,
+.edit-button {
+  all: unset;
+  width: 24px;
+  height: 24px;
+  opacity: 0.5;
+  &:hover {
+    opacity: 1;
   }
 }

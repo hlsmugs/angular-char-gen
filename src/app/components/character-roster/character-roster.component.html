@@ -38,7 +38,7 @@
   </div>
 
   <!--floating buttons-->
-  <div class="floating-button d-flex flex-column align-items-center">
+  <div class="floating-buttons d-none d-sm-flex flex-column align-items-center">
     <!--scroll to top-->
     @if (loadLimit! > loadDefault) {
 
@@ -67,6 +67,7 @@
 
   <!--list of characters-->
   @if (filteredCharacterList$ && filteredCharacterList$.length > 0){
+
   <section
     name="character-list"
     class="character-list d-flex flex-column align-items-center"
@@ -77,91 +78,139 @@
   >
     <!--iterate through character list-->
     @for(c of filteredCharacterList$; track $index;){
+    <!--variables to track index-->
+    @let characterIndex = 'character-index-' + $index;
+    <!--variables to for id-->
+    @let characterIndexTarget = '#' + characterIndex;
     <!--load limit; default = 5-->
     @if ($index <= loadLimit! - 1){
-    <div class="parchment-horizontal w-100">
-      <div class="parchment-content">
-        <div class="d-flex flex-column character-details">
-          <h2>{{ c.characterName }}</h2>
-          <div class="d-flex flex-row flex-wrap">
-            <span> {{ c.characterClass }}</span>
-            <span> {{ c.characterSpecies }}</span>
-            <span> {{ c.characterBackground }} </span>
+    <div
+      class="w-100 my-0 my-sm-4 roster-scroll-container"
+      data-bs-toggle="collapse"
+      [attr.data-bs-target]="characterIndexTarget"
+    >
+      <img
+        class="d-none d-sm-block w-100 roster-scroll-ends"
+        src="img/scroll-top.png"
+      />
+      <div class="roster-scroll w-100">
+        <div class="roster-scroll-content">
+          <div class="d-flex flex-column character-details">
+            <div class="d-flex flex-row justify-content-between">
+              <h2>{{ c.characterName }}</h2>
+              <!--buttons-->
+              <div class="d-flex flex-row p-0">
+                <!--edit button-->
+                <button
+                  class="ms-1 bg-transparent border-0 d-flex justify-content-center edit-button"
+                  [routerLink]="['/edit-character', c.id]"
+                  data-bs-toggle="tooltip"
+                  title="Edit Character"
+                >
+                  <!-- <span class="d-block d-md-none p-0">Edit</span> -->
+                  <img class="custom-icon my-auto" src="/img/edit-quill.png" />
+                </button>
+                <!--delete button-->
+                <button
+                  class="bg-transparent border-0 d-flex justify-content-center delete-button"
+                  (click)="deleteCharacter(c.id, c.characterName)"
+                  data-bs-toggle="tooltip"
+                  title="Delete Character"
+                >
+                  <img class="custom-icon my-auto" src="/img/trash.png" />
+                  <!-- <span class="d-block d-sm-none p-0">Delete</span> -->
+                </button>
+              </div>
+            </div>
+            <div class="d-flex flex-row flex-wrap">
+              <span> {{ c.characterClass }}</span>
+              <span> {{ c.characterSpecies }}</span>
+              <span> {{ c.characterBackground }} </span>
+            </div>
           </div>
-        </div>
-        <!--ability scores-->
-        <div class="ability-scores d-flex flex-row flex-wrap">
-          @if (c.abilityScores){ @let abilityScoresList =
-          this.characterSheetService.getAbilityScores(c); @for (a of
-          abilityScoresList; track $index){
-          <div class="ability-score-box d-flex flex-column">
-            <strong class="ability-score-name">{{
-              abilityScoresList[$index][0]
-            }}</strong>
-            <p class="ability-score-value">
-              {{ abilityScoresList[$index][1] }}
-            </p>
-          </div>
-          }}
-        </div>
-        <!--description-->
-        <div
-          class="d-flex flex-column flex-sm-row flex-wrap character-description"
-        >
-          @if (c.characterDescription){
-          <div class="character-description-box">
-            <strong class="character-description-header"
-              >Personality Traits</strong
+          <div [id]="characterIndex" class="collapse">
+            <!--ability scores-->
+            <div
+              class="ability-scores d-flex flex-row flex-wrap justify-content-between mt-3"
             >
-            <p class="character-description-text">
-              {{ c.characterDescription.personalityTraits }}
-            </p>
+              @if (c.abilityScores){ @let abilityScoresList =
+              this.characterSheetService.getAbilityScores(c); @for (a of
+              abilityScoresList; track $index){
+              <div class="ability-score-box d-flex flex-column text-center">
+                <strong class="ability-score-name">{{
+                  abilityScoresList[$index][0].substring(0, 3)
+                }}</strong>
+                <p class="ability-score-value">
+                  {{ abilityScoresList[$index][1] }}
+                </p>
+              </div>
+              }}
+            </div>
+            <!--description-->
+            <div
+              class="d-flex flex-column flex-sm-row flex-wrap character-description"
+            >
+              @if (c.characterDescription){
+              <div class="character-description-box">
+                <strong class="character-description-header"
+                  >Personality Traits</strong
+                >
+                <p class="character-description-text">
+                  {{ c.characterDescription.personalityTraits }}
+                </p>
+              </div>
+              <div class="character-description-box">
+                <strong class="character-description-header">Ideals</strong>
+                <p class="character-description-text">
+                  {{ c.characterDescription.ideals }}
+                </p>
+              </div>
+              <div class="character-description-box">
+                <strong class="character-description-header">Bonds</strong>
+                <p class="character-description-text">
+                  {{ c.characterDescription.bonds }}
+                </p>
+              </div>
+              <div class="character-description-box">
+                <strong class="character-description-header">Flaws</strong>
+                <p class="character-description-text">
+                  {{ c.characterDescription.flaws }}
+                </p>
+              </div>
+              }
+            </div>
           </div>
-          <div class="character-description-box">
-            <strong class="character-description-header">Ideals</strong>
-            <p class="character-description-text">
-              {{ c.characterDescription.ideals }}
-            </p>
-          </div>
-          <div class="character-description-box">
-            <strong class="character-description-header">Bonds</strong>
-            <p class="character-description-text">
-              {{ c.characterDescription.bonds }}
-            </p>
-          </div>
-          <div class="character-description-box">
-            <strong class="character-description-header">Flaws</strong>
-            <p class="character-description-text">
-              {{ c.characterDescription.flaws }}
-            </p>
-          </div>
-          }
-        </div>
-        <!--buttons-->
-        <div>
-          <button [routerLink]="['/edit-character', c.id]">Edit</button>
-          <button (click)="deleteCharacter(c.id, c.characterName)">
-            Delete
-          </button>
         </div>
       </div>
+      <img
+        class="d-none d-sm-block w-100 roster-scroll-ends"
+        src="img/scroll-bottom.png"
+      />
     </div>
-    } }
+    }}
   </section>
   }
-  <!--no characters-->
-  @if (characterList$.length == 0) {
-  <div class="bg-black text-white">
-    Your roster is empty... click here to create a character
-  </div>
-  }
-  <!--no character found-->
-  @if (filteredCharacterList$.length == 0 && characterList$.length > 0){
 
-  <div class="bg-black text-white">
-    There are no characters that match your search
-  </div>
-  }
+  <div
+    class="d-flex d-sm-none w-100 position-static bottom-0 character-roster-bar"
+  >
+    <!--no characters-->
+    @if (characterList$.length == 0) {
+    <div class="bg-black text-white">
+      Your roster is empty... click here to create a character
+    </div>
+    }
+    <!--no character found-->
+    @if (filteredCharacterList$.length == 0 && characterList$.length > 0){
 
-  <!--infinite scroll, only load 5 at a time-->
+    <div class="bg-black text-white">
+      There are no characters that match your search
+    </div>
+    }
+    <!--add character-->
+    @if (characterList$.length > 0 || filteredCharacterList$.length > 0) {
+    <!--change text based on stuff-->
+    <div class="text-white">Add another character</div>
+    }
+  </div>
 </div>
