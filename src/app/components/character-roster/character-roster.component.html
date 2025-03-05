@@ -17,8 +17,10 @@
       <div
         class="d-flex flex-row justify-content-center justify-content-sm-start my-3 mx-0 mx-sm-3"
       >
-        <!--filter by button that opens modal-->
+        <!--TODO: filter by button that opens modal-->
+
         <div class="mt-auto search-bar">
+          <!--search bar-->
           <input
             type="search"
             name="characterSearchBar"
@@ -32,7 +34,7 @@
             title="Search by name, class, species, or background"
           />
         </div>
-        <!--sort by button-->
+        <!--TODO: sort by button-->
       </div>
     </div>
   </div>
@@ -94,9 +96,10 @@
       />
       <div class="roster-scroll w-100">
         <div class="roster-scroll-content">
+          <!--details: name, class, species, bg-->
           <div class="d-flex flex-column character-details">
             <div class="d-flex flex-row justify-content-between">
-              <h2>{{ c.characterName }}</h2>
+              <h2 class="text-decoration-underline">{{ c.characterName }}</h2>
               <!--buttons-->
               <div class="d-flex flex-row p-0">
                 <!--edit button-->
@@ -127,25 +130,25 @@
               <span> {{ c.characterBackground }} </span>
             </div>
           </div>
-          <div [class]="characterIndex" class="collapse">
-            <!--ability scores-->
-            <div
-              class="ability-scores d-flex flex-row flex-wrap justify-content-between mt-3"
-            >
-              @if (c.abilityScores){ @let abilityScoresList =
-              this.characterSheetService.getAbilityScores(c); @for (a of
-              abilityScoresList; track $index){
-              <div class="ability-score-box d-flex flex-column text-center">
-                <strong class="ability-score-name">{{
-                  abilityScoresList[$index][0].substring(0, 3)
-                }}</strong>
-                <p class="ability-score-value">
-                  {{ abilityScoresList[$index][1] }}
-                </p>
-              </div>
-              }}
+          <!--ability scores-->
+          <div
+            class="ability-scores d-flex flex-row flex-wrap justify-content-between justify-content-xl-evenly my-3"
+          >
+            @if (c.abilityScores){ @let abilityScoresList =
+            this.characterSheetService.getAbilityScores(c); @for (a of
+            abilityScoresList; track $index){
+            <div class="ability-score-box d-flex flex-column text-center">
+              <strong class="ability-score-name">{{
+                abilityScoresList[$index][0].substring(0, 3)
+              }}</strong>
+              <p class="mb-1 mt-sm-1 mb-sm-2 ability-score-value">
+                {{ abilityScoresList[$index][1] }}
+              </p>
             </div>
-            <!--description-->
+            }}
+          </div>
+          <!--description-->
+          <div [class]="characterIndex" class="collapse">
             <div
               class="d-flex flex-column flex-sm-row flex-wrap character-description"
             >
@@ -179,14 +182,14 @@
               }
             </div>
           </div>
-          <!--ellipsis-->
+          <!--ellipsis for expand/collapse-->
           <div
             class="text-center collapse show"
             [class]="characterIndex"
             data-bs-toggle="tooltip"
             title="Expand Content"
           >
-            <img class="custom-icon" src="/img/ellipsis.png" />
+            <img class="ellipsis" src="/img/ellipsis.png" />
           </div>
         </div>
       </div>

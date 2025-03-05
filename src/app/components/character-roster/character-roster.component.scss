@@ -17,6 +17,16 @@
   }
 }
 
+input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  margin-right: -4px;
+  background: url("/img/cancel.png") no-repeat;
+  background-size: cover;
+  cursor: pointer;
+}
+
 .search-messages {
   background: url("/img/parchment-horizontal.png") no-repeat;
   border: none;
@@ -150,13 +160,33 @@
 
 .ability-score-box {
   width: 15%;
+  max-width: 60px;
+  // background: $tavern-white;
+  border: 2px solid $tavern-black;
+  // border: 2px solid maroon;
+  // outline: 2px outset silver;
+  border-radius: 5px 5px 25px 25px;
+  .ability-score-name {
+    border-bottom: 1px solid $tavern-black;
+    //   color: whitesmoke;
+    //   background: $tavern-red;
+    //   text-shadow: $text-shadow-dark-outline;
+  }
 }
 
 .character-description-box {
+  display: flex;
+  flex-direction: column;
   width: 100%;
-  // @include media-breakpoint-up(xl) {
-  //   width: 50%;
-  // }
+  .character-description-header {
+    text-decoration: underline;
+  }
+  @include media-breakpoint-up(xl) {
+    width: 50%;
+    .character-description-text {
+      padding-right: 24px;
+    }
+  }
 }
 
 .delete-button,
@@ -170,4 +200,9 @@
       opacity: 1;
     }
   }
+}
+
+.ellipsis {
+  width: 18px;
+  height: 18px;
 }

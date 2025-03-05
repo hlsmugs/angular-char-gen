@@ -10,7 +10,7 @@
     "test": "ng test",
     "serve:ssr:angular-char-gen": "node dist/angular-char-gen/server/server.mjs",
     "firebase-deploy": "firebase deploy",
-    "redeploy": "ng build && firebase deploy"
+    "redeploy": "npm run build && firebase deploy"
   },
   "private": true,
   "dependencies": {
