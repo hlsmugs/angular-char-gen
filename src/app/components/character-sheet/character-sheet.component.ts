@@ -220,17 +220,24 @@ export class CharacterSheetComponent {
   //set abilityScore values for form
   setAbiltyScoreFormValues() {
     let newScores = this.abilityScoreValuesWithBonuses;
-    let form = this.fb.group({
-      strengthScore: [newScores![0], [Validators.required]],
-      dexterityScore: [newScores![1], [Validators.required]],
-      constitutionScore: [newScores![2], [Validators.required]],
-      intelligenceScore: [newScores![3], [Validators.required]],
-      wisdomScore: [newScores![4], [Validators.required]],
-      charismaScore: [newScores![5], [Validators.required]],
-    });
-    this.playerCharacterForm$.controls['abilityScores'] = form;
-    let abilityScores =
-      this.playerCharacterForm$.controls['abilityScores'].value;
+    this.playerCharacterForm$
+      .get('abilityScores.strengthScore')
+      ?.setValue(newScores![0]);
+    this.playerCharacterForm$
+      .get('abilityScores.dexterityScore')
+      ?.setValue(newScores![1]);
+    this.playerCharacterForm$
+      .get('abilityScores.constitutionScore')
+      ?.setValue(newScores![2]);
+    this.playerCharacterForm$
+      .get('abilityScores.intelligenceScore')
+      ?.setValue(newScores![3]);
+    this.playerCharacterForm$
+      .get('abilityScores.wisdomScore')
+      ?.setValue(newScores![4]);
+    this.playerCharacterForm$
+      .get('abilityScores.charismaScore')
+      ?.setValue(newScores![5]);
   }
 
   // point buy
@@ -445,13 +452,17 @@ export class CharacterSheetComponent {
 
   createUniqueId() {
     const random = this.randomService.getUniqueId();
-    this.playerCharacterList$.forEach((character) => {
-      if (character.id == random) {
-        this.createUniqueId();
-      } else {
-        this.playerCharacterForm$.controls['id'].setValue(random);
-      }
-    });
+    if (this.playerCharacterList$.length > 0) {
+      this.playerCharacterList$.forEach((character) => {
+        if (character.id == random) {
+          this.createUniqueId();
+        } else {
+          this.playerCharacterForm$.controls['id'].setValue(random);
+        }
+      });
+    } else {
+      this.playerCharacterForm$.get('id')?.setValue(random);
+    }
   }
 
   //generate random character stuff
