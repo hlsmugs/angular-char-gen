@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { RandomizerService } from './randomizer.service';
-import { Dice } from '../models/_enums/dice';
 
 @Injectable({
   providedIn: 'root',
@@ -12,20 +11,20 @@ export class DiceRollerService extends RandomizerService {
 
   /**
    *
-   * @param diceSize are standard die sizes: 100, 20, 12, 10, 8, 6, 4, 2
+   * @param diceSize is any number
    * @returns a random number between 1 and the max die size
    */
-  rollDice(diceSize: Dice): number {
+  rollDice(diceSize: number): number {
     return this.getRandomNumber(0, diceSize) + 1;
   }
 
   /**
    *
    * @param numberOfDice is the number of dice you want to roll
-   * @param diceSize are standard die sizes: 100, 20, 12, 10, 8, 6, 4, 2
+   * @param diceSize is any number
    * @returns the array of dice rolled
    */
-  multiRoll(numberOfDice: number, diceSize: Dice): number[] {
+  multiRoll(numberOfDice: number, diceSize: number): number[] {
     let i = 0;
     let sum = 0;
     let rollArray = [];

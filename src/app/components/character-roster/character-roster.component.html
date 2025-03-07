@@ -1,5 +1,5 @@
 <div
-  class="character-roster-container d-flex flex-column justify-content-center"
+  class="character-roster-container d-flex flex-column justify-content-center mx-0 mx-sm-4 mx-lg-5 mb-sm-5"
 >
   <div class="d-none d-sm-flex flex-row justify-content-between w-50 m-auto">
     <img class="chain" src="/img/chain.png" />
@@ -19,7 +19,7 @@
       >
         <!--TODO: filter by button that opens modal-->
 
-        <div class="mt-auto search-bar">
+        <div class="mt-auto search-bar d-flex">
           <!--search bar-->
           <input
             type="search"
@@ -32,7 +32,14 @@
             data-bs-toggle="tooltip"
             data-bs-placement="bottom"
             title="Search by name, class, species, or background"
+            [value]="searchText"
           />
+          <div class="search-cancel-button">
+            <button
+              [hidden]="searchText.length == 0"
+              (click)="clearSearch()"
+            ></button>
+          </div>
         </div>
         <!--TODO: sort by button-->
       </div>

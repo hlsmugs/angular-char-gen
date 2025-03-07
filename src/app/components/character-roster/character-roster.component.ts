@@ -38,6 +38,7 @@ export class CharacterRosterComponent {
   characterSheetService: CharacterSheetService = inject(CharacterSheetService);
   characterList$: PlayerCharacterModel[] = [];
   filteredCharacterList$: PlayerCharacterModel[] = [];
+  searchText: string = '';
   selectedId?: number;
 
   //character load limit
@@ -83,6 +84,7 @@ export class CharacterRosterComponent {
       this.filteredCharacterList$ = this.characterList$;
       return;
     }
+    this.searchText = text;
     this.filteredCharacterList$ = this.characterList$.filter(
       (character) =>
         (this.isSearchByName &&
@@ -123,6 +125,11 @@ export class CharacterRosterComponent {
         this.characterSheetService.getAllCharacters();
       this.refresh();
     }
+  }
+
+  clearSearch() {
+    this.searchText = '';
+    this.filteredCharacterList$ = this.characterList$;
   }
 
   scrollToTop() {

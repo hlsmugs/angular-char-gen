@@ -1,75 +1,94 @@
-<div class="dice-roller-wrapper mt-0 mt-sm-5">
-  <h1 class="dice-roller-header">Dice Roller</h1>
-  <div class="dice-roller-input">
-    <label for="numberOfDice"></label>
-    <input
-      id="numberOfDice"
-      type="number"
-      (change)="setNumberOfDice($event)"
-      min="0"
-    />
-    <div>
-      <input
-        id="d4"
-        type="radio"
-        name="diceSize"
-        value="4"
-        (change)="setDiceSize($event)"
-      />
-      <label for="d4">d4</label>
-      <input
-        id="d6"
-        type="radio"
-        name="diceSize"
-        value="6"
-        (change)="setDiceSize($event)"
-      />
-      <label for="d6">d6</label>
-      <input
-        id="d8"
-        type="radio"
-        name="diceSize"
-        value="8"
-        (change)="setDiceSize($event)"
-      />
-      <label for="d8">d8</label>
-      <input
-        id="d10"
-        type="radio"
-        name="diceSize"
-        value="10"
-        (change)="setDiceSize($event)"
-      />
-      <label for="d10">d10</label>
-      <input
-        id="d12"
-        type="radio"
-        name="diceSize"
-        value="12"
-        (change)="setDiceSize($event)"
-      />
-      <label for="d12">d12</label>
-      <input
-        id="d20"
-        type="radio"
-        name="diceSize"
-        value="20"
-        (change)="setDiceSize($event)"
-      />
-      <label for="d20">d20</label>
-      <input
-        id="d100"
-        type="radio"
-        name="diceSize"
-        value="100"
-        (change)="setDiceSize($event)"
-      />
-      <label for="d100">d100</label>
+<div class="dice-roller-wrapper">
+  <h1 class="dice-roller-header mb-5">Dice Roller</h1>
+  <!--new input textarea-->
+  <div class="d-flex flex-column">
+    <div class="dice-roller-input-box mx-auto">
+      <div class="dice-roller-input">
+        <textarea
+          rows="3"
+          maxlength="64"
+          [value]="diceRollerInput"
+          (keydown)="validateInput($event)"
+          (keyup)="setDiceRollerInput($event)"
+        ></textarea>
+      </div>
+      <div class="text-end">
+        <button type="button" (click)="rollDice()">Roll</button>
+        <button type="button" (click)="clearResults()">Clear</button>
+      </div>
     </div>
-    <button type="button" (click)="rollDice()">Roll</button>
-    <button type="button" (click)="clearResults()">Clear</button>
+    <!--old input version-->
+    <!-- <div class="dice-roller-input-box">
+      <label for="numberOfDice"></label>
+      <input
+        id="numberOfDice"
+        type="number"
+        (change)="setNumberOfDice($event)"
+        min="0"
+      />
+      <div>
+        <input
+          id="d4"
+          type="radio"
+          name="diceSize"
+          value="4"
+          (change)="setDiceSize($event)"
+        />
+        <label for="d4">d4</label>
+        <input
+          id="d6"
+          type="radio"
+          name="diceSize"
+          value="6"
+          (change)="setDiceSize($event)"
+        />
+        <label for="d6">d6</label>
+        <input
+          id="d8"
+          type="radio"
+          name="diceSize"
+          value="8"
+          (change)="setDiceSize($event)"
+        />
+        <label for="d8">d8</label>
+        <input
+          id="d10"
+          type="radio"
+          name="diceSize"
+          value="10"
+          (change)="setDiceSize($event)"
+        />
+        <label for="d10">d10</label>
+        <input
+          id="d12"
+          type="radio"
+          name="diceSize"
+          value="12"
+          (change)="setDiceSize($event)"
+        />
+        <label for="d12">d12</label>
+        <input
+          id="d20"
+          type="radio"
+          name="diceSize"
+          value="20"
+          (change)="setDiceSize($event)"
+        />
+        <label for="d20">d20</label>
+        <input
+          id="d100"
+          type="radio"
+          name="diceSize"
+          value="100"
+          (change)="setDiceSize($event)"
+        />
+        <label for="d100">d100</label>
+      </div>
+      <button type="button" (click)="rollDice()">Roll</button>
+      <button type="button" (click)="clearResults()">Clear</button>
+    </div> -->
   </div>
-
+  <!--results-->
   <div>
     @for (res of rollResults; track $index){ @if(rollSum){ Roll #{{
       $index + 1
@@ -88,4 +107,5 @@ TODO:
 - ex. 5d8dl2 rolls 5d8 and drops the lowest 2 values
 > style to fade out dropped/unused values
 > limit max number of dice rolled or only do SUM for very large numbers
+> button to add
 --></div>

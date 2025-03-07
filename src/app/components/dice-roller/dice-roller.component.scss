@@ -3,11 +3,39 @@
 .dice-roller-wrapper {
   height: calc(100vh - $nav-height);
   background: url("/img/card-table.png") repeat;
-  padding: 16px;
+  padding: 10vh 10vw;
 }
 
 .dice-roller-header {
   text-align: center;
   color: white;
   text-shadow: $text-shadow-dark-outline;
+}
+
+.dice-roller-input {
+  background: white;
+  padding: 12px;
+  &-box {
+    min-width: max(200px, 30vw);
+    background: $faded-brown;
+    border: 8px ridge $faded-brown;
+    border-collapse: collapse;
+    button {
+      background: $tavern-white;
+      border: 4px outset $faded-brown;
+      &:hover {
+        border: 4px inset $faded-brown;
+      }
+    }
+  }
+}
+
+textarea {
+  resize: none;
+  width: 100%;
+  border: none;
+  background: none;
+  &:focus {
+    outline: none;
+  }
 }
