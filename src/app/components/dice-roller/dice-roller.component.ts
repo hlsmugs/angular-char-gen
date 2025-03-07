@@ -13,6 +13,7 @@ export class DiceRollerComponent {
   title: string = 'Dice Roller';
   rollResults?: any[];
   rollSum?: any[];
+  isValidInput?: boolean;
   numberOfDice: number;
   diceSize: number;
   diceRollerInput: string;
@@ -37,60 +38,46 @@ export class DiceRollerComponent {
     const input = evt.key;
     //regex for input
     let validInput = new RegExp('^[0-9dhkl+-]*$');
-    const isValidInput = validInput.test(input);
-    const oldStr = this.diceRollerInput;
-    const val = evt.target.value;
-
     if (input == 'Backspace') {
       return true;
     }
-    if (isValidInput) {
-      this.diceRollerInput = val;
-    } else {
-      this.diceRollerInput = oldStr;
-    }
-
-    return isValidInput;
+    return validInput.test(input);
   }
 
   //checks format of textarea input
-  validateString(): boolean {
-    const fullString = this.diceRollerInput;
+  validateString(fullString: string): boolean {
     //regex for entire string; using diff way
-    let standardRollRegex = /[1-9]\d*d\d+/g;
-    let withConditionsRegex = /[1-9]\d*d\d+((d|k)(h|l))[1-9]\d*/g;
-    let flatValueRegex = /[1-9]\d?/g;
+    let standardRollRegex = /^[+-]?[1-9]\d*d\d+$/g;
+    let withConditionsRegex = /^[+-]?[1-9]\d*d\d+((d|k)(h|l))[1-9]\d*$/g;
+    let flatValueRegex = /^[+-]?[1-9]\d?$/g;
 
     const isStandard: boolean = standardRollRegex.test(fullString);
     const hasConditions: boolean = withConditionsRegex.test(fullString);
     const isFlatValue: boolean = flatValueRegex.test(fullString);
 
     //separate the string using + or - to get multiple values
+    //if has + or -, only calculate for SUM
+    //if starts with -, or non-number
 
-    switch (true) {
-      //standard
-      case isStandard && !hasConditions:
-        console.log('standard string is valid');
-        return true;
-      //has condtions
-      case hasConditions:
-        console.log('fullString with conditions is valid');
-        return true;
-      case isFlatValue:
-        console.log('flat value is valid');
-        return true;
-      default:
-        return false;
+    if ((isStandard && !hasConditions) || hasConditions || isFlatValue) {
+      this.isValidInput = true;
+      return true;
+    } else {
+      console.log('string has invalid input');
+      this.isValidInput = false;
+      return false;
     }
   }
 
   setDiceRollerInput(evt: any) {
     const oldStr = this.diceRollerInput;
     const isValidInput = this.validateInput(evt);
-    const isValidString = this.validateString();
+    // const isValidString = this.validateString(oldStr);
     const val = evt.target.value;
     if (isValidInput) {
       this.diceRollerInput = val;
+      //split into array and then validate each
+      this.splitToArray(val);
     } else {
       this.diceRollerInput = oldStr;
     }
@@ -99,6 +86,19 @@ export class DiceRollerComponent {
   //split into multiple strings
   splitToArray(str: string) {
     const oldArray = this.diceRollerInputArray;
+    const fullStr = this.diceRollerInput;
+    let newArray: string[] = [];
+    let validatedArray: string[] = [];
+
+    newArray = fullStr.split(/(?=[+-])/);
+    newArray.forEach((val) => {
+      if (this.validateString(val)) {
+        validatedArray.push(val);
+      }
+    });
+    this.diceRollerInputArray = validatedArray;
+    console.log(validatedArray);
+    // console.log(newArray);
   }
 
   //need to only take valid format from regex
