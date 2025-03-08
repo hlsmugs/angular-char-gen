@@ -7,9 +7,9 @@
         <textarea
           rows="3"
           maxlength="64"
-          [value]="diceRollerInput"
+          [value]="textAreaInput"
           (keydown)="validateInput($event)"
-          (keyup)="setDiceRollerInput($event)"
+          (keyup)="setDiceRollerArrays($event)"
         ></textarea>
       </div>
       <div class="text-end">
@@ -90,10 +90,10 @@
   </div>
   <!--results-->
   <div>
-    @for (res of rollResults; track $index){ @if(rollSum){ Roll #{{
+    @for (res of allRollResults; track $index){ @if(allRollSums){ Roll #{{
       $index + 1
     }}
-    <p>Total: {{ rollSum![$index] }}</p>
+    <p>Total: {{ allRollSums![$index] }}</p>
     }
     <p>Results: {{ res }}</p>
     }

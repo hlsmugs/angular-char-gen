@@ -4,7 +4,7 @@ import { RandomizerService } from './randomizer.service';
 @Injectable({
   providedIn: 'root',
 })
-export class DiceRollerService extends RandomizerService {
+export class DiceRollerService extends RandomizerService {  
   constructor() {
     super();
   }
@@ -41,6 +41,23 @@ export class DiceRollerService extends RandomizerService {
     let sum = 0;
     numArray.forEach((val) => (sum += val));
     return sum;
+  }
+
+  /**
+  * 
+  * @param rollString is a string in dice roll format (eg. "3d6", "2d20")
+  * @returns 
+  */
+  rollStandard(rollString: string): number[]{
+    const numbers = rollString.split('d');
+    const numberOfDice = Number(numbers[0]);
+    const diceSize = Number(numbers[1]);
+    return this.multiRoll(Math.abs(numberOfDice), diceSize);
+  }
+
+  //check if drop/keep lowest/highest
+  rollWithConditions(){
+
   }
 
   //function to roll multiple die, return sum

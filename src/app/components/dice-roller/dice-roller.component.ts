@@ -11,13 +11,22 @@ import { Title } from '@angular/platform-browser';
 })
 export class DiceRollerComponent {
   title: string = 'Dice Roller';
-  rollResults?: any[];
-  rollSum?: any[];
+  //REGEX
+  standardRollRegex = /^[+-]?[1-9]\d*d[1-9]\d*$/;
+  withConditionsRegex = /^[+-]?[1-9]\d*d[1-9]\d*((d|k)(h|l))[1-9]\d*$/;
+  flatValueRegex = /^[+-]?[1-9]\d*$/;
+  //array of diceResults
+  allRollResults?: any[];
+  //array of diceSums
+  allRollSums?: any[];
   isValidInput?: boolean;
   numberOfDice: number;
   diceSize: number;
-  diceRollerInput: string;
-  diceRollerInputArray: string[];
+  //the textarea input
+  textAreaInput: string;
+  diceRollArray: string[];
+  diceResults: any[];
+  diceSum: number[];
   maxNumberOfDice: number;
 
   constructor(
@@ -27,10 +36,12 @@ export class DiceRollerComponent {
     this.titleService.setTitle(this.title);
     this.numberOfDice = 0;
     this.diceSize = 0;
-    this.rollResults = [];
-    this.rollSum = [];
-    this.diceRollerInput = '';
-    this.diceRollerInputArray = [];
+    this.allRollResults = [];
+    this.allRollSums = [];
+    this.textAreaInput = '';
+    this.diceRollArray = [];
+    this.diceResults = [];
+    this.diceSum = [];
     this.maxNumberOfDice = 10000;
   }
 
@@ -45,60 +56,73 @@ export class DiceRollerComponent {
   }
 
   //checks format of textarea input
-  validateString(fullString: string): boolean {
-    //regex for entire string; using diff way
-    let standardRollRegex = /^[+-]?[1-9]\d*d\d+$/g;
-    let withConditionsRegex = /^[+-]?[1-9]\d*d\d+((d|k)(h|l))[1-9]\d*$/g;
-    let flatValueRegex = /^[+-]?[1-9]\d?$/g;
-
-    const isStandard: boolean = standardRollRegex.test(fullString);
-    const hasConditions: boolean = withConditionsRegex.test(fullString);
-    const isFlatValue: boolean = flatValueRegex.test(fullString);
-
-    //separate the string using + or - to get multiple values
-    //if has + or -, only calculate for SUM
-    //if starts with -, or non-number
-
+  validateDiceRollString(fullString: string): boolean {
+    const isStandard: boolean = this.standardRollRegex.test(fullString);
+    const hasConditions: boolean = this.withConditionsRegex.test(fullString);
+    const isFlatValue: boolean = this.flatValueRegex.test(fullString);
     if ((isStandard && !hasConditions) || hasConditions || isFlatValue) {
-      this.isValidInput = true;
       return true;
     } else {
-      console.log('string has invalid input');
-      this.isValidInput = false;
       return false;
     }
   }
 
-  setDiceRollerInput(evt: any) {
-    const oldStr = this.diceRollerInput;
+  setDiceRollerArrays(evt: any) {
+    const oldStr = this.textAreaInput;
     const isValidInput = this.validateInput(evt);
-    // const isValidString = this.validateString(oldStr);
     const val = evt.target.value;
     if (isValidInput) {
-      this.diceRollerInput = val;
+      this.textAreaInput = val;
       //split into array and then validate each
-      this.splitToArray(val);
+      if(val.match(/[+-]/)){
+        this.splitToArray(val);
+      } 
+      if(this.validateDiceRollString(val)){
+        //make diceRollArray just the value
+        this.diceRollArray = [val];
+        console.log(this.diceRollArray);
+      }
     } else {
-      this.diceRollerInput = oldStr;
+      this.textAreaInput = oldStr;
+      this.diceRollArray = [];
     }
   }
 
   //split into multiple strings
   splitToArray(str: string) {
-    const oldArray = this.diceRollerInputArray;
-    const fullStr = this.diceRollerInput;
     let newArray: string[] = [];
     let validatedArray: string[] = [];
 
-    newArray = fullStr.split(/(?=[+-])/);
+    newArray = str.split(/(?=[+-])/);
     newArray.forEach((val) => {
-      if (this.validateString(val)) {
+      if (this.validateDiceRollString(val)) {
         validatedArray.push(val);
       }
     });
-    this.diceRollerInputArray = validatedArray;
+    this.diceRollArray = validatedArray;
     console.log(validatedArray);
-    // console.log(newArray);
+  }
+
+  //take validated array and calculate each "roll"
+  //put roll results in another array
+  calculateDiceRoll(rollString: string){
+    //rollstring must be valid
+    switch(true){
+      case this.standardRollRegex.test(rollString):
+        console.log('is standard');
+        break;
+      case this.withConditionsRegex.test(rollString):
+        console.log('has conditions')
+        break;
+      case this.flatValueRegex.test(rollString):
+        console.log('is flat')
+        break;
+    }
+
+
+    //calc standard format
+    //calc conditions
+    //calc flat
   }
 
   //need to only take valid format from regex
@@ -117,14 +141,43 @@ export class DiceRollerComponent {
   }
 
   clearResults() {
-    console.log('yeah');
-    this.diceRollerInput = '';
-    this.rollResults = [];
+    console.log('Cleared');
+    this.textAreaInput = '';
   }
 
   rollDice() {
-    console.log(this.diceRollerInput);
+    const rollArray = this.diceRollArray;
+    //roll each entry in array
+    rollArray.forEach((val) =>{
+      console.log('value is: ' + val);      
+      const leadingSign = val.charAt(0);
+      switch(true) {
+      //roll standard
+        case (this.standardRollRegex.test(val)):
+          const resArray = this.diceRollerService.rollStandard(val);
+          const sumOfRolls = this.diceRollerService.getSumOfRolls(resArray);
+          console.log('resArray: ' + resArray + '\nsumOfRolls: ' + sumOfRolls);
+          break;
+          //flat
+          case (this.flatValueRegex.test(val)):
+            console.log('flat number value: ' + val);
+            break;
+          default: break;
+      //roll with condtions          
+      }
+      //check if + or -
+      if(leadingSign == '+'){
+        console.log('leading sign is positive');
+      }
+      if(leadingSign == '-'){
+        console.log('leading sign is negative');
+      }
+    });
+    //push result of each individual die roll into result array
+    //calculate sum of each roll entry
+    //push sum into sum array
   }
+  
 
   // //old version
   // rollDice() {
